@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/panelItemBottomNav"
+        android:icon="@drawable/edit_white"
+        android:title="@string/panel"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/catalogCategoriesItemBottomNav"
+        android:icon="@drawable/catalog_categories"
+        android:title="@string/catalogCategories"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
+        android:id="@+id/catalogProductsItemBottomNav"
+        android:icon="@drawable/catalog_products"
+        android:title="@string/catalogProducts"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
+        android:id="@+id/catalogClothesItemBottomNav"
+        android:icon="@drawable/catalog_clothes"
+        android:title="@string/catalogClothes"
+        app:showAsAction="ifRoom"/>
+
+</menu>
