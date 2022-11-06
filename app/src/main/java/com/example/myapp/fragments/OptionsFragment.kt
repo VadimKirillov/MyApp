@@ -7,21 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentDaysBinding
+import com.example.myapp.databinding.FragmentOptionsBinding
+import com.example.myapp.databinding.TabExercisesBinding
 
-class DaysFragment : Fragment() {
-    private lateinit var binding: FragmentDaysBinding
+class OptionsFragment : Fragment() {
+    private lateinit var binding: FragmentOptionsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDaysBinding.inflate(inflater,container, false )
+        binding = FragmentOptionsBinding.inflate(inflater,container, false )
         return binding.root
     }
 
     companion object {
 
         @JvmStatic
-        fun newInstance() = DaysFragment()
+        fun newInstance() = OptionsFragment()
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/panelExercises"
+        android:icon="@drawable/edit_white"
+        android:title="упражнения"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/catalogCategoriesItemBottomNav"
+        android:icon="@drawable/delete"
+        android:title="дни"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
+        android:id="@+id/catalogProductsItemBottomNav"
+        android:icon="@drawable/catalog_products"
+        android:title="тренировка"
+        app:showAsAction="ifRoom"/>
+
+
+    <item
+        android:id="@+id/panel_options"
+        android:icon="@drawable/catalog_clothes"
+        android:title="настройки"
+        app:showAsAction="ifRoom"/>
+
+</menu>
