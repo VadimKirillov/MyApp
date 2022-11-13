@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapp.R
-import com.example.myapp.databinding.FragmentDaysBinding
 import com.example.myapp.databinding.FragmentOptionsBinding
 import com.example.myapp.databinding.TabExercisesBinding
 

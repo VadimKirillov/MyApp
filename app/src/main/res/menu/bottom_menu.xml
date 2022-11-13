@@ -5,27 +5,27 @@
 
     <item
         android:id="@+id/panelExercises"
-        android:icon="@drawable/edit_white"
+        android:icon="@drawable/catalog_products"
         android:title="упражнения"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/catalogCategoriesItemBottomNav"
-        android:icon="@drawable/delete"
-        android:title="дни"
+        android:id="@+id/panelCreator"
+        android:icon="@drawable/edit_white"
+        android:title="упражнение"
         app:showAsAction="ifRoom"/>
 
 
     <item
         android:id="@+id/catalogProductsItemBottomNav"
-        android:icon="@drawable/catalog_products"
-        android:title="тренировка"
+        android:icon="@drawable/calendar"
+        android:title="тренировки"
         app:showAsAction="ifRoom"/>
 
 
     <item
-        android:id="@+id/panel_options"
-        android:icon="@drawable/catalog_clothes"
+        android:id="@+id/panelOptions"
+        android:icon="@drawable/options"
         android:title="настройки"
         app:showAsAction="ifRoom"/>
 

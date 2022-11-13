@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/textExerciseName"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_marginStart="12dp"
@@ -22,14 +23,14 @@
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/sectionEnterBodyPart"
+        android:id="@+id/sectionEnterMuscleGroup"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:clickable="false"
-        android:hint="Часть тела"
-        app:boxBackgroundColor="@color/purple_500"
+        android:hint="Группа мышц"
+        app:boxBackgroundColor="@color/color_tab"
         app:boxStrokeColor="@android:color/white"
         app:boxStrokeWidthFocused="4dp"
         app:counterMaxLength="0"
@@ -39,7 +40,7 @@
         app:hintTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/textExerciseName"
         app:startIconTint="@android:color/white">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -62,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Время/Повторения"
-        app:boxBackgroundColor="@color/purple_500"
+        app:boxBackgroundColor="@color/color_tab"
         app:boxStrokeColor="@android:color/white"
         app:boxStrokeWidthFocused="4dp"
         app:endIconTint="@android:color/white"
@@ -71,7 +72,7 @@
         app:hintTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sectionEnterBodyPart"
+        app:layout_constraintTop_toBottomOf="@+id/sectionEnterMuscleGroup"
         app:startIconTint="@android:color/white">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -111,6 +112,8 @@
         android:layout_width="47dp"
         android:layout_height="44dp"
         android:layout_marginTop="36dp"
+
+        android:theme="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:text="+"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
@@ -124,7 +127,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="64dp"
-        android:background="@color/purple_500"
+        android:background="@color/orange"
         android:text="Добавить упражнение"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

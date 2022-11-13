@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import com.example.myapp.databinding.ActivityMainBinding
 import com.example.myapp.databinding.TabExercisesBinding
+import com.example.myapp.fragments.CreationExerciseFragment
 import com.example.myapp.fragments.ExerciseFragment
 import com.example.myapp.fragments.OptionsFragment
 import com.example.myapp.utils.FragmentManager
@@ -26,7 +27,8 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.panelExercises -> FragmentManager.setFragment(ExerciseFragment.newInstance(), this)
-            R.id.panel_options -> FragmentManager.setFragment(OptionsFragment.newInstance(), this)
+            R.id.panelOptions -> FragmentManager.setFragment(OptionsFragment.newInstance(), this)
+            R.id.panelCreator -> FragmentManager.setFragment(CreationExerciseFragment.newInstance(), this)
 
         }
         return true

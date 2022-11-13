@@ -1,4 +1,27 @@
 package com.example.myapp.repositories
 
-class ExerciseRepository {
+import androidx.lifecycle.LiveData
+import com.example.myapp.data.ExerciseDao
+import com.example.myapp.models.ExerciseModel
+
+
+class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
+
+    val exercises = exerciseDAO.getAllExercises()
+
+    suspend fun insertExercise(exerciseModel: ExerciseModel){
+        exerciseDAO.insertExercise(exerciseModel)
+    }
+
+    suspend fun updateExercise(exerciseModel: ExerciseModel){
+        exerciseDAO.updateExercise(exerciseModel)
+    }
+
+    suspend fun deleteExercise(exerciseModel: ExerciseModel) {
+        exerciseDAO.deleteExercise(exerciseModel)
+    }
+
+    suspend fun deleteAllExercises(){
+        exerciseDAO.deleteAllExercises()
+    }
 }

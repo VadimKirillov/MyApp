@@ -16,19 +16,34 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapp.R
+import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentCreationExerciseBinding
 import com.example.myapp.databinding.FragmentOptionsBinding
+import com.example.myapp.repositories.ExerciseRepository
+import com.example.myapp.viewModels.ExerciseFactory
+import com.example.myapp.viewModels.ExerciseViewModel
 
 class CreationExerciseFragment : Fragment() {
-    private lateinit var binding: FragmentCreationExerciseBinding
 
+    private lateinit var binding: FragmentCreationExerciseBinding
+    private var exerciseRepository: ExerciseRepository? = null
+    private var exerciseViewModel: ExerciseViewModel? = null
+    private var exerciseFactory: ExerciseFactory? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         binding = FragmentCreationExerciseBinding.inflate(inflater,container, false )
+        val exercisesDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
+        exerciseRepository = ExerciseRepository(exercisesDao)
+        exerciseFactory = ExerciseFactory(exerciseRepository!!)
+        exerciseViewModel = ViewModelProvider(this, exerciseFactory!!).get(ExerciseViewModel::class.java)
+
+
         val itemsBodyPart = listOf("Ноги", "Руки", "Спина", "Плечи", "Грудь")
         val itemsTypes = listOf("Количество повторений", "Секунды")
         val adapterBodyPart = ArrayAdapter(context?.applicationContext!!, R.layout.dropdown_item, itemsBodyPart)
@@ -42,12 +57,24 @@ class CreationExerciseFragment : Fragment() {
             }
 
         }
-        binding.createNewExercise.setOnClickListener(){
 
+        binding.createNewExercise.setOnClickListener(){
+            exerciseViewModel?.startInsert(binding.textExerciseName.text.toString(),
+                binding.autoCompleteBodyPart.text?.toString()!!,
+                binding.autoCompleteType.text?.toString()!!,
+                binding.autoCompleteType.text?.toString()!!)
+
+            binding.autoCompleteType.setText("")
+            binding.autoCompleteBodyPart.setText("")
+            binding.textExerciseName.setText("")
+
+
+            //(context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, ExerciseFragment()).commit()
         }
 
         return binding.root
     }
+
 
     private fun pickImageFromGallery(){
         val intent = Intent(Intent.ACTION_PICK)
