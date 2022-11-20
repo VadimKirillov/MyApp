@@ -15,8 +15,9 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             android:elevation="16dp"
             app:itemIconTint="@color/color_tab"
             app:itemTextColor="@color/color_tab"
-            app:menu="@menu/bottom_menu"/>
+            app:menu="@menu/bottom_menu" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

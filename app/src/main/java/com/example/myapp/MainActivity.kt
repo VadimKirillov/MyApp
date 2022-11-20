@@ -3,13 +3,18 @@ package com.example.myapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.Optional
+import com.example.CreateOrUpdateExercicesMutation
 import com.example.myapp.databinding.ActivityMainBinding
 import com.example.myapp.databinding.TabExercisesBinding
 import com.example.myapp.fragments.CreationExerciseFragment
 import com.example.myapp.fragments.ExerciseFragment
 import com.example.myapp.fragments.OptionsFragment
 import com.example.myapp.utils.FragmentManager
+import com.example.type.ExerciseReqNameInput
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener{
     private lateinit var binding: ActivityMainBinding
@@ -22,6 +27,7 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
         binding?.bottomNav?.setOnNavigationItemSelectedListener(this)
         binding?.bottomNav?.selectedItemId = R.id.panelExercises
         FragmentManager.setFragment(ExerciseFragment.newInstance(), this)
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

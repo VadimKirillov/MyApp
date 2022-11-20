@@ -1,0 +1,59 @@
+schema {
+    query: QueryExercises
+    mutation: MutationExercises
+}
+
+
+type Exercise {
+    _id: String
+    name: String
+    class: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+}
+
+input ExerciseInput {
+    _id: ID
+    name: String
+    class: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+}
+
+input ExerciseReqNameInput {
+    id: ID
+    name: String!
+    class: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+}
+
+type ExerciseResult {
+    success: Boolean
+    errors: [String]
+    exercise: Exercise
+}
+
+type ExercisesResult {
+    success: Boolean
+    errors: [String]
+    exercises: [Exercise]
+}
+
+
+type QueryExercises {
+    searchExercises(exercise: ExerciseInput): ExercisesResult!
+}
+
+type MutationExercises {
+    createExercise(exercise: ExerciseReqNameInput!): ExerciseResult
+    deleteExercises(exercise: ExerciseReqNameInput!): ExercisesResult
+}
+
+

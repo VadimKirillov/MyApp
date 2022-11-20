@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.example.myapp.databinding.TabExercisesBinding
 import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.tabs.ExerciseAdapter
+import com.example.myapp.utils.FragmentManager.setFragment
 import com.example.myapp.viewModels.ExerciseFactory
 import com.example.myapp.viewModels.ExerciseViewModel
 
@@ -44,6 +47,9 @@ class ExerciseFragment : Fragment() {
         binding.createNewExercise.setOnClickListener {
             //val nextFrag = CreationExerciseFragment()
 
+            val transaction  = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(com.example.myapp.R.id.content, CreationExerciseFragment())
+            transaction?.commit()
             //(context as FragmentActivity).supportFragmentManager.beginTransaction().replace(com.example.myapp.R.id.content,
             //    CreationExerciseFragment()).commit()
             //getActivity()?.onBackPressed()
@@ -75,17 +81,16 @@ class ExerciseFragment : Fragment() {
         exerciseViewModel?.deleteExercise(exerciseModel)
     }
 
-    private fun editExercise(categoryModel:ExerciseModel) {
-        /*
-        val panelCategory = PanelEditExercise()
+    private fun editExercise(exerciseModel:ExerciseModel) {
+        val panelEditExercise = EditExerciseFragment()
         val parameters = Bundle()
-        parameters.putString("idCategory", categoryModel.id.toString())
-        parameters.putString("nameCategory", categoryModel.name)
-        panelCategory.arguments = parameters
+        parameters.putString("idExercise", exerciseModel.id.toString())
+        parameters.putString("nameExercise", exerciseModel.name)
+        parameters.putString("typeExercise", exerciseModel.type)
+        parameters.putString("muscleGroupExercise", exerciseModel.muscle_group)
+        panelEditExercise.arguments = parameters
 
-        panelCategory.show((context as FragmentActivity).supportFragmentManager, "editCategory")
-
-         */
+        panelEditExercise.show((context as FragmentActivity).supportFragmentManager, "editExercise")
     }
 
 

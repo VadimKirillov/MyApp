@@ -1,0 +1,62 @@
+query SearchExercicesQuery{
+  searchExercises(
+      exercise: {
+        name: "бугага"
+      }
+) {
+    success
+    errors
+  	exercises {
+        _id
+        name
+    }
+  }
+}
+
+
+mutation CreateOrUpdateExercicesMutation($exercise: ExerciseReqNameInput!){
+  createExercise(
+		exercise: $exercise
+) {
+    success
+    errors
+  	exercise {
+		_id
+      name
+    }
+
+  }
+}
+
+
+
+mutation DeleteExercisesMutation($exercise: ExerciseReqNameInput!){
+  deleteExercises(
+		exercise: $exercise
+) {
+    success
+    errors
+  	exercises {
+        _id
+        name
+    }
+
+  }
+}
+
+query AllExercicesQuery($exercise: ExerciseInput){
+  searchExercises(
+      exercise: $exercise
+) {
+    success
+    errors
+  	exercises {
+        _id
+        name
+        class
+        count
+    }
+  }
+}
+
+

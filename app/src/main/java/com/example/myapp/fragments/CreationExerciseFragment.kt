@@ -1,30 +1,33 @@
 package com.example.myapp.fragments
 
-import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import kotlinx.coroutines.launch
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.Optional
+import com.example.CreateOrUpdateExercicesMutation
 import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentCreationExerciseBinding
-import com.example.myapp.databinding.FragmentOptionsBinding
+import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
+import com.example.myapp.utils.Converter
 import com.example.myapp.viewModels.ExerciseFactory
 import com.example.myapp.viewModels.ExerciseViewModel
+import com.example.type.ExerciseReqNameInput
+import kotlinx.coroutines.GlobalScope
 
 class CreationExerciseFragment : Fragment() {
 
@@ -59,15 +62,36 @@ class CreationExerciseFragment : Fragment() {
         }
 
         binding.createNewExercise.setOnClickListener(){
-            exerciseViewModel?.startInsert(binding.textExerciseName.text.toString(),
+             val exm =ExerciseModel(0,binding.textExerciseName.text.toString(),
                 binding.autoCompleteBodyPart.text?.toString()!!,
                 binding.autoCompleteType.text?.toString()!!,
                 binding.autoCompleteType.text?.toString()!!)
+
+            exerciseViewModel?.insertExercise(exm)
+
+            val apolloClient = ApolloClient.Builder()
+                .addHttpHeader("content-type", "application/json")
+                .addHttpHeader("Auth", "token") // jwt token
+                .serverUrl("http://84.201.187.3:8000/graphql")
+                .build()
+
+            var name1 = binding.textExerciseName.text.toString()
+            Log.e("tag1", name1)
+            var input2 = Converter.toBack(exm)
+            GlobalScope.launch{
+                val response2 = apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
+                Log.e("tag1", response2.data.toString())
+            }
+            //Log.e("tag1", exm.toString())
+            //Log.e("tag1", input2.toString())
 
             binding.autoCompleteType.setText("")
             binding.autoCompleteBodyPart.setText("")
             binding.textExerciseName.setText("")
 
+            val transaction  = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.content, ExerciseFragment())
+            transaction?.commit()
 
             //(context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, ExerciseFragment()).commit()
         }
