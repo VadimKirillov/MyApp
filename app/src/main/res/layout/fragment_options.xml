@@ -5,9 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".fragments.OptionsFragment">
 
-    <Button
-        android:id="@+id/startTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/startTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/buttonweb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="towww" />
+    </LinearLayout>
+
 </FrameLayout>

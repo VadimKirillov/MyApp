@@ -1,14 +1,15 @@
 package com.example.myapp.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.myapp.R
-
 import com.example.myapp.databinding.FragmentOptionsBinding
-import com.example.myapp.databinding.TabExercisesBinding
+
 
 class OptionsFragment : Fragment() {
     private lateinit var binding: FragmentOptionsBinding
@@ -24,6 +25,11 @@ class OptionsFragment : Fragment() {
             transaction?.replace(R.id.content, WaitingFragment())
             transaction?.commit()
         }
+
+        binding.buttonweb.setOnClickListener(){
+            goToUrl("http://stackoverflow.com/")
+        }
+
         return binding.root
     }
 
@@ -32,4 +38,11 @@ class OptionsFragment : Fragment() {
         @JvmStatic
         fun newInstance() = OptionsFragment()
     }
+
+    private fun goToUrl(url: String) {
+        val uriUrl: Uri = Uri.parse(url)
+        val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+        startActivity(launchBrowser)
+    }
+
 }
