@@ -12,21 +12,21 @@
     <item
         android:id="@+id/panelCreator"
         android:icon="@drawable/edit_white"
-        android:title="упражнение"
+        android:title="тренировка"
         app:showAsAction="ifRoom"/>
 
 
     <item
-        android:id="@+id/catalogProductsItemBottomNav"
-        android:icon="@drawable/calendar"
-        android:title="тренировки"
+        android:id="@+id/panelStartTraining"
+        android:icon="@drawable/play_item"
+        android:title="старт"
         app:showAsAction="ifRoom"/>
 
 
     <item
         android:id="@+id/panelOptions"
-        android:icon="@drawable/options"
-        android:title="настройки"
+        android:icon="@drawable/more_item"
+        android:title="больше"
         app:showAsAction="ifRoom"/>
 
 </menu>

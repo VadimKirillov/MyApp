@@ -1,25 +1,32 @@
 package com.example.myapp.fragments
 
-import android.R
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import com.apollographql.apollo3.ApolloClient
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.apollographql.apollo3.api.Optional
+import com.example.AllExercicesQuery
+import com.example.CreateOrUpdateExercicesMutation
+import com.example.DeleteExercisesMutation
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.TabExercisesBinding
 import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.tabs.ExerciseAdapter
-import com.example.myapp.utils.FragmentManager.setFragment
+import com.example.myapp.utils.Converter
 import com.example.myapp.viewModels.ExerciseFactory
 import com.example.myapp.viewModels.ExerciseViewModel
+import com.example.type.ExerciseInput
+import com.example.type.ExerciseReqNameInput
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ExerciseFragment : Fragment() {
@@ -40,6 +47,22 @@ class ExerciseFragment : Fragment() {
         exerciseRepository = ExerciseRepository(exercisesDao)
         exerciseFactory = ExerciseFactory(exerciseRepository!!)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory!!).get(ExerciseViewModel::class.java)
+        val apolloClient = ApolloClient.Builder()
+            .addHttpHeader("content-type", "application/json")
+            .addHttpHeader("Auth", "token") // jwt token
+            .serverUrl("http://84.201.187.3:8000/graphql")
+            .build()
+
+        exerciseViewModel?.deleteAllExercises()
+        var input = Optional.present(ExerciseInput())
+        GlobalScope.launch{
+            val response = apolloClient.query(AllExercicesQuery(input)).execute()
+            println("${response.data?.searchExercises?.exercises!!}")
+            for(ex in response.data?.searchExercises?.exercises!!){
+                //Converter.toLocal(ex)
+                exerciseViewModel?.insertExercise(Converter.toLocal(ex))
+            }
+        }
 
         initRecyclerExercises()
         displayExercises()
@@ -79,6 +102,20 @@ class ExerciseFragment : Fragment() {
 
     private fun deleteExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel?.deleteExercise(exerciseModel)
+        val apolloClient = ApolloClient.Builder()
+            .addHttpHeader("content-type", "application/json")
+            .addHttpHeader("Auth", "token") // jwt token
+            .serverUrl("http://84.201.187.3:8000/graphql")
+            .build()
+
+        //var name1 = binding.textExerciseName.text.toString()
+        //Log.e("tag1", name1)
+        var input2 = Converter.toBack(exerciseModel)
+        val exdel = ExerciseReqNameInput(name = exerciseModel.name)
+        GlobalScope.launch{
+            val response2 = apolloClient.mutation(DeleteExercisesMutation(exercise = exdel)).execute()
+            Log.e("tag1", response2.data.toString())
+        }
     }
 
     private fun editExercise(exerciseModel:ExerciseModel) {

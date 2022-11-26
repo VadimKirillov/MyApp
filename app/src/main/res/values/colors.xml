@@ -11,4 +11,7 @@
     <color name="blue_dark">#015780</color>
     <color name="blue_bg">#B7CBFF</color>
     <color name="black_light">#151515</color>
+    <style name="Button.White" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@android:color/white</item>
+    </style>
 </resources>

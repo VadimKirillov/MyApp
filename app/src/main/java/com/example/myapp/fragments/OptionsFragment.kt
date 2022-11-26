@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.myapp.AboutFragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
 
@@ -20,15 +21,28 @@ class OptionsFragment : Fragment() {
     ): View {
         binding = FragmentOptionsBinding.inflate(inflater,container, false )
 
-        binding.startTimer.setOnClickListener(){
+        binding.aboutButton.setOnClickListener(){
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.content, WaitingFragment())
+            transaction?.replace(R.id.content, AboutFragment())
             transaction?.commit()
         }
-
-        binding.buttonweb.setOnClickListener(){
-            goToUrl("http://stackoverflow.com/")
+        binding.gitBotton.setOnClickListener(){
+            goToUrl("https://github.com/VadimKirillov/MyApp")
         }
+        binding.webBotton.setOnClickListener(){
+            goToUrl("https://github.com/VadimKirillov/MyApp")
+        }
+
+        binding.emailBotton.setOnClickListener(){
+            val intent = Intent(Intent.ACTION_VIEW)
+            val data = Uri.parse(
+                "mailto:vadim.kirillov2001@gmail.com?subject=" + Uri.encode("Fitness App") + "&body=" + Uri.encode("Hello, ")
+            )
+            intent.data = data
+            startActivity(intent)
+        }
+
+
 
         return binding.root
     }

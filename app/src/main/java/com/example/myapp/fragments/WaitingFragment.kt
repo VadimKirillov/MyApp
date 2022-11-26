@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapp.DayFinishFragment
 import com.example.myapp.R
 
 
@@ -40,7 +41,7 @@ class WaitingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ab = (activity as AppCompatActivity).supportActionBar
-        ab?.title = getString(R.string.waiting)
+        //ab?.title = getString(R.string.waiting)
         soundEnd = MediaPlayer.create(context, R.raw.korotkiy)
         soundWarning = MediaPlayer.create(context, R.raw.nizkiy)
         binding.pBar.max = COUNT_DOWN_TIME.toInt()
@@ -65,7 +66,7 @@ class WaitingFragment : Fragment() {
             override fun onFinish() {
                 soundEnd?.start()
                 FragmentManager.setFragment(
-                    OptionsFragment.newInstance(),
+                    DayFinishFragment.newInstance(),
                     activity as AppCompatActivity
                 )
             }
