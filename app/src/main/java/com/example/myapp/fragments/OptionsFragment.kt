@@ -29,7 +29,7 @@ class OptionsFragment : Fragment() {
             goToUrl("https://github.com/VadimKirillov/MyApp")
         }
         binding.webBotton.setOnClickListener(){
-            goToUrl("https://github.com/VadimKirillov/MyApp")
+            goToUrl("https://staszerling2.wixsite.com/fitness")
         }
 
         binding.emailBotton.setOnClickListener(){
