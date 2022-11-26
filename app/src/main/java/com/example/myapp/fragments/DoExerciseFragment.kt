@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.fragments
 
 import android.os.Bundle
 import android.os.CountDownTimer

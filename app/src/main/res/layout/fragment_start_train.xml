@@ -5,7 +5,7 @@
     android:id="@+id/contentt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartTrainFragment">
+    tools:context=".fragments.StartTrainFragment">
 
     <ImageButton
         android:id="@+id/startButton"

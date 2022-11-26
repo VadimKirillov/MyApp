@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.fragments
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapp.R
 import com.example.myapp.databinding.FragmentDayFinishBinding
-import com.example.myapp.fragments.COUNT_DOWN_TIME
-import com.example.myapp.fragments.OptionsFragment
+import com.example.myapp.fragments.StartTrainFragment
 import com.example.myapp.utils.FragmentManager
-import com.example.myapp.utils.TimeUtils
 import pl.droidsonroids.gif.GifDrawable
 
 const val CONGRATS_TIME = 1000L
@@ -37,7 +36,8 @@ class DayFinishFragment : Fragment() {
         binding.imMain.setImageDrawable(GifDrawable((activity as AppCompatActivity).assets,
            "congrats-congratulations.gif"))
         binding.bDone.setOnClickListener {
-            FragmentManager.setFragment(StartTrainFragment.newInstance(),
+            FragmentManager.setFragment(
+                StartTrainFragment.newInstance(),
                 activity as AppCompatActivity
             )
         }

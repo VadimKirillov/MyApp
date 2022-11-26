@@ -2,13 +2,12 @@ package com.example.myapp
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.databinding.ActivityMainBinding
-import com.example.myapp.databinding.FragmentTrainCreatorBinding
-import com.example.myapp.fragments.CreationExerciseFragment
 import com.example.myapp.fragments.ExerciseFragment
 import com.example.myapp.fragments.OptionsFragment
+import com.example.myapp.fragments.StartTrainFragment
+import com.example.myapp.fragments.TrainCreatorFragment
 import com.example.myapp.utils.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

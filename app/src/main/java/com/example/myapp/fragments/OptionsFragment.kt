@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.myapp.AboutFragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
 
@@ -41,6 +40,11 @@ class OptionsFragment : Fragment() {
             intent.data = data
             startActivity(intent)
         }
+        binding.exitButton.setOnClickListener(){
+            getActivity()?.finish();
+            System.exit(0);
+        }
+
 
 
 

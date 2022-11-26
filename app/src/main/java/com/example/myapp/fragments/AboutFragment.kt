@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.fragments
 
 import android.R
 import android.app.Activity
@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
 import androidx.fragment.app.Fragment
 import com.example.myapp.databinding.AboutFragmentBinding
-import com.example.myapp.fragments.OptionsFragment
 
 
 class AboutFragment :Fragment() {
@@ -28,9 +27,11 @@ class AboutFragment :Fragment() {
         //navBar.visibility = View.GONE
 
         binding.backButton.setOnClickListener {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.show()
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.content, OptionsFragment())
             transaction?.commit()
+
         }
         return binding.root
     }

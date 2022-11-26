@@ -76,6 +76,22 @@
             app:iconTint="@color/black"
             app:iconTintMode="src_in" />
 
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:background="@android:drawable/menuitem_background"
+            android:backgroundTint="@color/white"
+            android:backgroundTintMode="src_in"
+            android:text="Выход"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:icon="@drawable/cursor"
+            app:iconGravity="end"
+            app:iconPadding="10dp"
+            app:iconTint="@color/black"
+            app:iconTintMode="src_in" />
+
     </LinearLayout>
 
 </FrameLayout>

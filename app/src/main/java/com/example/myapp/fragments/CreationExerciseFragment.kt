@@ -1,12 +1,15 @@
 package com.example.myapp.fragments
 
+import android.R.attr.data
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
@@ -68,6 +71,7 @@ class CreationExerciseFragment : Fragment() {
                 )
                 pickImageFromGallery()
                 //binding.textExerciseName.setText(getBase64String(binding.imageView)))
+
             }
 
         }
