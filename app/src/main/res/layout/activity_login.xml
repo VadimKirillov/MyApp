@@ -13,8 +13,8 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_height="44dp"
         android:layout_marginTop="96dp"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"

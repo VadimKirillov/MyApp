@@ -5,11 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.myapp.models.ExerciseModel
+import com.example.myapp.models.TrainingExerciseModel
+import com.example.myapp.models.TrainingModel
 
-@Database(entities = [ExerciseModel::class],version = 1)
+@Database(entities = [TrainingModel::class, ExerciseModel::class,TrainingExerciseModel::class], version = 2)
 abstract class Database: RoomDatabase() {
 
     abstract val exerciseDAO : ExerciseDao
+    abstract val trainingDAO : TrainingDao
 
     companion object{
         @Volatile
@@ -21,8 +24,8 @@ abstract class Database: RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         com.example.myapp.data.Database::class.java,
-                        "database"
-                    ).build()
+                        "database1"
+                    ).allowMainThreadQueries().build()
                 }
                 return instance
             }

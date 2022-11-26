@@ -9,7 +9,7 @@ import com.example.myapp.repositories.ExerciseRepository
 data class ExerciseModel (
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "exercise_id")
+    @ColumnInfo(name = "id")
     var id : Int,
 
     @ColumnInfo(name = "exercise_name")
@@ -23,5 +23,7 @@ data class ExerciseModel (
 
     @ColumnInfo(name = "exercise_image")
     var image : String
+
+
 
 )

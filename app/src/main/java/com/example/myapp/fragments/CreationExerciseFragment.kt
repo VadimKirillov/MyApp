@@ -122,6 +122,8 @@ class CreationExerciseFragment : Fragment() {
         val bitmap = BitmapFactory.decodeStream(stream)
         imageView.setImageBitmap(bitmap)
     }
+
+
     private fun getBase64String(im: ImageView): String? {
         // give your image file url in mCurrentPhotoPath
         val bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.calendar)

@@ -15,7 +15,7 @@
         android:background="@color/orange">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/idExercise"
+            android:id="@+id/idTrain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/idExercise"
+            app:layout_constraintLeft_toRightOf="@id/idTrain"
             android:layout_margin="10dp"
             android:textColor="@color/black"/>
 
