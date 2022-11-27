@@ -87,7 +87,7 @@ class ExerciseFragment : Fragment() {
         binding?.recyclerCategories?.layoutManager = LinearLayoutManager(context)
         exerciseAdapter = ExerciseAdapter({categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
             {categoryModel:ExerciseModel-> editExercise(categoryModel)},
-            {categoryModel: ExerciseModel -> deleteExercise(categoryModel)})
+            {categoryModel: ExerciseModel -> pickExercise(categoryModel)})
         binding?.recyclerCategories?.adapter = exerciseAdapter
 
     }
@@ -102,6 +102,12 @@ class ExerciseFragment : Fragment() {
 
 
 
+    private fun pickExercise(exerciseModel: ExerciseModel) {
+        exerciseViewModel?.pickExercise(exerciseModel)
+    }
+
+
+
     private fun deleteExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel?.deleteExercise(exerciseModel)
         val apolloClient = ApolloClient.Builder()
@@ -109,6 +115,7 @@ class ExerciseFragment : Fragment() {
             .addHttpHeader("Auth", "token") // jwt token
             .serverUrl("http://84.201.187.3:8000/graphql")
             .build()
+
 
         //var name1 = binding.textExerciseName.text.toString()
         //Log.e("tag1", name1)

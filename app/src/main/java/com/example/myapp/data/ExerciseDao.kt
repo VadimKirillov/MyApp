@@ -23,8 +23,10 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercise_data_table")
     fun getAllExercises(): LiveData<List<ExerciseModel>>
 
-    @Query("SELECT * FROM exercise_data_table")
-    fun pickExercise(): LiveData<List<ExerciseModel>>
+    @Query("INSERT INTO training_exercise_data_table VALUES (:training_id,:exercise_id, 0)")
+    fun pickExercise(exercise_id:Int,training_id:Int)
+
+
 //    @Transaction
 //    @Query("SELECT * FROM training_data_table")
 //    fun getTrainingWithExercises(): List<TrainingWithExercises>

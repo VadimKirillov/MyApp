@@ -42,12 +42,10 @@ class OptionsFragment : Fragment() {
             startActivity(intent)
         }
         binding.exitButton.setOnClickListener(){
-            //getActivity()?.finish();
-            //System.exit(0);
-            //val transaction  = activity?.supportFragmentManager?.beginTransaction()
-            //transaction?.replace(R.id.content, EditCountTrainFragment())
-            //transaction?.commit()
-            EditCountTrainFragment().show((context as FragmentActivity).supportFragmentManager, "editTrain")
+            getActivity()?.finish();
+            System.exit(0);
+
+            //EditCountTrainFragment().show((context as FragmentActivity).supportFragmentManager, "editTrain")
         }
 
 

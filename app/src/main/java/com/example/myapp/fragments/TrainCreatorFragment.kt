@@ -118,15 +118,15 @@ class TrainCreatorFragment : Fragment() {
     }
 
     private fun editTraining(trainingModel: LineWithExercises) {
-//        val panelEditExercise = EditExerciseFragment()
-//        val parameters = Bundle()
-//        parameters.putString("idExercise", trainingModel.id.toString())
-//        parameters.putString("nameExercise", trainingModel.name)
-//        parameters.putString("typeExercise", trainingModel.type)
+        val panelEditCountTrain = EditCountTrainFragment()
+        val parameters = Bundle()
+        parameters.putString("idExercise", trainingModel.exercise.id.toString())
+        parameters.putString("nameExercise", trainingModel.exercise.name)
+        parameters.putString("count", trainingModel.playlist.count.toString())
 //        parameters.putString("muscleGroupExercise", trainingModel.muscle_group)
-//        panelEditExercise.arguments = parameters
+        panelEditCountTrain.arguments = parameters
 //
-//        panelEditExercise.show((context as FragmentActivity).supportFragmentManager, "editExercise")
+        panelEditCountTrain.show((context as FragmentActivity).supportFragmentManager, "editCount")
 
     }
 

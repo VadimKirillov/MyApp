@@ -7,8 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textExerciseCountName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Изменение количества"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
     <EditText
-        android:id="@+id/textExerciseName"
+        android:id="@+id/textCount"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_marginStart="12dp"
@@ -20,31 +31,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Изменение количества"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintTop_toTopOf="@+id/textExerciseCountName" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonEditExercise"
+        android:id="@+id/buttonEditCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/orange"
-        android:text="Изменить упражнение"
+        android:text="Изменить количество"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textExerciseName" />
+        app:layout_constraintTop_toBottomOf="@+id/textCount" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,11 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
         exerciseRepository.deleteExercise(exerciseModel)
     }
 
+    fun pickExercise(exerciseModel: ExerciseModel) = viewModelScope.launch{
+        exerciseRepository.pickExercise(1, exercise_id = exerciseModel.id)
+    }
+
+
     fun deleteAllExercises() = viewModelScope.launch{
         exerciseRepository.deleteAllExercises()
     }

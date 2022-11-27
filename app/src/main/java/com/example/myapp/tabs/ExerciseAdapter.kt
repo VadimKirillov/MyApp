@@ -58,7 +58,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
             })
 
             binding.pickExercise.setOnClickListener(View.OnClickListener {
-                deleteExercise(exercisesModel)
+                pickExercise(exercisesModel)
             })
 
         }

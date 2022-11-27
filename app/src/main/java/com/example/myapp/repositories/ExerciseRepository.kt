@@ -27,5 +27,9 @@ class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
         //exerciseDAO.deleteAllExercises()
     }
 
+    suspend fun pickExercise(training_id: Int, exercise_id: Int){
+        exerciseDAO.pickExercise(exercise_id = exercise_id, training_id = training_id)
+    }
+
 
 }
