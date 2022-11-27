@@ -8,7 +8,8 @@ import com.example.myapp.databinding.ExerciseItemBinding
 import com.example.myapp.models.ExerciseModel
 
 class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
-                      private val editExercise:(ExerciseModel)->Unit) : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>() {
+                      private val editExercise:(ExerciseModel)->Unit,
+                      private val pickExercise:(ExerciseModel)->Unit,) : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>() {
 
     private val exercisesList = ArrayList<ExerciseModel>()
 
@@ -23,7 +24,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        holder.bind(exercisesList[position], deleteExercise, editExercise)
+        holder.bind(exercisesList[position], deleteExercise, editExercise, pickExercise)
     }
 
     fun setList(exercises: List<ExerciseModel>) {
@@ -38,7 +39,8 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
         fun bind(
             exercisesModel: ExerciseModel,
             deleteExercise: (ExerciseModel) -> Unit,
-            editExercise: (ExerciseModel) -> Unit
+            editExercise: (ExerciseModel) -> Unit,
+            pickExercise: (ExerciseModel) -> Unit,
 
         ) {
 
@@ -52,6 +54,10 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
             })
 
             binding.deleteExercise.setOnClickListener(View.OnClickListener {
+                deleteExercise(exercisesModel)
+            })
+
+            binding.pickExercise.setOnClickListener(View.OnClickListener {
                 deleteExercise(exercisesModel)
             })
 

@@ -47,6 +47,7 @@ class ExerciseFragment : Fragment() {
         exerciseRepository = ExerciseRepository(exercisesDao)
         exerciseFactory = ExerciseFactory(exerciseRepository!!)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory!!).get(ExerciseViewModel::class.java)
+
         val apolloClient = ApolloClient.Builder()
             .addHttpHeader("content-type", "application/json")
             .addHttpHeader("Auth", "token") // jwt token
@@ -85,7 +86,8 @@ class ExerciseFragment : Fragment() {
     private fun initRecyclerExercises(){
         binding?.recyclerCategories?.layoutManager = LinearLayoutManager(context)
         exerciseAdapter = ExerciseAdapter({categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
-            {categoryModel:ExerciseModel-> editExercise(categoryModel)})
+            {categoryModel:ExerciseModel-> editExercise(categoryModel)},
+            {categoryModel: ExerciseModel -> deleteExercise(categoryModel)})
         binding?.recyclerCategories?.adapter = exerciseAdapter
 
     }

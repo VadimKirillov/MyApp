@@ -1,9 +1,6 @@
 package com.example.myapp.models
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "training_exercise_data_table", primaryKeys = ["training_id", "exercise_id"], foreignKeys =
 [
@@ -22,4 +19,27 @@ data class TrainingExerciseModel (
     @ColumnInfo(name = "count")
     var count : Int,
 
+    //@Embedded val playlist: ExerciseModel,
+
+
     )
+
+data class LineWithExercises(
+    @Embedded val playlist: TrainingExerciseModel,
+    @Relation(
+        parentColumn = "exercise_id",
+        entityColumn = "id",
+        //associateBy = Junction(TrainingExerciseModel::class)
+    )
+
+    var exercise: ExerciseModel,
+
+
+//    @Relation(
+//    parentColumn = "training_id",
+//    entityColumn = "id", entity = TrainingModel::class
+//    //associateBy = Junction(TrainingExerciseModel::class)
+//    )
+//
+//    var training: TrainingWithExercises
+)

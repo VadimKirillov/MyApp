@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
 
@@ -41,8 +42,12 @@ class OptionsFragment : Fragment() {
             startActivity(intent)
         }
         binding.exitButton.setOnClickListener(){
-            getActivity()?.finish();
-            System.exit(0);
+            //getActivity()?.finish();
+            //System.exit(0);
+            //val transaction  = activity?.supportFragmentManager?.beginTransaction()
+            //transaction?.replace(R.id.content, EditCountTrainFragment())
+            //transaction?.commit()
+            EditCountTrainFragment().show((context as FragmentActivity).supportFragmentManager, "editTrain")
         }
 
 

@@ -3,7 +3,9 @@ package com.example.myapp.repositories
 import com.example.myapp.data.ExerciseDao
 import com.example.myapp.data.TrainingDao
 import com.example.myapp.models.ExerciseModel
+import com.example.myapp.models.TrainingExerciseModel
 import com.example.myapp.models.TrainingModel
+import com.example.myapp.models.TrainingWithExercises
 
 class TrainingRepository (private val trainingDAO: TrainingDao) {
 
@@ -24,6 +26,14 @@ class TrainingRepository (private val trainingDAO: TrainingDao) {
 
     suspend fun deleteAllTrainings(){
         trainingDAO.deleteAllTrainings()
+    }
+
+    suspend fun deleteLine(training_id: Int, exercise_id: Int){
+        trainingDAO.deleteLine(training_id, exercise_id)
+    }
+
+    suspend fun updateLine(trainingModel: TrainingExerciseModel){
+        trainingDAO.updateLine(trainingModel)
     }
 
 

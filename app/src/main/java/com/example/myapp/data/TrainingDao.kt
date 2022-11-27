@@ -3,6 +3,7 @@ package com.example.myapp.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.myapp.models.ExerciseModel
+import com.example.myapp.models.TrainingExerciseModel
 import com.example.myapp.models.TrainingModel
 import com.example.myapp.models.TrainingWithExercises
 
@@ -26,7 +27,11 @@ interface TrainingDao {
 
     @Transaction
     @Query("SELECT * FROM training_data_table")
-    fun getTrainingWithExercises(): List<TrainingWithExercises>
+    fun getTrainingWithExercises(): LiveData<List<TrainingWithExercises>>
 
+    @Query("DELETE FROM training_exercise_data_table WHERE training_id = :training_id and exercise_id = :exercise_id")
+    fun deleteLine(training_id: Int, exercise_id: Int)
 
+    @Update
+    suspend fun updateLine(productModel: TrainingExerciseModel)
 }

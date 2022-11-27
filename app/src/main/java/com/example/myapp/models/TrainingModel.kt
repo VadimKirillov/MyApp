@@ -13,18 +13,21 @@ data class TrainingModel (
     var name : String,
 
 
-
 )
 
 
 data class TrainingWithExercises(
+
     @Embedded val playlist: TrainingModel,
+
     @Relation(
         parentColumn = "id",
         entityColumn = "training_id",
+        entity = TrainingExerciseModel::class
         //associateBy = Junction(TrainingExerciseModel::class)
     )
 
-    var lines: List<TrainingExerciseModel>
+    var lines: List<LineWithExercises>
+
 )
 
