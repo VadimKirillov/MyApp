@@ -1,13 +1,13 @@
 schema {
-    query: QueryExercises
-    mutation: MutationExercises
+    query: QueryFitness
+    mutation: MutationFitness
 }
 
 
 type Exercise {
-    _id: String
+    id: String
     name: String
-    class: String
+    class_exercise: String
     description: String
     measure: String
     count: Int
@@ -15,30 +15,39 @@ type Exercise {
 }
 
 input ExerciseInput {
-    _id: ID
+    id: String
     name: String
-    class: String
+    class_exercise: String
     description: String
     measure: String
     count: Int
     picture: String
 }
 
-input ExerciseReqNameInput {
-    id: ID
-    name: String!
-    class: String
-    description: String
-    measure: String
+input TrainingLineInput {
+    exercise: String
     count: Int
-    picture: String
 }
 
-type ExerciseResult {
-    success: Boolean
-    errors: [String]
-    exercise: Exercise
+input TrainingInput {
+    id: String
+    name: String
+    training_lines: [TrainingLineInput]
 }
+
+type TrainingLine {
+    id: String
+    exercise: String
+    count: Int
+}
+
+
+type Training {
+    id: String
+    name: String
+    training_lines: [TrainingLine]
+}
+
 
 type ExercisesResult {
     success: Boolean
@@ -46,14 +55,22 @@ type ExercisesResult {
     exercises: [Exercise]
 }
 
+type TrainingResult {
+    success: Boolean
+    errors: [String]
+    trainings: [Training]
+}
 
-type QueryExercises {
+
+type QueryFitness {
     searchExercises(exercise: ExerciseInput): ExercisesResult!
+    searchTrainings(training: TrainingInput): TrainingResult!
 }
 
-type MutationExercises {
-    createExercise(exercise: ExerciseReqNameInput!): ExerciseResult
-    deleteExercises(exercise: ExerciseReqNameInput!): ExercisesResult
+type MutationFitness {
+    createExercise(exercise: ExerciseInput!): ExercisesResult
+    deleteExercises(exercise: ExerciseInput!): ExercisesResult
+    createTrainings (training: TrainingInput!): TrainingResult
+    deleteTrainings(training: TrainingInput!): TrainingResult
 }
-
 

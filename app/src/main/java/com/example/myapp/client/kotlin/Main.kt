@@ -4,7 +4,7 @@ import com.example.AllExercicesQuery
 import com.example.CreateOrUpdateExercicesMutation
 import com.example.DeleteExercisesMutation
 import com.example.type.ExerciseInput
-import com.example.type.ExerciseReqNameInput
+
 
 suspend fun main(args: Array<String>) {
     // Try adding program arguments via Run/Debug configuration.
@@ -21,9 +21,9 @@ suspend fun main(args: Array<String>) {
 //    println("${response.data?.searchExercises?.exercises!!}")
     DeleteExercisesMutation
 
-    var input2 = ExerciseReqNameInput(name =  "Жопа228", count = Optional.present(15))
-    val response2 = apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
-    println("${response2.data?.createExercise?.exercise!!}")
+//    var input2 = ExerciseReqNameInput(name =  "Жопа228", count = Optional.present(15))
+//    val response2 = apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
+//    println("${response2.data?.createExercise?.exercise!!}")
 
 //    var input3 = Optional.present(ExerciseInput(name =  Optional.present("Качалка")))
 //    val response3 = apolloClient.query(AllExercicesQuery(input3)).execute()

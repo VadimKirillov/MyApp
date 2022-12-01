@@ -3,6 +3,7 @@ package com.example.myapp.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.apollographql.apollo3.api.BooleanExpression
 import com.example.myapp.repositories.ExerciseRepository
 
 @Entity(tableName = "exercise_data_table")
@@ -22,8 +23,9 @@ data class ExerciseModel (
     var type : String,
 
     @ColumnInfo(name = "exercise_image")
-    var image : String
+    var image : String,
 
-
+    @ColumnInfo(name = "external_id", defaultValue = "NULL")
+    var external_id : String?
 
 )

@@ -9,6 +9,7 @@ import com.example.myapp.models.ExerciseModel
 class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
 
     val exercises = exerciseDAO.getAllExercises()
+    val listExercises = exerciseDAO.getAllExercisesList()
 
     suspend fun insertExercise(exerciseModel: ExerciseModel){
         exerciseDAO.insertExercise(exerciseModel)
@@ -24,7 +25,7 @@ class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
     }
 
     suspend fun deleteAllExercises(){
-        //exerciseDAO.deleteAllExercises()
+        exerciseDAO.deleteAllExercises()
     }
 
     suspend fun pickExercise(training_id: Int, exercise_id: Int){

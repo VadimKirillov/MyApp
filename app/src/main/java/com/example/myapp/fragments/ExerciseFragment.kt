@@ -16,6 +16,7 @@ import com.example.AllExercicesQuery
 import com.example.CreateOrUpdateExercicesMutation
 import com.example.DeleteExercisesMutation
 import com.example.myapp.data.Database
+import com.example.myapp.data.model.UtilClient
 import com.example.myapp.databinding.TabExercisesBinding
 import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
@@ -24,14 +25,13 @@ import com.example.myapp.utils.Converter
 import com.example.myapp.viewModels.ExerciseFactory
 import com.example.myapp.viewModels.ExerciseViewModel
 import com.example.type.ExerciseInput
-import com.example.type.ExerciseReqNameInput
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
 class ExerciseFragment : Fragment() {
     private lateinit var binding: TabExercisesBinding
-
+    private var isSaved: Boolean? = null
     private var exerciseRepository: ExerciseRepository? = null
     private var exerciseViewModel: ExerciseViewModel? = null
     private var exerciseFactory: ExerciseFactory? = null
@@ -42,28 +42,45 @@ class ExerciseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = TabExercisesBinding.inflate(inflater,container, false )
+        isSaved = savedInstanceState?.getBoolean("Saved", false) ?: false
 
         val exercisesDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
         exerciseRepository = ExerciseRepository(exercisesDao)
         exerciseFactory = ExerciseFactory(exerciseRepository!!)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory!!).get(ExerciseViewModel::class.java)
 
-        val apolloClient = ApolloClient.Builder()
-            .addHttpHeader("content-type", "application/json")
-            .addHttpHeader("Auth", "token") // jwt token
-            .serverUrl("http://84.201.187.3:8000/graphql")
-            .build()
+        val client = UtilClient.instance
+        exerciseRepository!!.exercises
 
-        exerciseViewModel?.deleteAllExercises()
-        var input = Optional.present(ExerciseInput())
-        GlobalScope.launch{
-            val response = apolloClient.query(AllExercicesQuery(input)).execute()
-            println("${response.data?.searchExercises?.exercises!!}")
-            for(ex in response.data?.searchExercises?.exercises!!){
-                //Converter.toLocal(ex)
-                exerciseViewModel?.insertExercise(Converter.toLocal(ex))
+        if(!client.isSaved){
+            //exerciseViewModel?.deleteAllExercises()
+
+            var input = Optional.present(ExerciseInput())
+
+            GlobalScope.launch{
+                val listLocal = exerciseRepository!!.listExercises
+                val response = client.apolloClient.query(AllExercicesQuery(input)).execute()
+                println("${response.data?.searchExercises?.exercises!!}")
+                for(ex in response.data?.searchExercises?.exercises!!){
+                    var record = Converter.toLocal(ex)
+                    val filtered = listLocal.filter { it.external_id == record.external_id}
+
+                    if (!filtered.isEmpty()){
+                        //filtered[0].id
+                        record.id = filtered[0].id
+                        exerciseViewModel?.updateExercise(record)
+                    }
+
+                    else{
+                        exerciseViewModel?.insertExercise(Converter.toLocal(ex))
+                    }
+
+                }
             }
+
+            //client.isSaved = true
         }
+
 
         initRecyclerExercises()
         displayExercises()
@@ -77,11 +94,15 @@ class ExerciseFragment : Fragment() {
             //(context as FragmentActivity).supportFragmentManager.beginTransaction().replace(com.example.myapp.R.id.content,
             //    CreationExerciseFragment()).commit()
             //getActivity()?.onBackPressed()
-            //binding.recyclerCategories.setVisibility(View.GONE);
-            //binding.createNewExercise.setVisibility(View.GONE);
+
         }
         return binding.root
     }
+
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putBoolean("Saved", isSaved ?: true)
+//    }
 
     private fun initRecyclerExercises(){
         binding?.recyclerCategories?.layoutManager = LinearLayoutManager(context)
@@ -100,8 +121,6 @@ class ExerciseFragment : Fragment() {
         })
     }
 
-
-
     private fun pickExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel?.pickExercise(exerciseModel)
     }
@@ -110,19 +129,15 @@ class ExerciseFragment : Fragment() {
 
     private fun deleteExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel?.deleteExercise(exerciseModel)
-        val apolloClient = ApolloClient.Builder()
-            .addHttpHeader("content-type", "application/json")
-            .addHttpHeader("Auth", "token") // jwt token
-            .serverUrl("http://84.201.187.3:8000/graphql")
-            .build()
 
+        val client = UtilClient.instance
 
         //var name1 = binding.textExerciseName.text.toString()
-        //Log.e("tag1", name1)
+
         var input2 = Converter.toBack(exerciseModel)
-        val exdel = ExerciseReqNameInput(name = exerciseModel.name)
+        val exdel = ExerciseInput(id = Optional.present(exerciseModel.external_id!!))
         GlobalScope.launch{
-            val response2 = apolloClient.mutation(DeleteExercisesMutation(exercise = exdel)).execute()
+            val response2 = client.apolloClient.mutation(DeleteExercisesMutation(exercise = exdel)).execute()
             Log.e("tag1", response2.data.toString())
         }
     }
@@ -133,7 +148,10 @@ class ExerciseFragment : Fragment() {
         parameters.putString("idExercise", exerciseModel.id.toString())
         parameters.putString("nameExercise", exerciseModel.name)
         parameters.putString("typeExercise", exerciseModel.type)
+        parameters.putString("imageExercise", exerciseModel.image)
         parameters.putString("muscleGroupExercise", exerciseModel.muscle_group)
+        parameters.putString("external_id", exerciseModel.external_id)
+
         panelEditExercise.arguments = parameters
 
         panelEditExercise.show((context as FragmentActivity).supportFragmentManager, "editExercise")

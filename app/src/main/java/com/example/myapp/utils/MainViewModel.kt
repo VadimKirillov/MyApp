@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.myapp.models.ExerciseModel
 
 class MainViewModel : ViewModel() {
-    //val mutableListExercise = MutableLiveData<ArrayList<ExerciseModel>>()
+    //val mutableListExercise = MutableLiveData<ArrayList<ExerciseGOModel>>()
     var pref: SharedPreferences? = null
     var currentDay = 0
 

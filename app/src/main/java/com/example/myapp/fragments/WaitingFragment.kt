@@ -66,7 +66,7 @@ class WaitingFragment : Fragment() {
             override fun onFinish() {
                 soundEnd?.start()
                 FragmentManager.setFragment(
-                    DayFinishFragment.newInstance(),
+                    DoExerciseFragment.newInstance(),
                     activity as AppCompatActivity
                 )
             }

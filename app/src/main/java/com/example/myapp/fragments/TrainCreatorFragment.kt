@@ -31,7 +31,7 @@ import com.example.myapp.viewModels.ExerciseViewModel
 import com.example.myapp.viewModels.TrainingFactory
 import com.example.myapp.viewModels.TrainingViewModel
 import com.example.type.ExerciseInput
-import com.example.type.ExerciseReqNameInput
+
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -74,6 +74,7 @@ class TrainCreatorFragment : Fragment() {
 //                exerciseViewModel?.insertExercise(Converter.toLocal(ex))
 //            }
 //        }
+
 
         initRecyclerTrainings()
         displayTrainings()

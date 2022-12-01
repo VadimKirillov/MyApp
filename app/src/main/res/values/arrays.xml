@@ -16,4 +16,12 @@
         <item>1,1,1,1,1,1,1,1,1,1,1,1,1</item> <!-- Day 1 -->
         <item>1,0,3,0,5,0,5,0,2,0,7,0,1,0,1,0,3,0,5,0,5</item> <!-- Day 2 -->
     </string-array>
+    <string-array name="names">
+        <item>Ноги</item>
+        <item>Руки</item>
+        <item>Спина</item>
+        <item>Плечи</item>
+        <item>Грудь</item>
+
+    </string-array>
 </resources>
