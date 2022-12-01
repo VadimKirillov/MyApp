@@ -1,0 +1,76 @@
+schema {
+    query: QueryFitness
+    mutation: MutationFitness
+}
+
+
+type Exercise {
+    id: String
+    name: String
+    class_exercise: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+}
+
+input ExerciseInput {
+    id: String
+    name: String
+    class_exercise: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+}
+
+input TrainingLineInput {
+    exercise: String
+    count: Int
+}
+
+input TrainingInput {
+    id: String
+    name: String
+    training_lines: [TrainingLineInput]
+}
+
+type TrainingLine {
+    id: String
+    exercise: String
+    count: Int
+}
+
+
+type Training {
+    id: String
+    name: String
+    training_lines: [TrainingLine]
+}
+
+
+type ExercisesResult {
+    success: Boolean
+    errors: [String]
+    exercises: [Exercise]
+}
+
+type TrainingResult {
+    success: Boolean
+    errors: [String]
+    trainings: [Training]
+}
+
+
+type QueryFitness {
+    searchExercises(exercise: ExerciseInput): ExercisesResult!
+    searchTrainings(training: TrainingInput): TrainingResult!
+}
+
+type MutationFitness {
+    createExercise(exercise: ExerciseInput!): ExercisesResult
+    deleteExercises(exercise: ExerciseInput!): ExercisesResult
+    createTrainings (training: TrainingInput!): TrainingResult
+    deleteTrainings(training: TrainingInput!): TrainingResult
+}
+

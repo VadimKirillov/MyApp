@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
-        timer = object : CountDownTimer(2000, 1000){
+        timer = object : CountDownTimer(1000, 1000){
             override fun onTick(p0: Long) {
 
             }

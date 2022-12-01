@@ -1,0 +1,97 @@
+mutation CreateOrUpdateExercicesMutation($exercise: ExerciseInput!){
+    createExercise(
+        exercise: $exercise
+    ) {
+        success
+        errors
+        exercises {
+            id # for update
+            name
+            class_exercise
+            picture
+        }
+
+    }
+}
+
+
+
+mutation DeleteExercisesMutation($exercise: ExerciseInput!){
+    deleteExercises(
+        exercise: $exercise
+    ) {
+        success
+        errors
+        exercises {
+            id
+        }
+
+    }
+}
+
+query AllExercicesQuery($exercise: ExerciseInput){
+    searchExercises(
+        exercise: $exercise
+    ) {
+        success
+        errors
+        exercises {
+            id
+            name
+            class_exercise
+            count
+            picture
+        }
+    }
+}
+
+
+
+mutation DeleteTrainingsMutation($training: TrainingInput!){
+    deleteTrainings(
+        training: $training
+    ) {
+        success
+        errors
+        trainings {
+            id
+        }
+    }
+}
+
+query searchTrainings($training: TrainingInput!){
+    searchTrainings(
+        training: $training
+    ) {
+        success
+        errors
+        trainings{
+            name
+            training_lines{
+                exercise
+                count
+            }
+        }
+    }
+}
+
+mutation createTrainings($training: TrainingInput!){
+    createTrainings(
+        training: $training
+    ) {
+        success
+        errors
+        trainings {
+            id
+            name
+            training_lines{
+                id
+                exercise
+                count
+            }
+
+        }
+    }
+}
+
+
