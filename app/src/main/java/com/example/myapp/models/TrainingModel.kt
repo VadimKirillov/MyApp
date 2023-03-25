@@ -24,7 +24,6 @@ data class TrainingWithExercises(
         parentColumn = "id",
         entityColumn = "training_id",
         entity = TrainingExerciseModel::class
-        //associateBy = Junction(TrainingExerciseModel::class)
     )
 
     var lines: List<LineWithExercises>

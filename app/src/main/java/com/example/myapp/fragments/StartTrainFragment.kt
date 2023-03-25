@@ -16,15 +16,13 @@ class StartTrainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStartTrainBinding.inflate(inflater,container, false )
-
+        // todo: перенести в граф
+        binding = FragmentStartTrainBinding.inflate(inflater,container, false)
         binding.startButton.setOnClickListener(){
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.content, WaitingFragment())
             transaction?.commit()
-
         }
-
         return binding.root
     }
 

@@ -20,12 +20,9 @@ import com.example.myapp.viewModels.TrainingViewModel
 
 
 class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
-
-    private var binding: FragmentEditCountTrainBinding? = null
-    private var trainRepository: TrainingRepository? = null
-    private var trainViewModel: TrainingViewModel? = null
-    private var factory:  TrainingFactory? = null
-    private var idExercise:Int? = null
+    private lateinit var binding: FragmentEditCountTrainBinding
+    private lateinit var trainViewModel: TrainingViewModel
+    private var idExercise:Int = 0
 
 
     override fun onCreateView(
@@ -35,28 +32,27 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
 
         binding = FragmentEditCountTrainBinding.inflate(inflater, container, false)
 
-        idExercise = arguments?.getString("idExercise")?.toInt()
+        idExercise = arguments?.getString("idExercise")!!.toInt()
 
-        binding?.textExerciseCountName?.setText(arguments?.getString("nameExercise").toString())
-        binding?.textCount?.setText(arguments?.getString("count").toString() )
+        binding.textExerciseCountName.setText(arguments?.getString("nameExercise").toString())
+        binding.textCount.setText(arguments?.getString("count").toString() )
 
         val productDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
-        trainRepository = TrainingRepository(productDao)
-        factory = TrainingFactory(trainRepository!!)
-        trainViewModel = ViewModelProvider(this, factory!!).get(TrainingViewModel::class.java)
+        val trainRepository = TrainingRepository(productDao)
+        val factory = TrainingFactory(trainRepository)
+        trainViewModel = ViewModelProvider(this, factory).get(TrainingViewModel::class.java)
 
-
-        binding?.buttonEditCount?.setOnClickListener(this)
-
-        return binding?.root
-
+        binding.buttonEditCount.setOnClickListener(this)
+        return binding.root
     }
 
     override fun onClick(view: View) {
 
-        idExercise?.let { binding?.textCount?.text.toString().toIntOrNull()
-            ?.let { it1 -> trainViewModel?.startUpdateLine(1, it, it1) } }
+        binding.textCount.text.toString().toIntOrNull()?.let {
+            it1 -> trainViewModel.startUpdateLine(1, idExercise, it1)
+        }
         dismiss()
+        //todo: в граф
         (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, TrainCreatorFragment()).commit()
     }
 

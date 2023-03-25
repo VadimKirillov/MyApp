@@ -18,10 +18,6 @@ data class TrainingExerciseModel (
 
     @ColumnInfo(name = "count")
     var count : Int,
-
-    //@Embedded val playlist: ExerciseModel,
-
-
     )
 
 data class LineWithExercises(
@@ -29,17 +25,8 @@ data class LineWithExercises(
     @Relation(
         parentColumn = "exercise_id",
         entityColumn = "id",
-        //associateBy = Junction(TrainingExerciseModel::class)
     )
 
     var exercise: ExerciseModel,
 
-
-//    @Relation(
-//    parentColumn = "training_id",
-//    entityColumn = "id", entity = TrainingModel::class
-//    //associateBy = Junction(TrainingExerciseModel::class)
-//    )
-//
-//    var training: TrainingWithExercises
 )

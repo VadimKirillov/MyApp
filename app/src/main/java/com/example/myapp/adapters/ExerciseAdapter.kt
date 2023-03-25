@@ -1,9 +1,8 @@
-package com.example.myapp.tabs
+package com.example.myapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.databinding.ExerciseItemBinding
 import com.example.myapp.models.ExerciseModel
@@ -32,7 +31,6 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
     fun setList(exercises: List<ExerciseModel>) {
         exercisesList.clear()
         exercisesList.addAll(exercises)
-
     }
 
 
@@ -45,7 +43,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
             pickExercise: (ExerciseModel) -> Unit,
 
         ) {
-
+            // todo: заменить просто на передачу объекта
             binding.idExercise.text = exercisesModel.id.toString()
             binding.nameExercise.text = exercisesModel.name
             //binding.categoryExercise.text = exercisesModel.category

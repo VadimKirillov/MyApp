@@ -18,7 +18,6 @@ import pl.droidsonroids.gif.GifDrawable
 const val CONGRATS_TIME = 1000L
 class DayFinishFragment : Fragment() {
     private lateinit var binding: FragmentDayFinishBinding
-    private var ab: ActionBar? = null
     private lateinit var timer: CountDownTimer
     var soundCongratulation: MediaPlayer? = null
     override fun onCreateView(
@@ -31,11 +30,11 @@ class DayFinishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ab = (activity as AppCompatActivity).supportActionBar
-        //ab?.title = getString(R.string.done)
-        binding.imMain.setImageDrawable(GifDrawable((activity as AppCompatActivity).assets,
-           "congrats-congratulations.gif"))
-        binding.bDone.setOnClickListener {
+        binding.imageExercise.setImageDrawable(
+            GifDrawable((activity as AppCompatActivity).assets,
+           "congrats-congratulations.gif"),
+        )
+        binding.buttonDone.setOnClickListener {
             FragmentManager.setFragment(
                 StartTrainFragment.newInstance(),
                 activity as AppCompatActivity
@@ -46,19 +45,13 @@ class DayFinishFragment : Fragment() {
     }
     private fun startTimer() = with(binding){
         timer = object : CountDownTimer(CONGRATS_TIME, 1){
-            override fun onTick(restTime: Long) {
-
-            }
-
+            override fun onTick(restTime: Long) {}
             override fun onFinish() {
                 soundCongratulation?.start()
-
             }
-
         }.start()
     }
-
-
+    
     companion object {
         @JvmStatic
         fun newInstance() = DayFinishFragment()

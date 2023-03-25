@@ -1,18 +1,11 @@
-package com.example.myapp.tabs
+package com.example.myapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapp.data.Database
-import com.example.myapp.databinding.ExerciseItemBinding
 import com.example.myapp.databinding.TrainItemBinding
-import com.example.myapp.models.ExerciseModel
 import com.example.myapp.models.LineWithExercises
-import com.example.myapp.models.TrainingExerciseModel
-import com.example.myapp.models.TrainingModel
-import com.example.myapp.repositories.ExerciseRepository
 
 
 class TrainingAdapter(private val deleteTraining:(LineWithExercises)->Unit,
