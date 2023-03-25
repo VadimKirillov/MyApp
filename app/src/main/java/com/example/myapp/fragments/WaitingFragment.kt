@@ -49,7 +49,7 @@ class WaitingFragment : Fragment() {
     }
 
     private fun startTimer() = with(binding){
-        timer = object : CountDownTimer(COUNT_DOWN_TIME, 1){
+        timer = object : CountDownTimer(COUNT_DOWN_TIME, 1000){
             override fun onTick(restTime: Long) {
                 tvTimer.text = TimeUtils.getTime(restTime)
                 pBar.progress = restTime.toInt()

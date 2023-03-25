@@ -23,6 +23,7 @@
     <string name="edition_exercise">Изменение упражнения</string>
     <string name="name_exercise">Название упражнения</string>
     <string name="my_train">Моя тренировка</string>
+    <string name="end_train">Конец</string>
 
 
 </resources>

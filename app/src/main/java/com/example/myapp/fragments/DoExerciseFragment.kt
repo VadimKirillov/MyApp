@@ -2,53 +2,37 @@ package com.example.myapp.fragments
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.ListAdapter
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentDoExerciseBinding
 
-import com.example.myapp.models.ExerciseModel
 import com.example.myapp.models.LineWithExercises
-import com.example.myapp.models.TrainingWithExercises
 import com.example.myapp.repositories.TrainingRepository
-import com.example.myapp.tabs.TrainingAdapter
 import com.example.myapp.utils.FragmentManager
-import com.example.myapp.utils.MainViewModel
-import com.example.myapp.viewModels.TrainingFactory
-import com.example.myapp.viewModels.TrainingViewModel
 import pl.droidsonroids.gif.GifDrawable
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
+val CONGRATULATION_GIF = "congrats-congratulations.gif"
 
 class DoExerciseFragment : Fragment() {
-    private var timer: CountDownTimer? = null
     private lateinit var binding: FragmentDoExerciseBinding
     private var exerciseCounter = 0
 
-    private var ab: ActionBar? = null
-    private var currentDay = 0
-    //private val model: MainViewModel by activityViewModels()
-    private var exList: List<LineWithExercises>? = null
-    private var exListTrain: List<TrainingWithExercises>? = null
+    private var actionBar: ActionBar? = null
+    private lateinit var trainingExercisesList: List<LineWithExercises>
+//    private lateinit var exListTrain: List<TrainingWithExercises> todo: может нафиг его
 
-    private var trainingRepository: TrainingRepository? = null
-    private var trainingViewModel: TrainingViewModel? = null
-    private var trainingFactory: TrainingFactory? = null
-    private var trainingAdapter: TrainingAdapter? = null
+    private lateinit var trainingRepository: TrainingRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,24 +42,17 @@ class DoExerciseFragment : Fragment() {
 
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         trainingRepository = TrainingRepository(trainingsDao)
-        trainingFactory = TrainingFactory(trainingRepository!!)
-        trainingViewModel = ViewModelProvider(this, trainingFactory!!).get(TrainingViewModel::class.java)
-
-
-        //trainingAdapter = ArrayAdapter(trainingViewModel)
+//        trainingFactory = TrainingFactory(trainingRepository!!)
+//        trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model = trainingRepository
-
-        //exerciseCounter = model.getExerciseCount()
-        ab = (activity as AppCompatActivity).supportActionBar
-        model!!.trainings.observe(viewLifecycleOwner){
-            var t = it!![0].lines
-            exList = t
+        actionBar = (activity as AppCompatActivity).supportActionBar
+        trainingRepository.trainings.observe(viewLifecycleOwner){
+            var lines = it!![0].lines
+            trainingExercisesList = lines
             nextExercise()
         }
         binding.bNext.setOnClickListener {
@@ -84,33 +61,29 @@ class DoExerciseFragment : Fragment() {
     }
 
     private fun nextExercise(){
-        if(exerciseCounter < exList?.size!!){
-            val ex = exList?.get(exerciseCounter++) ?: return
-            showExercise(ex)
-            //setExerciseType(ex)
+        if(exerciseCounter < trainingExercisesList.size){
+            val item = trainingExercisesList.get(exerciseCounter++)
+            showExercise(item)
             showNextExercise()
         } else {
-            exerciseCounter++
+            // todo: мейби тут граф
             FragmentManager.setFragment(DayFinishFragment.newInstance(),
                 activity as AppCompatActivity)
         }
     }
 
     private fun showNextExercise() = with(binding){
-        if(exerciseCounter < exList?.size!!){
-            val ex = exList?.get(exerciseCounter) ?: return
-            tvNextName.text = ex.exercise.name
-            decodeBase64AndSetImage(ex.exercise.image,imNext)
-            //setTimeType(ex)
+        if(exerciseCounter < trainingExercisesList.size){
+            val item = trainingExercisesList.get(exerciseCounter)
+            tvNextName.text = item.exercise.name
+            decodeBase64AndSetImage(item.exercise.image, imNext)
         } else {
-            imNext.setImageDrawable(GifDrawable(root.context.assets, "congrats-congratulations.gif"))
-            tvNextName.text = "Конец"
-            //tvNextName.text = exList!![0].exercise.name
+            imNext.setImageDrawable(GifDrawable(root.context.assets, CONGRATULATION_GIF))
+            tvNextName.text = getString(R.string.end_train)
         }
     }
 
     private fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
-        // Incase you're storing into aws or other places where we have extension stored in the starting.
         val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
         val stream: InputStream =
             ByteArrayInputStream(Base64.decode(imageDataBytes.toByteArray(), Base64.DEFAULT))
@@ -123,19 +96,11 @@ class DoExerciseFragment : Fragment() {
         tvName.text = exercise.exercise.name
         val cnt = exercise.playlist.count.toString()
         tvTime.text = "$cnt раз"
-        //val title = "$exerciseCounter / ${exList?.size}"
-        //ab?.title = title
-
     }
-
-
 
     companion object {
         @JvmStatic
         fun newInstance() = DoExerciseFragment()
     }
-
-
-
 
 }
