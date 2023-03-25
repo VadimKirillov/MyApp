@@ -102,20 +102,20 @@ class CreationExerciseFragment : Fragment() {
                 binding.autoCompleteBodyPart.text?.toString()!!,
                  getBase64String(binding.imageView) ?: standart,
                  binding.autoCompleteBodyPart.text?.toString()!!)
-
-
-            val client = UtilClient.instance
+            GlobalScope.launch {
+                exercisesDao.insertExercise(exm)
+            }
 
             var name1 = binding.textExerciseName.text.toString()
             Log.e("tag1", name1)
 
-            var input2 = Converter.toBack(exm)
-            GlobalScope.launch{
-                val response2 = client.apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
-                exm.external_id = response2.data?.createExercise?.exercises?.get(0)!!.id
-                exerciseViewModel?.insertExercise(exm)
-            }
-
+//            var input2 = Converter.toBack(exm)
+//            GlobalScope.launch{
+//                val response2 = client.apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
+//                exm.external_id = response2.data?.createExercise?.exercises?.get(0)!!.id
+//                exerciseViewModel?.insertExercise(exm)
+//            }
+//
 
             //Log.e("tag1", exm.toString())
             //Log.e("tag1", input2.toString())
