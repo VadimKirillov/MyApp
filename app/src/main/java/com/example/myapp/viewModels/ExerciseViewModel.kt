@@ -36,7 +36,6 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
 //            exerciseViewModel?.insertExercise(exm)
         }
 
-
     }
 
     fun insertExercise(exerciseModel: ExerciseModel) = viewModelScope.launch{

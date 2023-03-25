@@ -13,4 +13,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="exercises">Упражнения</string>
+    <string name="train">тренировка</string>
+    <string name="start">старт</string>
+    <string name="more">больше</string>
+    <string name="next">ДАЛЕЕ</string>
+    <string name="finish">ГОТОВО</string>
+    <string name="edit_exercise">Изменить упражнение</string>
+    <string name="edition_exercise">Изменение упражнения</string>
+    <string name="name_exercise">Название упражнения</string>
+    <string name="my_train">Моя тренировка</string>
+
+
 </resources>

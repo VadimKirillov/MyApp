@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/optionsFragment">
+
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="com.example.myapp.fragments.OptionsFragment"
+        android:label="fragment_options"
+        tools:layout="@layout/fragment_options" >
+        <action
+            android:id="@+id/action_optionsFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.myapp.fragments.AboutFragment"
+        android:label="about_fragment"
+        tools:layout="@layout/about_fragment" />
+    <fragment
+        android:id="@+id/startTrainFragment"
+        android:name="com.example.myapp.fragments.StartTrainFragment"
+        android:label="fragment_start_train"
+        tools:layout="@layout/fragment_start_train" >
+        <action
+            android:id="@+id/action_startTrainFragment_to_waitingFragment"
+            app:destination="@id/waitingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/waitingFragment"
+        android:name="com.example.myapp.fragments.WaitingFragment"
+        android:label="WaitingFragment" >
+        <action
+            android:id="@+id/action_waitingFragment_to_doExerciseFragment"
+            app:destination="@id/doExerciseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doExerciseFragment"
+        android:name="com.example.myapp.fragments.DoExerciseFragment"
+        android:label="DoExerciseFragment" />
+</navigation>

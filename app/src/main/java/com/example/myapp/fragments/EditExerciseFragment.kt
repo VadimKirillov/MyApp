@@ -76,6 +76,7 @@ class EditExerciseFragment : DialogFragment(), View.OnClickListener {
                 //binding.textExerciseName.setText(getBase64String(binding.imageView)))
             }
         }
+        activity?.supportFragmentManager
         return binding?.root
 
     }

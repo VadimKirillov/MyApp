@@ -27,6 +27,7 @@ abstract class Database: RoomDatabase() {
                         "database1.0"
                     ).allowMainThreadQueries().build()
                 }
+
                 return instance
             }
         }

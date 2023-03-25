@@ -121,7 +121,8 @@ class DoExerciseFragment : Fragment() {
     private fun showExercise(exercise: LineWithExercises) = with(binding){
         decodeBase64AndSetImage(exercise.exercise.image, imMain)
         tvName.text = exercise.exercise.name
-        tvTime.text = exercise.playlist.count.toString()
+        val cnt = exercise.playlist.count.toString()
+        tvTime.text = "$cnt раз"
         //val title = "$exerciseCounter / ${exList?.size}"
         //ab?.title = title
 

@@ -3,6 +3,7 @@ package com.example.myapp.tabs
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.databinding.ExerciseItemBinding
 import com.example.myapp.models.ExerciseModel
@@ -16,6 +17,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
 
         val binding : ExerciseItemBinding = ExerciseItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return ExerciseHolder(binding)
     }
 

@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.example.myapp.MuscleGroupPickerFragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 
 class OptionsFragment : Fragment() {
