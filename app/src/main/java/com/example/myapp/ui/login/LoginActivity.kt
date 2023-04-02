@@ -1,6 +1,7 @@
 package com.example.myapp.ui.login
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -15,6 +16,9 @@ import android.widget.Toast
 import com.example.myapp.databinding.ActivityLoginBinding
 
 import com.example.myapp.R
+import com.example.myapp.data.AuthController
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
@@ -23,16 +27,20 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val username = binding.username
+        val username = binding.login
         val password = binding.password
-        val login = binding.login
+        val login = binding.buttonLogin
         val loading = binding.loading
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        val retrofit = Retrofit.Builder()
+            .baseUrl(getString(R.string.server_url))
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(retrofit))
             .get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
@@ -60,9 +68,8 @@ class LoginActivity : AppCompatActivity() {
                 updateUiWithUser(loginResult.success)
             }
             setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
             finish()
+
         })
 
         username.afterTextChanged {
@@ -93,7 +100,12 @@ class LoginActivity : AppCompatActivity() {
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                Thread() {
+                    run {
+
+                        loginViewModel.login(username.text.toString(), password.text.toString())
+                    }
+                }.start()
             }
         }
     }
@@ -103,14 +115,14 @@ class LoginActivity : AppCompatActivity() {
         val displayName = model.displayName
         // TODO : initiate successful logged in experience
         Toast.makeText(
-            applicationContext,
+            this,
             "$welcome $displayName",
             Toast.LENGTH_LONG
         ).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+       Toast.makeText(this, errorString, Toast.LENGTH_SHORT).show()
     }
 }
 

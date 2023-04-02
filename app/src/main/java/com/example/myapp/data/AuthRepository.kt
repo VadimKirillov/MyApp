@@ -7,10 +7,18 @@ import com.example.myapp.data.model.LoggedInUser
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: LoginDataSource) {
+/**
+ * Data class that captures user information for logged in users retrieved from LoginRepository
+ */
+
+
+class AuthRepository(val dataSource: AuthDataSource) {
 
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
+        private set
+
+    var controller: LoggedInUser? = null
         private set
 
     val isLoggedIn: Boolean
@@ -20,12 +28,13 @@ class LoginRepository(val dataSource: LoginDataSource) {
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
         user = null
-    }
 
-    fun logout() {
-        user = null
-        dataSource.logout()
     }
+// todo: пока нет
+//    fun logout() {
+//        user = null
+//        dataSource.logout()
+//    }
 
     fun login(username: String, password: String): Result<LoggedInUser> {
         // handle login
