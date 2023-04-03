@@ -1,5 +1,6 @@
 package com.example.myapp.ui.login
 
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.myapp.data.AuthRepository
 import com.example.myapp.data.Result
 
 import com.example.myapp.R
+import kotlinx.coroutines.*
 
 class LoginViewModel(private val loginRepository: AuthRepository) : ViewModel() {
 
@@ -17,28 +19,47 @@ class LoginViewModel(private val loginRepository: AuthRepository) : ViewModel() 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
-        val result = loginRepository.login(username, password)
+    fun login(login: String, password: String) {
 
-
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = withContext(Dispatchers.Default) {
+                loginRepository.login(login, password)
+            }
+            if (result is Result.Success) {
+                _loginResult.value =
+                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
         }
+
+        }
+
+    fun register(login: String, password: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = withContext(Dispatchers.Default) {
+                loginRepository.register(login, password)
+            }
+            if (result is Result.Success) {
+                _loginResult.value = LoginResult()
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
+        }
+
     }
 
-    fun register(username: String, password: String) {
-        val result = loginRepository.register(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
-    }
+//
+//    fun register(username: String, password: String) {
+//        val result = loginRepository.register(username, password)
+//
+//        if (result is Result.Success) {
+//            _loginResult.value =
+//                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+//        } else {
+//            _loginResult.value = LoginResult(error = R.string.login_failed)
+//        }
+//    }
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {

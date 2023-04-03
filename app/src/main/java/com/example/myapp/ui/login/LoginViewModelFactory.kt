@@ -3,7 +3,6 @@ package com.example.myapp.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapp.R
-import com.example.myapp.data.AuthController
 import com.example.myapp.data.AuthDataSource
 import com.example.myapp.data.AuthRepository
 import retrofit2.Retrofit

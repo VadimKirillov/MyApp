@@ -2,6 +2,7 @@ package com.example.myapp.ui.login
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -13,10 +14,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import com.example.myapp.MainActivity
 import com.example.myapp.databinding.ActivityLoginBinding
 
 import com.example.myapp.R
-import com.example.myapp.data.AuthController
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.login
         val password = binding.password
         val login = binding.buttonLogin
+        val register = binding.buttonRegister
         val loading = binding.loading
 
         val retrofit = Retrofit.Builder()
@@ -47,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            register.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
@@ -66,9 +68,11 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
+                setResult(Activity.RESULT_OK)
+                finish()
+
+                startActivity(Intent(this, MainActivity::class.java))
             }
-            setResult(Activity.RESULT_OK)
-            finish()
 
         })
 
@@ -90,22 +94,25 @@ class LoginActivity : AppCompatActivity() {
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
+
                         loginViewModel.login(
                             username.text.toString(),
-                            password.text.toString()
+                            password.text.toString(),
                         )
+
                 }
                 false
             }
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                Thread() {
-                    run {
+                loginViewModel.login(username.text.toString(), password.text.toString())
 
-                        loginViewModel.login(username.text.toString(), password.text.toString())
-                    }
-                }.start()
+            }
+
+            register.setOnClickListener {
+                loading.visibility = View.VISIBLE
+                loginViewModel.register(username.text.toString(), password.text.toString())
             }
         }
     }
@@ -113,7 +120,6 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
         Toast.makeText(
             this,
             "$welcome $displayName",

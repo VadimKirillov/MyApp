@@ -1,6 +1,7 @@
 package com.example.myapp
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,7 +22,6 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-//                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             }
 
         }.start()

@@ -39,7 +39,7 @@
             android:layout_height="58dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/round_button"
-            android:contentDescription="@string/action_sign_in"
+            android:contentDescription="@string/action_sign"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,6 +1,10 @@
 package com.example.myapp.data
 
 import com.example.myapp.data.model.LoggedInUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -18,17 +22,11 @@ class AuthRepository(val dataSource: AuthDataSource) {
     var user: LoggedInUser? = null
         private set
 
-    var controller: LoggedInUser? = null
-        private set
-
     val isLoggedIn: Boolean
         get() = user != null
 
     init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
         user = null
-
     }
 // todo: пока нет
 //    fun logout() {
@@ -36,10 +34,8 @@ class AuthRepository(val dataSource: AuthDataSource) {
 //        dataSource.logout()
 //    }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
+     fun login(username: String, password: String): Result<LoggedInUser> {
         val result = dataSource.login(username, password)
-
         if (result is Result.Success) {
             setLoggedInUser(result.data)
         }
@@ -47,9 +43,13 @@ class AuthRepository(val dataSource: AuthDataSource) {
         return result
     }
 
+     fun register(username: String, password: String): Result<Unit> {
+        val result = dataSource.register(username, password)
+
+        return result
+    }
+
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
     }
 }
