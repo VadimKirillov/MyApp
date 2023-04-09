@@ -36,51 +36,42 @@ import java.io.InputStream
 
 class EditExerciseFragment : DialogFragment(), View.OnClickListener {
 
-    private var binding: PanelEditExerciseBinding? = null
-    private var exerciseRepository: ExerciseRepository? = null
+    private lateinit var binding: PanelEditExerciseBinding
+    private lateinit var exerciseRepository: ExerciseRepository
     private var exerciseViewModel: ExerciseViewModel? = null
-    private var factory: ExerciseFactory? = null
     private var idExercise:Int? = null
-    private var baseImage:String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = PanelEditExerciseBinding.inflate(inflater, container, false)
 
         idExercise = arguments?.getString("idExercise")?.toInt()
-        baseImage = arguments?.getString("imageExercise")?.toString()
-        binding?.textExerciseName?.setText(arguments?.getString("nameExercise")?.toString())
-        baseImage?.let { decodeBase64AndSetImage(it, binding!!.imageView) }
+        val baseImage = arguments?.getString("imageExercise")
+        binding.textExerciseName.setText(arguments?.getString("nameExercise"))
+        baseImage?.let { decodeBase64AndSetImage(it, binding.imageView) }
 
-        /*
-        binding?.editCategoryExercise?.setText(arguments?.getString("categoryProduct").toString())
-        binding?.editPriceExercise?.setText(arguments?.getString("priceProduct").toString())
-        */
+        val exerciseDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
+        exerciseRepository = ExerciseRepository(exerciseDao)
+        val factory = ExerciseFactory(exerciseRepository)
+        exerciseViewModel = ViewModelProvider(this, factory).get(ExerciseViewModel::class.java)
 
-        val productDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
-        exerciseRepository = ExerciseRepository(productDao)
-        factory = ExerciseFactory(exerciseRepository!!)
-        exerciseViewModel = ViewModelProvider(this, factory!!).get(ExerciseViewModel::class.java)
+        binding.buttonEditExercise.setOnClickListener(this)
 
-
-        binding?.buttonEditExercise?.setOnClickListener(this)
-
-        binding!!.pickImage.setOnClickListener(){
-
-            if( Build.VERSION.SDK_INT  >= Build.VERSION_CODES.M){
+        // todo: в OnClick мейби перенести
+        binding.pickImage.setOnClickListener(){
+            if(Build.VERSION.SDK_INT  >= Build.VERSION_CODES.M){
                 pickImageFromGallery()
-                //binding.textView.text = getBase64String(binding.imageView)
-                //binding.textExerciseName.setText(getBase64String(binding.imageView)))
             }
         }
+        activity?.supportFragmentManager
         return binding?.root
 
     }
+
+    // todo: вынести в статичный класс
     private fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
-        // Incase you're storing into aws or other places where we have extension stored in the starting.
         val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
         val stream: InputStream =
             ByteArrayInputStream(Base64.decode(imageDataBytes.toByteArray(), Base64.DEFAULT))
@@ -118,17 +109,15 @@ class EditExerciseFragment : DialogFragment(), View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE)
-            binding?.imageView?.setImageURI(data?.data)
-
+            binding.imageView.setImageURI(data?.data)
     }
-
+    // todo: в статичный класс
     private fun getBase64String(im: ImageView): String? {
         // give your image file url in mCurrentPhotoPath
-        //val bitmap = BitmapFactory.decodeResource(getResources(), im.drawable)
+        // val bitmap = BitmapFactory.decodeResource(getResources(), im.drawable)
         val bitmap = im.drawable.toBitmap()
         val byteArrayOutputStream = ByteArrayOutputStream()
         // In case you want to compress your image, here it's at 40%
@@ -141,22 +130,8 @@ class EditExerciseFragment : DialogFragment(), View.OnClickListener {
         exerciseViewModel?.startUpdateExercise(idExercise.toString().toInt(), binding?.textExerciseName?.text.toString(),
             arguments?.getString("muscleGroupExercise").toString(),
             arguments?.getString("typeExercise").toString(),
-            getBase64String(binding!!.imageView ) ?: arguments?.getString("imageExercise").toString(),
+            getBase64String(binding.imageView ) ?: arguments?.getString("imageExercise").toString(),
             arguments?.getString("external_id").toString())
-
-
-//        val client = UtilClient.instance
-//
-//        var name1 = binding?.textExerciseName?.text.toString()
-//        Log.e("tag1", name1)
-//
-//        var input2 = Converter.toBack()
-//
-//        GlobalScope.launch{
-//            val response2 = client.apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
-//            exm.external_id = response2.data?.createExercise?.exercises?.get(0)!!.id
-//            exerciseViewModel?.insertExercise(exm)
-//        }
 
         dismiss()
 

@@ -13,7 +13,6 @@ class TrainingRepository (private val trainingDAO: TrainingDao) {
 
     suspend fun insertTraining(trainingModel: TrainingModel){
         trainingDAO.insertTraining(trainingModel)
-        //Log.d("ww", exerciseDAO.getTrainingWithExercises()[0].lines[0].toString())
     }
 
     suspend fun updateTraining(trainingModel: TrainingModel){

@@ -6,27 +6,27 @@
     <item
         android:id="@+id/panelExercises"
         android:icon="@drawable/catalog_products"
-        android:title="упражнения"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/exercises"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/panelCreator"
         android:icon="@drawable/edit_white"
-        android:title="тренировка"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/train"
+        app:showAsAction="ifRoom" />
 
 
     <item
         android:id="@+id/panelStartTraining"
         android:icon="@drawable/play_item"
-        android:title="старт"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/start"
+        app:showAsAction="ifRoom" />
 
 
     <item
         android:id="@+id/panelOptions"
         android:icon="@drawable/more_item"
-        android:title="больше"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/more"
+        app:showAsAction="ifRoom" />
 
 </menu>

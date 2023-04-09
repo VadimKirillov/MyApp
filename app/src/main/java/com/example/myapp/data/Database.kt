@@ -14,6 +14,7 @@ abstract class Database: RoomDatabase() {
     abstract val exerciseDAO : ExerciseDao
     abstract val trainingDAO : TrainingDao
 
+
     companion object{
         @Volatile
         private var INSTANCE : com.example.myapp.data.Database? = null
@@ -27,6 +28,7 @@ abstract class Database: RoomDatabase() {
                         "database1.0"
                     ).allowMainThreadQueries().build()
                 }
+
                 return instance
             }
         }
