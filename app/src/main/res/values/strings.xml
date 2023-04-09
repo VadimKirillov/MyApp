@@ -21,6 +21,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_register">Register</string>
+    <string name="action_google_auth">Google Auth</string>
     <string name="action_sign">Sign in</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
