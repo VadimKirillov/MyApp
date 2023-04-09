@@ -1,5 +1,7 @@
 package com.example.myapp.viewModels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapp.models.*
@@ -9,7 +11,23 @@ import kotlinx.coroutines.launch
 
 class TrainingViewModel (private val trainingRepository: TrainingRepository) : ViewModel() {
 
-   val trainings = trainingRepository.trainings
+   var trainings = trainingRepository.trainings
+   var allTrainings = trainingRepository.allTrainings
+
+
+   fun getTrainingWithExercisesById(id: Int? = null){
+        if(id != null){
+            trainings = trainingRepository.getTrainingWithExercisesById(id)
+        }
+        else{
+            trainings = trainingRepository.trainings
+        }
+   }
+
+
+   //fun getTrainings() : LiveData<List<TrainingModel>> {
+  //     return trainingRepository.getTrainings()
+  // }
 
    fun startInsert(nameTraining:String, ) {
        insertTraining(TrainingModel(0,nameTraining))
@@ -25,7 +43,7 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
 
     fun insertTraining(trainingModel: TrainingModel) = viewModelScope.launch{
         trainingRepository.insertTraining(trainingModel)
-  }
+    }
 
     fun updateTraining(trainingModel: TrainingModel) = viewModelScope.launch{
         trainingRepository.updateTraining(trainingModel)

@@ -30,11 +30,13 @@ class TrainCreatorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTrainCreatorBinding.inflate(inflater,container, false )
+        val id = arguments?.getInt("idTraining")
 
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         val trainingRepository = TrainingRepository(trainingsDao)
         trainingFactory = TrainingFactory(trainingRepository)
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
+        trainingViewModel.getTrainingWithExercisesById(id)
         initRecyclerTrainings()
         displayTrainings()
 
@@ -50,6 +52,7 @@ class TrainCreatorFragment : Fragment() {
     }
 
     private fun displayTrainings(){
+        trainingViewModel.trainings
         trainingViewModel.trainings.observe(viewLifecycleOwner, Observer {
             trainingAdapter.setList(it.get(0).lines)
             trainingAdapter.notifyDataSetChanged()
@@ -70,7 +73,6 @@ class TrainCreatorFragment : Fragment() {
 //        parameters.putString("muscleGroupExercise", trainingModel.muscle_group)
         panelEditCountTrain.arguments = parameters
         panelEditCountTrain.show((context as FragmentActivity).supportFragmentManager, "editCount")
-
     }
     
     companion object {

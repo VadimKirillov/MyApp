@@ -51,7 +51,7 @@ class DoExerciseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         actionBar = (activity as AppCompatActivity).supportActionBar
         trainingRepository.trainings.observe(viewLifecycleOwner){
-            var lines = it!![0].lines
+            var lines = it!![1].lines
             trainingExercisesList = lines
             nextExercise()
         }

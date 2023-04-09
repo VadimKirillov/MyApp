@@ -5,52 +5,79 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
+import com.example.myapp.adapters.TrainingsAdapter
+import com.example.myapp.data.Database
+import com.example.myapp.databinding.FragmentAllTrainingsBinding
+import com.example.myapp.databinding.FragmentTrainCreatorBinding
+import com.example.myapp.models.TrainingModel
+import com.example.myapp.repositories.TrainingRepository
+import com.example.myapp.viewModels.TrainingFactory
+import com.example.myapp.viewModels.TrainingViewModel
 
 class AllTrainingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentAllTrainingsBinding
+    private lateinit var trainingViewModel: TrainingViewModel
+    private lateinit var trainingFactory: TrainingFactory
+    private lateinit var trainingAdapter: TrainingsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_trainings, container, false)
+    ): View {
+        binding = FragmentAllTrainingsBinding.inflate(inflater,container, false )
+
+        val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
+        val trainingRepository = TrainingRepository(trainingsDao)
+        trainingFactory = TrainingFactory(trainingRepository)
+        trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
+        initRecyclerTrainings()
+        displayTrainings()
+
+        return binding.root
+    }
+
+    private fun initRecyclerTrainings(){
+        binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
+        // todo: кажется адаптер должен вызывать только методы view model, но не факт
+        trainingAdapter = TrainingsAdapter({categoryModel: TrainingModel -> deleteTraining(categoryModel)},
+            {categoryModel: TrainingModel -> editTraining(categoryModel)})
+        binding.recyclerCategories.adapter = trainingAdapter
+    }
+
+    private fun displayTrainings(){
+        trainingViewModel.allTrainings.observe(viewLifecycleOwner, Observer {
+            trainingAdapter.setList(it)
+            trainingAdapter.notifyDataSetChanged()
+        })
+
+    }
+
+    private fun deleteTraining(trainingModel: TrainingModel) {
+        trainingViewModel.deleteTraining(trainingModel)
+    }
+
+    private fun editTraining(trainingModel: TrainingModel) {
+        val fragment = TrainCreatorFragment()
+        val parameters = Bundle()
+        parameters.putInt("idTraining", trainingModel.id)
+        //parameters.putString("nameExercise", trainingModel.exercise.name)
+        //parameters.putString("count", trainingModel.playlist.count.toString())
+//        parameters.putString("muscleGroupExercise", trainingModel.muscle_group)
+        fragment.arguments = parameters
+        val transaction  = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.content, fragment)
+        transaction?.commit()
+
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AllTrainingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AllTrainingsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = AllTrainingsFragment()
     }
 }

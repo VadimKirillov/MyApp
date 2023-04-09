@@ -9,6 +9,15 @@ import com.example.myapp.models.ExerciseModel
 class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
     val exercises = exerciseDAO.getAllExercises()
 
+    fun getExercises(group: String? = null): LiveData<List<ExerciseModel>> {
+          if(group != null){
+            return exerciseDAO.getExercisesByGroup(group)
+          }
+          else{
+            return exerciseDAO.getAllExercises()
+          }
+    }
+
     suspend fun insertExercise(exerciseModel: ExerciseModel){
         exerciseDAO.insertExercise(exerciseModel)
     }

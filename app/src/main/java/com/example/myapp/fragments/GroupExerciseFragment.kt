@@ -2,6 +2,7 @@ package com.example.myapp.fragments
 
 import com.example.myapp.R
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,12 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         super.onClick(groupExercise)
         Toast.makeText(context, groupExercise.title, Toast.LENGTH_LONG).show()
         val transaction  = activity?.supportFragmentManager?.beginTransaction()
-        transaction?.replace(R.id.content, ExerciseFragment())
+        val parameters = Bundle()
+        parameters.putString("filter", groupExercise.title)
+        Log.d("debug", groupExercise.title)
+        val fragment = ExerciseFragment()
+        fragment.arguments = parameters
+        transaction?.replace(R.id.content, fragment)
         transaction?.commit()
     }
 

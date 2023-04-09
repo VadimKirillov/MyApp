@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
             R.id.panelExercises -> FragmentManager.setFragment(GroupExerciseFragment.newInstance(), this)
             R.id.panelStartTraining -> FragmentManager.setFragment(StartTrainFragment.newInstance(), this)
             R.id.panelOptions -> FragmentManager.setFragment(OptionsFragment.newInstance(), this)
-            R.id.panelCreator -> FragmentManager.setFragment(TrainCreatorFragment.newInstance(), this)
+            R.id.panelCreator -> FragmentManager.setFragment(AllTrainingsFragment.newInstance(), this)
         }
         return true
     }

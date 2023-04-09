@@ -1,6 +1,7 @@
 package com.example.myapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,12 +29,14 @@ class ExerciseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val group = arguments?.getString("filter")
+        Log.d("debug", group?.toString() ?: "")
         binding = ListExercisesBinding.inflate(inflater, container, false)
-
         val exercisesDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
         exerciseRepository = ExerciseRepository(exercisesDao)
         val exerciseFactory = ExerciseFactory(exerciseRepository)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
+        exerciseViewModel.getExercises(group)
 
         initRecyclerExercises()
         displayExercises()

@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapp.databinding.AllTrainItemBinding
 import com.example.myapp.databinding.TrainItemBinding
 import com.example.myapp.models.LineWithExercises
+import com.example.myapp.models.TrainingModel
+import com.example.myapp.viewModels.TrainingViewModel
 
 
 class TrainingAdapter(private val deleteTraining:(LineWithExercises)->Unit,
@@ -54,10 +57,7 @@ class TrainingAdapter(private val deleteTraining:(LineWithExercises)->Unit,
             binding.deleteExercise.setOnClickListener(View.OnClickListener {
                 deleteTraining(trainingModel)
             })
-
         }
-
-
     }
-
 }
+

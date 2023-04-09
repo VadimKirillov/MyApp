@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : ViewModel() {
 
-    val exercises = exerciseRepository.exercises
+    var exercises = exerciseRepository.exercises
 
     fun startUpdateExercise(idExercise:Int, nameExercise:String, muscle_group:String,exercise_type:String, exercise_image:String, external_id:String) {
         var ex_filter = exercises.value?.filter { it.id == idExercise }
@@ -29,6 +29,10 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
             val response2 = client.apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
         }
 
+    }
+
+    fun getExercises(group: String? = null){
+       exercises = exerciseRepository.getExercises(group)
     }
 
     fun insertExercise(exerciseModel: ExerciseModel) = viewModelScope.launch{
