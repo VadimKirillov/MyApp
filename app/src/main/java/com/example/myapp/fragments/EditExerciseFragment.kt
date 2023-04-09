@@ -117,7 +117,7 @@ class EditExerciseFragment : DialogFragment(), View.OnClickListener {
     // todo: в статичный класс
     private fun getBase64String(im: ImageView): String? {
         // give your image file url in mCurrentPhotoPath
-        //val bitmap = BitmapFactory.decodeResource(getResources(), im.drawable)
+        // val bitmap = BitmapFactory.decodeResource(getResources(), im.drawable)
         val bitmap = im.drawable.toBitmap()
         val byteArrayOutputStream = ByteArrayOutputStream()
         // In case you want to compress your image, here it's at 40%

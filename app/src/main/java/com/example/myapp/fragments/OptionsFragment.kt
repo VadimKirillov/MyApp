@@ -10,6 +10,7 @@ import com.example.myapp.MuscleGroupPickerFragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import kotlin.system.exitProcess
 
 val URL_GIT = "https://github.com/VadimKirillov/MyApp"
