@@ -35,10 +35,13 @@ class LoginViewModel(private val loginRepository: AuthRepository) : ViewModel() 
 
         }
 
-    fun register(login: String, password: String) {
+    fun register(login: String, password: String, skipUpdate: Boolean = false) {
         CoroutineScope(Dispatchers.Main).launch {
             val result = withContext(Dispatchers.Default) {
                 loginRepository.register(login, password)
+            }
+            if (skipUpdate) {
+                return@launch;
             }
             if (result is Result.Success) {
                 _loginResult.value = LoginResult()

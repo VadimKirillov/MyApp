@@ -10,6 +10,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -18,6 +19,11 @@ import com.example.myapp.MainActivity
 import com.example.myapp.databinding.ActivityLoginBinding
 
 import com.example.myapp.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -34,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         val username = binding.login
         val password = binding.password
         val login = binding.buttonLogin
+        val loginGoogle = binding.buttonGoogleAuth
         val register = binding.buttonRegister
         val loading = binding.loading
 
@@ -107,12 +114,45 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
-
             }
 
             register.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.register(username.text.toString(), password.text.toString())
+            }
+
+            loginGoogle.setOnClickListener{
+                register.setOnClickListener {
+                }
+                loading.visibility = View.VISIBLE
+                val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build()
+                val mGoogleSignInClient = GoogleSignIn.getClient(this@LoginActivity, googleSignInOptions);
+
+                val signInIntent = mGoogleSignInClient.signInIntent
+                startActivityForResult(signInIntent, Companion.RC_AUTH_CODE)
+
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Companion.RC_AUTH_CODE) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            print(1)
+            task.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val result = task.result
+                    val login = result.email.toString()
+                    val password = "123" // todo:
+                    loginViewModel.register(login, password, skipUpdate = true)
+                    loginViewModel.login(login, password)
+                } else {
+                    Log.e("auth", "Error google auth")
+                    showLoginFailed(R.string.login_failed)
+                }
             }
         }
     }
@@ -129,6 +169,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showLoginFailed(@StringRes errorString: Int) {
        Toast.makeText(this, errorString, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private val RC_AUTH_CODE = 100;
     }
 }
 
