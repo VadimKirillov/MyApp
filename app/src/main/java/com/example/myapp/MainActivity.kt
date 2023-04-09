@@ -9,7 +9,6 @@ import com.example.myapp.fragments.OptionsFragment
 import com.example.myapp.fragments.StartTrainFragment
 import com.example.myapp.utils.FragmentManager
 import com.example.myapp.fragments.TrainCreatorFragment
-
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener{

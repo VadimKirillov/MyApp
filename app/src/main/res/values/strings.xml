@@ -4,15 +4,6 @@
     <string name="waiting_message">Упражнения начнутся через:</string>
     <string name="start_train">Начать тренировку</string>
     <string name="waiting">Приготовьтесь</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="exercises">Упражнения</string>
     <string name="train">тренировка</string>
     <string name="start">старт</string>
@@ -25,5 +16,17 @@
     <string name="my_train">Моя тренировка</string>
     <string name="end_train">Конец</string>
 
-
+    <!--  Authentication  -->
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign">Sign in</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >3 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="server_url">http://84.201.187.3:8000</string>
 </resources>
