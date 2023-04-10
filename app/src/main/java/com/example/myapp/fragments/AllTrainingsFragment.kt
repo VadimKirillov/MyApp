@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.R
+import com.example.myapp.TrainCreationFragment
 import com.example.myapp.adapters.TrainingsAdapter
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentAllTrainingsBinding
@@ -18,6 +19,8 @@ import com.example.myapp.models.TrainingModel
 import com.example.myapp.repositories.TrainingRepository
 import com.example.myapp.viewModels.TrainingFactory
 import com.example.myapp.viewModels.TrainingViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AllTrainingsFragment : Fragment() {
 
@@ -38,7 +41,11 @@ class AllTrainingsFragment : Fragment() {
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
         initRecyclerTrainings()
         displayTrainings()
+        binding.createNewTrain.setOnClickListener {
+            val panelNewTrain = TrainCreationFragment()
+            panelNewTrain.show((context as FragmentActivity).supportFragmentManager, "editCount")
 
+        }
         return binding.root
     }
 

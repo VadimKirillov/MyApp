@@ -107,7 +107,7 @@ class CreationExerciseFragment : Fragment() {
             }
 
             var name1 = binding.textExerciseName.text.toString()
-            Log.e("tag1", name1)
+            //Log.e("tag1", name1)
 
 //            var input2 = Converter.toBack(exm)
 //            GlobalScope.launch{
