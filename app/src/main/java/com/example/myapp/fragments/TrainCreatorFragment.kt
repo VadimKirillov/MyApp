@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
+import com.example.myapp.PickExerciseToTrainFragment
+import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentTrainCreatorBinding
 import com.example.myapp.models.LineWithExercises
@@ -37,6 +39,10 @@ class TrainCreatorFragment : Fragment() {
         trainingFactory = TrainingFactory(trainingRepository)
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
         trainingViewModel.getTrainingWithExercisesById(id)
+
+        binding.addExercise.setOnClickListener {
+            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, PickExerciseToTrainFragment()).commit()
+        }
         initRecyclerTrainings()
         displayTrainings()
 
@@ -63,6 +69,7 @@ class TrainCreatorFragment : Fragment() {
     private fun deleteTraining(trainingModel: LineWithExercises) {
         trainingViewModel.deleteLine(trainingModel)
     }
+
 
     private fun editTraining(trainingModel: LineWithExercises) {
         val panelEditCountTrain = EditCountTrainFragment()
