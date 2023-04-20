@@ -42,11 +42,6 @@ class PickExerciseToTrainFragment : Fragment() {
             initRecyclerExercises()
             displayExercises()
 
-            binding.createNewExercise.setOnClickListener {
-                val transaction  = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(com.example.myapp.R.id.content, CreationExerciseFragment())
-                transaction?.commit()
-            }
             return binding.root
         }
 
