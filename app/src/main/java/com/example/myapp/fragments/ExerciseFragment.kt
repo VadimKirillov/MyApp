@@ -69,7 +69,7 @@ class ExerciseFragment : Fragment() {
 
     private fun pickExercise(exerciseModel: ExerciseModel) {
         // todo: уберём, в тренировке будем добавлять упражнения
-        exerciseViewModel.pickExercise(exerciseModel)
+        exerciseViewModel.pickExercise(exerciseModel, 1)
     }
 
     private fun deleteExercise(exerciseModel: ExerciseModel) {

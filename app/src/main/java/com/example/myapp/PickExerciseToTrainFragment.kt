@@ -6,15 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.adapters.ExerciseAdapter
+import com.example.myapp.adapters.PickExerciseToTrainAdapter
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentPickExerciseToTrainBinding
 import com.example.myapp.fragments.CreationExerciseFragment
 import com.example.myapp.fragments.EditExerciseFragment
+import com.example.myapp.fragments.TrainCreatorFragment
 import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.viewModels.ExerciseFactory
@@ -24,7 +27,7 @@ class PickExerciseToTrainFragment : Fragment() {
         private lateinit var binding: FragmentPickExerciseToTrainBinding
         private lateinit var exerciseRepository: ExerciseRepository
         private lateinit var exerciseViewModel: ExerciseViewModel
-        private lateinit var exerciseAdapter: ExerciseAdapter
+        private lateinit var pickExerciseToTrainAdapter: PickExerciseToTrainAdapter
 
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +41,16 @@ class PickExerciseToTrainFragment : Fragment() {
             val exerciseFactory = ExerciseFactory(exerciseRepository)
             exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
             exerciseViewModel.getExercises(group)
+            val trainingId = arguments?.getInt("idTraining")
+
+            binding.addExercisesToTraining.setOnClickListener {
+                addExercisesToTraing(exerciseViewModel.selectedExercises, trainingId!!)
+                val trainCreatorFragment = TrainCreatorFragment()
+                val arguments = Bundle()
+                arguments.putInt("idTraining", trainingId!!)
+                trainCreatorFragment.arguments = arguments
+                (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, trainCreatorFragment).commit()
+            }
 
             initRecyclerExercises()
             displayExercises()
@@ -47,45 +60,36 @@ class PickExerciseToTrainFragment : Fragment() {
 
         private fun initRecyclerExercises(){
             binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
-            exerciseAdapter = ExerciseAdapter(
-                {categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
-                {categoryModel:ExerciseModel-> editExercise(categoryModel)},
-                {categoryModel: ExerciseModel -> pickExercise(categoryModel)}
-            )
-            binding.recyclerCategories.adapter = exerciseAdapter
-
+            pickExerciseToTrainAdapter = PickExerciseToTrainAdapter {
+             categoryModel: ExerciseModel, state : Boolean ->
+                pickExercise(
+                    categoryModel, state
+                )
+            }
+            binding.recyclerCategories.adapter = pickExerciseToTrainAdapter
         }
 
         private fun displayExercises(){
             exerciseViewModel.exercises.observe(viewLifecycleOwner, Observer {
-                exerciseAdapter.setList(it)
-                exerciseAdapter.notifyDataSetChanged()
+                pickExerciseToTrainAdapter.setList(it)
+                pickExerciseToTrainAdapter.notifyDataSetChanged()
             })
         }
 
-        private fun pickExercise(exerciseModel: ExerciseModel) {
+        private fun pickExercise(exerciseModel: ExerciseModel, state :Boolean) {
             // todo: уберём, в тренировке будем добавлять упражнения
-            exerciseViewModel.pickExercise(exerciseModel)
+            if (state){
+                exerciseViewModel.selectedExercises.add(exerciseModel)
+            }
+            else {
+                exerciseViewModel.selectedExercises.remove(exerciseModel)
+            }
         }
 
-        private fun deleteExercise(exerciseModel: ExerciseModel) {
-            exerciseViewModel.deleteExercise(exerciseModel)
-        }
-
-        private fun editExercise(exerciseModel:ExerciseModel) {
-            // todo: кажется нужно просто передавать id, хотелось бы объект
-            val panelEditExercise = EditExerciseFragment()
-            val parameters = Bundle()
-            parameters.putString("idExercise", exerciseModel.id.toString())
-            parameters.putString("nameExercise", exerciseModel.name)
-            parameters.putString("typeExercise", exerciseModel.type)
-            parameters.putString("imageExercise", exerciseModel.image)
-            parameters.putString("muscleGroupExercise", exerciseModel.muscle_group)
-            parameters.putString("external_id", exerciseModel.external_id)
-
-            panelEditExercise.arguments = parameters
-
-            panelEditExercise.show((context as FragmentActivity).supportFragmentManager, "editExercise")
+        private fun addExercisesToTraing(selectedExercises: List<ExerciseModel>, trainingId:Int){
+            for (selectedExercise in selectedExercises){
+                exerciseViewModel.pickExercise(selectedExercise, trainingId)
+            }
         }
 
         companion object {

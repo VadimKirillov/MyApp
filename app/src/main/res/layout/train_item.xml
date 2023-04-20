@@ -35,12 +35,36 @@
             app:layout_constraintLeft_toRightOf="@id/idTrain"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editExercise"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/deleteExercise"
+            android:layout_width="30dp"
+            android:layout_height="28dp"
+            android:layout_margin="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/editExercise"
+            android:layout_width="17dp"
+            android:layout_height="26dp"
+            android:layout_margin="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/edit_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/deleteExercise"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

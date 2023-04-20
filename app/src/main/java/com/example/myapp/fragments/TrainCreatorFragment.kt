@@ -1,6 +1,7 @@
 package com.example.myapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,25 +27,30 @@ class TrainCreatorFragment : Fragment() {
     private lateinit var trainingViewModel: TrainingViewModel
     private lateinit var trainingFactory: TrainingFactory
     private lateinit var trainingAdapter: TrainingAdapter
+    private var idTraining: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTrainCreatorBinding.inflate(inflater,container, false )
-        val id = arguments?.getInt("idTraining")
+        idTraining = arguments?.getInt("idTraining")!!
 
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         val trainingRepository = TrainingRepository(trainingsDao)
         trainingFactory = TrainingFactory(trainingRepository)
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
-        trainingViewModel.getTrainingWithExercisesById(id)
+        trainingViewModel.getTrainingWithExercisesById(idTraining)
 
         binding.addExercise.setOnClickListener {
-            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, PickExerciseToTrainFragment()).commit()
+            val pickExerciseToTrainFragment = PickExerciseToTrainFragment()
+            val arguments = Bundle()
+            arguments.putInt("idTraining", idTraining!!)
+            pickExerciseToTrainFragment.arguments = arguments
+            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, pickExerciseToTrainFragment).commit()
         }
         initRecyclerTrainings()
-        displayTrainings()
+        displayTrainingsLines()
 
         return binding.root
     }
@@ -57,12 +63,17 @@ class TrainCreatorFragment : Fragment() {
         binding.recyclerCategories.adapter = trainingAdapter
     }
 
-    private fun displayTrainings(){
-        trainingViewModel.trainings
+    private fun displayTrainingsLines(){
+        Log.d("banban", trainingViewModel.trainings.toString())
+
         trainingViewModel.trainings.observe(viewLifecycleOwner, Observer {
-            trainingAdapter.setList(it.get(0).lines)
-            trainingAdapter.notifyDataSetChanged()
-        })
+            Log.d("banban", it.size.toString())
+             if(it.size > 0){
+                 trainingAdapter.setList(it.get(0).lines)
+                 trainingAdapter.notifyDataSetChanged()
+             }
+      })
+
     }
 
 
@@ -74,7 +85,9 @@ class TrainCreatorFragment : Fragment() {
     private fun editTraining(trainingModel: LineWithExercises) {
         val panelEditCountTrain = EditCountTrainFragment()
         val parameters = Bundle()
-        parameters.putString("idExercise", trainingModel.exercise.id.toString())
+        parameters.putInt("idTrainLine", trainingModel.playlist.id)
+        parameters.putInt("idExercise", trainingModel.playlist.exercise_id)
+        parameters.putInt("idTraining", idTraining)
         parameters.putString("nameExercise", trainingModel.exercise.name)
         parameters.putString("count", trainingModel.playlist.count.toString())
 //        parameters.putString("muscleGroupExercise", trainingModel.muscle_group)

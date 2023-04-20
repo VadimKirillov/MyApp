@@ -1,6 +1,7 @@
 package com.example.myapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,8 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
     private lateinit var binding: FragmentEditCountTrainBinding
     private lateinit var trainViewModel: TrainingViewModel
     private var idExercise:Int = 0
-
+    private var idTrain:Int = 0
+    private var idTrainLine:Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,9 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
 
         binding = FragmentEditCountTrainBinding.inflate(inflater, container, false)
 
-        idExercise = arguments?.getString("idExercise")!!.toInt()
+        idExercise = arguments?.getInt("idExercise")!!.toInt()
+        idTrain = arguments?.getInt("idTraining")!!.toInt()
+        idTrainLine = arguments?.getInt("idTrainLine")!!.toInt()
 
         binding.textExerciseCountName.setText(arguments?.getString("nameExercise").toString())
         binding.textCount.setText(arguments?.getString("count").toString() )
@@ -43,17 +47,22 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
         trainViewModel = ViewModelProvider(this, factory).get(TrainingViewModel::class.java)
 
         binding.buttonEditCount.setOnClickListener(this)
+
         return binding.root
     }
 
     override fun onClick(view: View) {
-
+       Log.d("log-log", "${idTrainLine}, ${idExercise},${idTrain}")
         binding.textCount.text.toString().toIntOrNull()?.let {
-            it1 -> trainViewModel.startUpdateLine(1, idExercise, it1)
-        }
-        dismiss()
-        //todo: в граф
-        (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, TrainCreatorFragment()).commit()
+
+                it1 -> trainViewModel.startUpdateLine(idTrainLine, idExercise, idTrain, it1)
+            }
+            dismiss()
+            val fragment = TrainCreatorFragment()
+            val arguments = Bundle()
+            arguments.putInt("idTraining", idTrain)
+            fragment.arguments = arguments
+            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
     }
 
 }

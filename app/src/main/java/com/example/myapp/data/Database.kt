@@ -25,7 +25,7 @@ abstract class Database: RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         com.example.myapp.data.Database::class.java,
-                        "database1.0"
+                        "database7.0"
                     ).allowMainThreadQueries().build()
                 }
 

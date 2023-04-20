@@ -25,7 +25,6 @@ data class TrainingWithExercises(
         entityColumn = "training_id",
         entity = TrainingExerciseModel::class
     )
-
     var lines: List<LineWithExercises>
 
 )

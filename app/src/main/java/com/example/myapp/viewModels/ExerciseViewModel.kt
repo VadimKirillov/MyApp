@@ -16,11 +16,13 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
 
     var exercises = exerciseRepository.exercises
 
+    var selectedExercises = mutableListOf<ExerciseModel>()
+
     fun startUpdateExercise(idExercise:Int, nameExercise:String, muscle_group:String,exercise_type:String, exercise_image:String, external_id:String) {
         var ex_filter = exercises.value?.filter { it.id == idExercise }
         updateExercise(ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image,
             external_id))
-        val exerciseModel =ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image, external_id)
+        val exerciseModel = ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image, external_id)
         val client = UtilClient.instance
 
         var input2 = Converter.toBack(exerciseModel)
@@ -47,9 +49,11 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
         exerciseRepository.deleteExercise(exerciseModel)
     }
 
-    fun pickExercise(exerciseModel: ExerciseModel) = viewModelScope.launch{
-        exerciseRepository.pickExercise(1, exercise_id = exerciseModel.id)
+    fun pickExercise(exerciseModel: ExerciseModel, trainingId: Int) = viewModelScope.launch{
+        exerciseRepository.pickExercise(trainingId, exercise_id = exerciseModel.id)
     }
+
+
 
 
 }
