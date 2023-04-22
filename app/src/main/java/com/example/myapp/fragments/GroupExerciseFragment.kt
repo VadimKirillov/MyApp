@@ -50,6 +50,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         binding.createNewExercise.setOnClickListener {
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(com.example.myapp.R.id.content, CreationExerciseFragment())
+            transaction?.addToBackStack(null)
             transaction?.commit()
         }
 
@@ -69,6 +70,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         val fragment = ExerciseFragment()
         fragment.arguments = parameters
         transaction?.replace(R.id.content, fragment)
+        transaction?.addToBackStack(null)
         transaction?.commit()
     }
 

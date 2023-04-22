@@ -45,11 +45,18 @@ class TrainCreatorFragment : Fragment() {
         trainingViewModel.getTrainingWithExercisesById(idTraining)
 
         binding.addExercise.setOnClickListener {
+
+            val transaction  = activity?.supportFragmentManager?.beginTransaction()
+            val parameters = Bundle()
+            parameters.putInt("idTraining", idTraining)
+            parameters.putString("nameTraining", nameTraining)
             val pickExerciseToTrainFragment = PickExerciseToTrainFragment()
-            val arguments = Bundle()
-            arguments.putInt("idTraining", idTraining!!)
-            pickExerciseToTrainFragment.arguments = arguments
-            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, pickExerciseToTrainFragment).commit()
+            pickExerciseToTrainFragment.arguments = parameters
+            transaction?.replace(R.id.content, pickExerciseToTrainFragment)
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+
+
         }
         initRecyclerTrainings()
         displayTrainingsLines()
@@ -73,6 +80,7 @@ class TrainCreatorFragment : Fragment() {
              if(it.size > 0){
                  trainingAdapter.setList(it.get(0).lines)
                  trainingAdapter.notifyDataSetChanged()
+
              }
       })
 
@@ -90,6 +98,7 @@ class TrainCreatorFragment : Fragment() {
         parameters.putInt("idTrainLine", trainingModel.playlist.id)
         parameters.putInt("idExercise", trainingModel.playlist.exercise_id)
         parameters.putInt("idTraining", idTraining)
+        parameters.putString("nameTraining", nameTraining)
         parameters.putString("nameExercise", trainingModel.exercise.name)
         parameters.putString("count", trainingModel.playlist.count.toString())
 //        parameters.putString("muscleGroupExercise", trainingModel.muscle_group)

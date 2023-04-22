@@ -48,6 +48,7 @@ class ExerciseFragment : Fragment() {
         binding.createNewExercise.setOnClickListener {
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(com.example.myapp.R.id.content, CreationExerciseFragment())
+            transaction?.addToBackStack(null)
             transaction?.commit()
         }
         return binding.root

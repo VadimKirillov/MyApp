@@ -1,5 +1,6 @@
 package com.example.myapp.models
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Entity(tableName = "training_data_table")

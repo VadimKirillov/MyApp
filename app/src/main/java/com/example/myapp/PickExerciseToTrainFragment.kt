@@ -42,14 +42,20 @@ class PickExerciseToTrainFragment : Fragment() {
             exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
             exerciseViewModel.getExercises(group)
             val trainingId = arguments?.getInt("idTraining")
+            val trainingName = arguments?.getString("nameTraining")
+
 
             binding.addExercisesToTraining.setOnClickListener {
                 addExercisesToTraing(exerciseViewModel.selectedExercises, trainingId!!)
                 val trainCreatorFragment = TrainCreatorFragment()
                 val arguments = Bundle()
-                arguments.putInt("idTraining", trainingId!!)
+                arguments.putInt("idTraining", trainingId)
+                arguments.putString("nameTraining", trainingName!!)
                 trainCreatorFragment.arguments = arguments
                 (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, trainCreatorFragment).commit()
+
+                //fragmentManager?.popBackStack()
+
             }
 
             initRecyclerExercises()

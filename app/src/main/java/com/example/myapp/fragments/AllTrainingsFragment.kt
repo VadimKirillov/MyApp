@@ -80,6 +80,7 @@ class AllTrainingsFragment : Fragment() {
         fragment.arguments = parameters
         val transaction  = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.content, fragment)
+        transaction?.addToBackStack(null)
         transaction?.commit()
 
     }

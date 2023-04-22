@@ -5,13 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView.ItemView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.R
 import com.example.myapp.data.GroupExercise
 import com.example.myapp.databinding.BottomMuscleListItemBinding
 import com.example.myapp.databinding.GroupExerciseItemBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class BottomMuscleAdapter(val listener: BottomMuscleAdapter.Listener) : RecyclerView.Adapter<BottomMuscleAdapter.BottomGroupExerciseHolder>()
+class BottomMuscleAdapter(val listener: BottomMuscleAdapter.Listener,
+) : RecyclerView.Adapter<BottomMuscleAdapter.BottomGroupExerciseHolder>()
 {
     val  mList = ArrayList<GroupExercise>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomGroupExerciseHolder {

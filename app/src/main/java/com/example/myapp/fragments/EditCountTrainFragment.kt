@@ -26,6 +26,7 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
     private var idExercise:Int = 0
     private var idTrain:Int = 0
     private var idTrainLine:Int = 0
+    private var nameTraining:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +34,7 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
     ): View? {
 
         binding = FragmentEditCountTrainBinding.inflate(inflater, container, false)
-
+        nameTraining = arguments?.getString("nameTraining")!!
         idExercise = arguments?.getInt("idExercise")!!.toInt()
         idTrain = arguments?.getInt("idTraining")!!.toInt()
         idTrainLine = arguments?.getInt("idTrainLine")!!.toInt()
@@ -56,13 +57,15 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
         binding.textCount.text.toString().toIntOrNull()?.let {
 
                 it1 -> trainViewModel.startUpdateLine(idTrainLine, idExercise, idTrain, it1)
-            }
+        }
             dismiss()
             val fragment = TrainCreatorFragment()
             val arguments = Bundle()
+
             arguments.putInt("idTraining", idTrain)
+            arguments.putString("nameTraining", nameTraining)
             fragment.arguments = arguments
-            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
+            //(context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
     }
 
 }
