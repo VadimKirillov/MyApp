@@ -18,6 +18,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
     private var adapter = GroupExerciseAdapter(this)
 
     private val imageGroupExerciseIdList = listOf(
+        R.drawable.billy_bg,
         R.drawable.abs,
         R.drawable.quads,
         R.drawable.glutes,
@@ -25,8 +26,11 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         R.drawable.biceps,
         R.drawable.back,
         R.drawable.chest,
+        R.drawable.other,
+        R.drawable.twoguys,
     )
     private val titleGroupExerciseIdList = listOf(
+        "Все",
         "Пресс",
         "Квадрицепсы",
         "Ягодицы",
@@ -34,13 +38,21 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         "Бицепсы",
         "Спина",
         "Грудь",
+        "Другое",
+        "Пользовательские"
     )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentGroupExerciseBinding.inflate(inflater,container, false )
+        binding = FragmentGroupExerciseBinding.inflate(inflater,container, false)
+        binding.createNewExercise.setOnClickListener {
+            val transaction  = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(com.example.myapp.R.id.content, CreationExerciseFragment())
+            transaction?.commit()
+        }
+
         init()
 
         return binding.root
@@ -49,6 +61,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
     override fun onClick(groupExercise: GroupExercise) {
         super.onClick(groupExercise)
         Toast.makeText(context, groupExercise.title, Toast.LENGTH_LONG).show()
+
         val transaction  = activity?.supportFragmentManager?.beginTransaction()
         val parameters = Bundle()
         parameters.putString("filter", groupExercise.title)

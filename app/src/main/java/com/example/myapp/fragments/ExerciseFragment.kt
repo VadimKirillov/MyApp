@@ -29,7 +29,11 @@ class ExerciseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val group = arguments?.getString("filter")
+        var group = arguments?.getString("filter")
+        if(group == "Все"){
+            group = null
+        }
+
         Log.d("debug", group?.toString() ?: "")
         binding = ListExercisesBinding.inflate(inflater, container, false)
         val exercisesDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
