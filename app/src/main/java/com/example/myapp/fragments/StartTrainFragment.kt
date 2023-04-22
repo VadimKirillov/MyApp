@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.myapp.PickTrainToStartFragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentStartTrainBinding
 
@@ -21,7 +22,7 @@ class StartTrainFragment : Fragment() {
         binding.startButton.setOnClickListener(){
             //findNavController()?.navigate(R.id.action_startTrainFragment_to_waitingFragment)
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.content, WaitingFragment())
+            transaction?.replace(R.id.content, PickTrainToStartFragment())
             transaction?.commit()
 
         }

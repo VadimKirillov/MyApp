@@ -28,6 +28,7 @@ class TrainCreatorFragment : Fragment() {
     private lateinit var trainingFactory: TrainingFactory
     private lateinit var trainingAdapter: TrainingAdapter
     private var idTraining: Int = 0
+    private var nameTraining: String = " "
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,8 @@ class TrainCreatorFragment : Fragment() {
     ): View {
         binding = FragmentTrainCreatorBinding.inflate(inflater,container, false )
         idTraining = arguments?.getInt("idTraining")!!
-
+        nameTraining = arguments?.getString("nameTraining")!!
+        binding.textView13.setText(nameTraining)
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         val trainingRepository = TrainingRepository(trainingsDao)
         trainingFactory = TrainingFactory(trainingRepository)

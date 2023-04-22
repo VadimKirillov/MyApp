@@ -73,6 +73,7 @@ class AllTrainingsFragment : Fragment() {
         val fragment = TrainCreatorFragment()
         val parameters = Bundle()
         parameters.putInt("idTraining", trainingModel.id)
+        parameters.putString("nameTraining", trainingModel.name)
         //parameters.putString("nameExercise", trainingModel.exercise.name)
         //parameters.putString("count", trainingModel.playlist.count.toString())
 //        parameters.putString("muscleGroupExercise", trainingModel.muscle_group)
