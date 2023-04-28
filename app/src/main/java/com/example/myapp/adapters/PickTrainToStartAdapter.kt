@@ -6,17 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.R
 import com.example.myapp.data.GroupExercise
+import com.example.myapp.databinding.AllTrainItemBinding
 import com.example.myapp.databinding.GroupExerciseItemBinding
+import com.example.myapp.databinding.PickTrainToStartItemBinding
+import com.example.myapp.models.TrainingModel
 
 class PickTrainToStartAdapter(val listener: Listener): RecyclerView.Adapter<PickTrainToStartAdapter.PickTrainToStartHolder>() {
-    val  pickTrainToStartList = ArrayList<GroupExercise>()
+    val  pickTrainToStartList = ArrayList<TrainingModel>()
+
     class PickTrainToStartHolder(item: View): RecyclerView.ViewHolder(item) {
-        val binding = GroupExerciseItemBinding.bind(item)
-        fun bind(groupExercise: GroupExercise, listener: Listener) = with(binding) {
-            imageGroupExercise.setImageResource(groupExercise.imageId)
-            textGroupExercise.text = groupExercise.title
+        val binding = PickTrainToStartItemBinding.bind(item)
+        fun bind(trainingModel: TrainingModel, listener: Listener) = with(binding) {
+            idTrain.text = trainingModel.id.toString()
+            nameTrain.text = trainingModel.name
             itemView.setOnClickListener(){
-                listener.onClick(groupExercise)
+                listener.onClick(trainingModel)
             }
         }
     }
@@ -34,13 +38,20 @@ class PickTrainToStartAdapter(val listener: Listener): RecyclerView.Adapter<Pick
         return pickTrainToStartList.size
     }
 
-    fun addGroupExercise(groupExercise: GroupExercise){
-        pickTrainToStartList.add(groupExercise)
-        notifyDataSetChanged()
+
+
+    fun setList(trainings: List<TrainingModel>) {
+        pickTrainToStartList.clear()
+        pickTrainToStartList.addAll(trainings)
     }
 
+//    fun addGroupExercise(groupExercise: TrainingModel){
+//        pickTrainToStartList.add(groupExercise)
+//        notifyDataSetChanged()
+//    }
+
     interface Listener{
-        fun onClick(groupExercise: GroupExercise){
+        fun onClick(trainingModel: TrainingModel){
 
         }
     }

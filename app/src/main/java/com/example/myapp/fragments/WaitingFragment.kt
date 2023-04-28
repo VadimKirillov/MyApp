@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 
@@ -29,12 +30,14 @@ class WaitingFragment : Fragment() {
     var onceTickLastWarning:Boolean = false
     private lateinit var binding: FragmentWaitingBinding
     private lateinit var timer: CountDownTimer
+    private var idTraining:String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentWaitingBinding.inflate(inflater, container, false)
+        idTraining = arguments?.getString("idTraining")
         return binding.root
     }
 
@@ -65,10 +68,15 @@ class WaitingFragment : Fragment() {
 
             override fun onFinish() {
                 soundEnd?.start()
-                FragmentManager.setFragment(
-                    DoExerciseFragment.newInstance(),
-                    activity as AppCompatActivity
-                )
+                val transaction  = activity?.supportFragmentManager?.beginTransaction()
+                val parameters = Bundle()
+                parameters.putString("idTraining", idTraining)
+
+                val fragment = DoExerciseFragment()
+                fragment.arguments = parameters
+                transaction?.replace(R.id.content, fragment)
+                transaction?.addToBackStack(null)
+                transaction?.commit()
             }
 
         }.start()

@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -28,6 +29,7 @@ import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.viewModels.ExerciseFactory
 import com.example.myapp.viewModels.ExerciseViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
