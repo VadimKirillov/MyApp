@@ -41,13 +41,14 @@ class DayFinishFragment : Fragment() {
             )
         }
         soundCongratulation = MediaPlayer.create(context, R.raw.finish_sound)
+        soundCongratulation?.start()
         startTimer()
     }
     private fun startTimer() = with(binding){
         timer = object : CountDownTimer(CONGRATS_TIME, 1){
             override fun onTick(restTime: Long) {}
             override fun onFinish() {
-                soundCongratulation?.start()
+                //soundCongratulation?.start()
             }
         }.start()
     }

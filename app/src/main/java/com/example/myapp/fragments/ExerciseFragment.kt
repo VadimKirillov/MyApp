@@ -30,12 +30,19 @@ class ExerciseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         var group = arguments?.getString("filter")
+
+
+
+        //Log.d("debug", group?.toString() ?: "")
+        binding = ListExercisesBinding.inflate(inflater, container, false)
+
         if(group == "Все"){
             group = null
         }
+        else{
+            binding.textHeaderGroup.text = group
+        }
 
-        Log.d("debug", group?.toString() ?: "")
-        binding = ListExercisesBinding.inflate(inflater, container, false)
         val exercisesDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
         exerciseRepository = ExerciseRepository(exercisesDao)
         val exerciseFactory = ExerciseFactory(exerciseRepository)
@@ -59,7 +66,7 @@ class ExerciseFragment : Fragment() {
         exerciseAdapter = ExerciseAdapter(
             {categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
             {categoryModel:ExerciseModel-> editExercise(categoryModel)},
-            {categoryModel: ExerciseModel -> pickExercise(categoryModel)}
+
         )
         binding.recyclerCategories.adapter = exerciseAdapter
 
@@ -72,10 +79,6 @@ class ExerciseFragment : Fragment() {
         })
     }
 
-    private fun pickExercise(exerciseModel: ExerciseModel) {
-        // todo: уберём, в тренировке будем добавлять упражнения
-        exerciseViewModel.pickExercise(exerciseModel, 1)
-    }
 
     private fun deleteExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel.deleteExercise(exerciseModel)

@@ -9,7 +9,7 @@ import com.example.myapp.models.ExerciseModel
 
 class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
                       private val editExercise:(ExerciseModel)->Unit,
-                      private val pickExercise:(ExerciseModel)->Unit,) : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>() {
+                      ) : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>() {
 
     private val exercisesList = ArrayList<ExerciseModel>()
 
@@ -25,7 +25,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        holder.bind(exercisesList[position], deleteExercise, editExercise, pickExercise)
+        holder.bind(exercisesList[position], deleteExercise, editExercise)
     }
 
     fun setList(exercises: List<ExerciseModel>) {
@@ -40,7 +40,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
             exercisesModel: ExerciseModel,
             deleteExercise: (ExerciseModel) -> Unit,
             editExercise: (ExerciseModel) -> Unit,
-            pickExercise: (ExerciseModel) -> Unit,
+            
 
         ) {
             // todo: заменить просто на передачу объекта
@@ -57,9 +57,7 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
                 deleteExercise(exercisesModel)
             })
 
-            binding.pickExercise.setOnClickListener(View.OnClickListener {
-                pickExercise(exercisesModel)
-            })
+            
 
         }
 

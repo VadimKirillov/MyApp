@@ -28,7 +28,7 @@
         android:layout_width="366dp"
         android:layout_height="53dp"
         android:layout_marginTop="16dp"
-        android:hint="@string/prompt_password"
+        android:hint="Пароль"
         android:imeActionLabel="@string/action_sign"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
@@ -46,12 +46,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="64dp"
         android:enabled="true"
-        android:text="@string/action_sign"
+        android:text="Войти"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/buttonRegister"
@@ -60,27 +61,13 @@
         android:layout_gravity="start"
         android:layout_marginBottom="64dp"
         android:enabled="false"
-        android:text="@string/action_register"
+        android:text="Регистрация"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
         app:layout_constraintVertical_bias="0.051" />
-
-    <Button
-        android:id="@+id/buttonGoogleAuth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginBottom="64dp"
-        android:enabled="true"
-        android:text="@string/action_google_auth"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
-        app:layout_constraintVertical_bias="0.143" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -95,5 +82,17 @@
         app:layout_constraintStart_toStartOf="@+id/password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
+
+    <ImageButton
+        android:id="@+id/buttonGoogleAuth"
+        android:layout_width="69dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="32dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
+        app:srcCompat="@drawable/google_logo_shadow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

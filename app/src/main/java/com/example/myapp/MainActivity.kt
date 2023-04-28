@@ -33,9 +33,11 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.panelExercises -> FragmentManager.setFragment(GroupExerciseFragment.newInstance(), this)
-            R.id.panelStartTraining -> FragmentManager.setFragment(StartTrainFragment.newInstance(), this)
-            R.id.panelOptions -> FragmentManager.setFragment(OptionsFragment.newInstance(), this)
             R.id.panelCreator -> FragmentManager.setFragment(AllTrainingsFragment.newInstance(), this)
+            R.id.panelStartTraining -> FragmentManager.setFragment(StartTrainFragment.newInstance(), this)
+            R.id.global -> FragmentManager.setFragment(GlobalFragment.newInstance("",""), this)
+            R.id.panelOptions -> FragmentManager.setFragment(OptionsFragment.newInstance(), this)
+
         }
         return true
     }

@@ -61,7 +61,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
 
     override fun onClick(groupExercise: GroupExercise) {
         super.onClick(groupExercise)
-        Toast.makeText(context, groupExercise.title, Toast.LENGTH_LONG).show()
+        //Toast.makeText(context, groupExercise.title, Toast.LENGTH_LONG).show()
 
         val transaction  = activity?.supportFragmentManager?.beginTransaction()
         val parameters = Bundle()
@@ -78,7 +78,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         binding.apply {
             rcViewGroups.layoutManager = GridLayoutManager(context, 2 )
             rcViewGroups.adapter = adapter
-
+            adapter.clear()
             for (i in 0..imageGroupExerciseIdList.size-1){
                 val groupExercise = GroupExercise(imageGroupExerciseIdList[i], titleGroupExerciseIdList[i])
                 adapter.addGroupExercise(groupExercise)

@@ -86,20 +86,7 @@ class CreationExerciseFragment : Fragment(), BottomMuscleAdapter.Listener {
         val itemsTypes = listOf("Количество повторений", "Секунды")
         val adapterBodyPart = ArrayAdapter(context?.applicationContext!!, R.layout.dropdown_item, itemsBodyPart)
         val adapterTypes = ArrayAdapter(context?.applicationContext!!, R.layout.dropdown_item, itemsTypes)
-        binding.autoCompleteBodyPart.setAdapter(adapterBodyPart)
-        //binding.autoCompleteType.setAdapter(adapterTypes)
-//        binding.musgp.setOnClickListener(){
-//
-//            val panelEditMuscleGroup = MuscleGroupPickerFragment()
-//            val parameters = Bundle()
-//            parameters.putString("Muscle", "Группа мышц")
-//            panelEditMuscleGroup.arguments = parameters
-//            //EditCountTrainFragment().show((context as FragmentActivity).supportFragmentManager, "editTrain")
-//            //this.isDetached
-//            //getActivity()?.getFragmentManager()?.beginTransaction()?.remove(context.fra)?.commit()
-//            panelEditMuscleGroup.show((context as FragmentActivity).supportFragmentManager, "editMuscle")
-//
-//        }
+
 
         binding.pickImage.setOnClickListener(){
 
@@ -155,12 +142,12 @@ class CreationExerciseFragment : Fragment(), BottomMuscleAdapter.Listener {
             }
 
 
-            Toast.makeText(context, text_group, Toast.LENGTH_LONG).show()
+
              val exm = ExerciseModel(0,binding.textExerciseName.text.toString(),
                  text_group,
                  text_group,
                  getBase64String(binding.imageView) ?: standart,
-                 binding.autoCompleteBodyPart.text?.toString()!!)
+                 binding.showBottomSheet.text?.toString()!!)
 
             GlobalScope.launch {
                 exercisesDao.insertExercise(exm)
@@ -181,7 +168,7 @@ class CreationExerciseFragment : Fragment(), BottomMuscleAdapter.Listener {
             //Log.e("tag1", input2.toString())
 
             //binding.autoCompleteType.setText("")
-            binding.autoCompleteBodyPart.setText("")
+
             binding.textExerciseName.setText("")
 
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
