@@ -22,7 +22,7 @@ data class TrainingExerciseModel (
     var count : Int,
 
     @ColumnInfo(name = "rest_time")
-    var rest_time : Int,
+    var rest_time : Int?,
 
 
     )
