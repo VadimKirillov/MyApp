@@ -56,7 +56,7 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
        Log.d("log-log", "${idTrainLine}, ${idExercise},${idTrain}")
         binding.textCount.text.toString().toIntOrNull()?.let {
 
-                it1 -> trainViewModel.startUpdateLine(idTrainLine, idExercise, idTrain, it1)
+                it1 -> trainViewModel.startUpdateLine(idTrainLine, idExercise, idTrain, it1, 30)
         }
             dismiss()
             val fragment = TrainCreatorFragment()

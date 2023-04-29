@@ -21,6 +21,9 @@ data class TrainingExerciseModel (
     @ColumnInfo(name = "count")
     var count : Int,
 
+    @ColumnInfo(name = "rest_time")
+    var rest_time : Int,
+
 
     )
 

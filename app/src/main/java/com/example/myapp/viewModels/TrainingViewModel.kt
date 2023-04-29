@@ -37,9 +37,9 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
         updateTraining(TrainingModel(idTraining,nameTraining))
     }
 
-    fun startUpdateLine(idTraingLine: Int, idExercice:Int, idTraining:Int, count:Int) {
+    fun startUpdateLine(idTraingLine: Int, idExercice:Int, idTraining:Int, count:Int, rest_time:Int) {
      // TODO: не передаётся id, не работает редактирование упражения
-        updateLine(TrainingExerciseModel(idTraingLine, idTraining,idExercice, count))
+        updateLine(TrainingExerciseModel(idTraingLine, idTraining,idExercice, count,rest_time))
     }
 
     fun insertTraining(trainingModel: TrainingModel) = viewModelScope.launch{

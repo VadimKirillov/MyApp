@@ -34,32 +34,43 @@
             app:layout_constraintTop_toBottomOf="@+id/searchExercise"
             app:layout_constraintVertical_bias="0.11" />
 
-        <ImageButton
-            android:id="@+id/createNewExercise"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/round_button"
-            android:contentDescription="@string/action_sign"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_add" />
-
         <EditText
             android:id="@+id/searchExercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:ems="10"
+            android:fitsSystemWindows="true"
             android:hint="Поиск упражнения"
             android:inputType="textPersonName"
+            android:isScrollContainer="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.164"
+            app:layout_constraintHorizontal_bias="0.129"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textHeaderGroup" />
+
+        <ImageButton
+            android:id="@+id/deleteSearch"
+            android:layout_width="39dp"
+            android:layout_height="36dp"
+            android:backgroundTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/searchExercise"
+            app:layout_constraintStart_toEndOf="@+id/searchExercise"
+            app:layout_constraintTop_toTopOf="@+id/searchExercise"
+            app:layout_constraintVertical_bias="0.222"
+            app:srcCompat="@android:drawable/ic_delete" />
+
+        <ImageButton
+            android:id="@+id/createNewExercise"
+            android:layout_width="53dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/textHeaderGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textHeaderGroup"
+            app:srcCompat="@drawable/plus" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

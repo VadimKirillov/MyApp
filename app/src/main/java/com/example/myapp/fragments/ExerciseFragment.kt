@@ -38,7 +38,7 @@ class ExerciseFragment : Fragment() {
 
         //Log.d("debug", group?.toString() ?: "")
         binding = ListExercisesBinding.inflate(inflater, container, false)
-        
+
         if(group == "Все"){
             group = null
         }
@@ -50,7 +50,7 @@ class ExerciseFragment : Fragment() {
         exerciseRepository = ExerciseRepository(exercisesDao)
         val exerciseFactory = ExerciseFactory(exerciseRepository)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
-        
+
         exerciseViewModel.filterName.setValue("%%");
         exerciseViewModel.getExercises(group)
 
@@ -84,6 +84,10 @@ class ExerciseFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
           })
+
+        binding.deleteSearch.setOnClickListener{
+            binding.searchExercise.setText("")
+        }
         return binding.root
     }
 

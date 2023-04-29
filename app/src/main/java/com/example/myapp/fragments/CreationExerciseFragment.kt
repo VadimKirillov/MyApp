@@ -107,7 +107,7 @@ class CreationExerciseFragment : Fragment(), BottomMuscleAdapter.Listener {
             dialog = BottomSheetDialog(context as FragmentActivity)
 
             val view = layoutInflater.inflate(R.layout.muscle_group_bottom_sheet_dialog, null)
-            val btnClose = view.findViewById<Button>(R.id.idBtnDismiss)
+            val btnClose = view.findViewById<ImageButton>(R.id.dismissImageButton)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerBottomMuscles)
 
 
