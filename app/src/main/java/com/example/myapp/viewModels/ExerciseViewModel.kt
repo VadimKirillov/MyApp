@@ -2,6 +2,7 @@ package com.example.myapp.viewModels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.CreateOrUpdateExercicesMutation
@@ -17,6 +18,8 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
     var exercises = exerciseRepository.exercises
 
     var selectedExercises = mutableListOf<ExerciseModel>()
+
+    var filterName = MutableLiveData<String>().apply { postValue("%%")};
 
     fun startUpdateExercise(idExercise:Int, nameExercise:String, muscle_group:String,exercise_type:String, exercise_image:String, external_id:String) {
         var ex_filter = exercises.value?.filter { it.id == idExercise }
@@ -34,7 +37,8 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
     }
 
     fun getExercises(group: String? = null){
-       exercises = exerciseRepository.getExercises(group)
+        Log.d("exercise", filterName.value!!)
+       exercises = exerciseRepository.getExercises(group, filterName.value!!)
     }
 
     fun insertExercise(exerciseModel: ExerciseModel) = viewModelScope.launch{
