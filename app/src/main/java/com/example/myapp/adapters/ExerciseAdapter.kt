@@ -47,13 +47,9 @@ class ExerciseAdapter(
         if(position <= -1 || getItem(position) == null){
             return
         }
-        holder.bind(getItem(position)!!, deleteExercise, editExercise, pickExercise)
+        holder.bind(getItem(position)!!, deleteExercise, editExercise)
     }
 
-//    fun setList(exercises: List<ExerciseModel>) {
-//        exercisesList.clear()
-//        exercisesList.addAll(exercises)
-//    }
 
 
     class ExerciseHolder(val binding: ExerciseItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -62,7 +58,7 @@ class ExerciseAdapter(
             exercisesModel: ExerciseModel,
             deleteExercise: (ExerciseModel) -> Unit,
             editExercise: (ExerciseModel) -> Unit,
-            pickExercise: (ExerciseModel) -> Unit,
+
         ) {
             // todo: заменить просто на передачу объекта
             binding.idExercise.text = exercisesModel.id.toString()
@@ -76,10 +72,6 @@ class ExerciseAdapter(
 
             binding.deleteExercise.setOnClickListener(View.OnClickListener {
                 deleteExercise(exercisesModel)
-            })
-
-            binding.pickExercise.setOnClickListener(View.OnClickListener {
-                pickExercise(exercisesModel)
             })
 
         }

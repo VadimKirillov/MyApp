@@ -22,41 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/sectionEnterMuscleGroup"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="32dp"
-        android:clickable="false"
-        android:hint="Группа мышц"
-        app:boxBackgroundColor="@color/color_tab"
-        app:boxStrokeColor="@android:color/white"
-        app:boxStrokeWidthFocused="4dp"
-        app:counterMaxLength="0"
-        app:endIconTint="@android:color/white"
-        app:helperTextEnabled="true"
-        app:helperTextTextColor="@android:color/white"
-        app:hintTextColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textExerciseName"
-        app:startIconTint="@android:color/white">
-
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/autoCompleteBodyPart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoText="false"
-            android:completionThreshold="0"
-            android:includeFontPadding="false"
-            android:inputType="none"
-            android:textAllCaps="false"
-            android:textColor="@color/black" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -76,8 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sectionEnterMuscleGroup"
-        app:layout_constraintVertical_bias="0.162"
+        app:layout_constraintTop_toBottomOf="@+id/showBottomSheet"
+        app:layout_constraintVertical_bias="0.109"
         app:srcCompat="@drawable/ic_baseline_image_24" />
 
     <Button
@@ -85,7 +50,6 @@
         android:layout_width="47dp"
         android:layout_height="44dp"
 
-        android:layout_marginTop="40dp"
         android:backgroundTint="@color/orange"
         android:text="+"
         android:textColor="@color/black"
@@ -93,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sectionEnterMuscleGroup" />
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/createNewExercise"
@@ -115,14 +79,16 @@
         android:id="@+id/showBottomSheet"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="432dp"
         android:backgroundTint="@color/orange"
         android:text="Группа мышц"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/createNewExercise"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textExerciseName"
+        app:layout_constraintVertical_bias="0.882" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,11 @@ package com.example.myapp.viewModels
 
 import androidx.lifecycle.*
 import androidx.paging.PagedList
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.CreateOrUpdateExercicesMutation
 import com.example.myapp.data.model.UtilClient
 import com.example.myapp.models.ExerciseModel
@@ -16,10 +21,9 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
     lateinit var exercises : LiveData<PagedList<ExerciseModel>>
     val mediatorLiveDataExercises = MediatorLiveData<List<ExerciseModel>>()
     fun getExercisesMediator() : LiveData<List<ExerciseModel>> = mediatorLiveDataExercises
-
-    var filterExercises = MutableLiveData<String>()
-
     var selectedExercises = mutableListOf<ExerciseModel>()
+
+    var filterName = MutableLiveData<String>().apply { postValue("%%")};
 
     lateinit var config : PagedList.Config
     init {
@@ -41,7 +45,7 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
 //        ).build()
 
         exercises = Transformations.switchMap<String, PagedList<ExerciseModel>>(
-            filterExercises
+            filterName
         ) { input: String? ->
             return@switchMap LivePagedListBuilder<Integer, ExerciseModel>(
                 exerciseRepository.loadExercises(), config
@@ -66,6 +70,8 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
     }
 
     fun getExercises(group: String? = null){
+        Log.d("exercise", filterName.value!!)
+       exercises = exerciseRepository.getExercises(group, filterName.value!!)
 //        initAllTeams()
 //        var list = exerciseRepository.getExercises(group)
 //        mediatorLiveDataExercises.addSource(exerciseRepository.getExercises(group)){
@@ -94,5 +100,8 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
     fun pickExercise(exerciseModel: ExerciseModel, trainingId: Int) = viewModelScope.launch{
         exerciseRepository.pickExercise(trainingId, exercise_id = exerciseModel.id)
     }
+
+
+
 
 }

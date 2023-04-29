@@ -8,14 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentDoExerciseBinding
+import com.example.myapp.models.ExerciseModel
 
 import com.example.myapp.models.LineWithExercises
+import com.example.myapp.models.TrainingExerciseModel
 import com.example.myapp.repositories.TrainingRepository
 import com.example.myapp.utils.FragmentManager
 import pl.droidsonroids.gif.GifDrawable
@@ -30,9 +33,11 @@ class DoExerciseFragment : Fragment() {
 
     private var actionBar: ActionBar? = null
     private lateinit var trainingExercisesList: List<LineWithExercises>
+
 //    private lateinit var exListTrain: List<TrainingWithExercises> todo: может нафиг его
 
     private lateinit var trainingRepository: TrainingRepository
+    private var idTraining:Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +49,10 @@ class DoExerciseFragment : Fragment() {
         trainingRepository = TrainingRepository(trainingsDao)
 //        trainingFactory = TrainingFactory(trainingRepository!!)
 //        trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
+
+        idTraining = arguments?.getString("idTraining")?.toInt()
+
+
         return binding.root
     }
 
@@ -51,8 +60,17 @@ class DoExerciseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         actionBar = (activity as AppCompatActivity).supportActionBar
         trainingRepository.trainings.observe(viewLifecycleOwner){
-            var lines = it!![1].lines
+
+
+            var lines = it!![idTraining?.minus(1)!!].lines
+
             trainingExercisesList = lines
+            var t = lines.toMutableList()
+            //t.add(LineWithExercises(TrainingExerciseModel(id=1, training_id=1, exercise_id=1, count=5),
+            //                      ExerciseModel(id=1, name="отдых", muscle_group="отдых", type="type", image="4124", external_id=null)))
+
+            
+            trainingExercisesList = t.toList()
             nextExercise()
         }
         binding.bNext.setOnClickListener {
@@ -95,6 +113,7 @@ class DoExerciseFragment : Fragment() {
         decodeBase64AndSetImage(exercise.exercise.image, imMain)
         tvName.text = exercise.exercise.name
         val cnt = exercise.playlist.count.toString()
+
         tvTime.text = "$cnt раз"
     }
 

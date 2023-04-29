@@ -9,14 +9,14 @@ import com.example.myapp.models.ExerciseModel
 
 
 class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
-    val exercises = exerciseDAO.getAllExercises()
+    val exercises = exerciseDAO.getAllExercises("%%")
 
-    fun getExercises(group: String? = null): LiveData<List<ExerciseModel>> {
+    fun getExercises(group: String? = null, name: String): LiveData<List<ExerciseModel>> {
           if(group != null){
-            return exerciseDAO.getExercisesByGroup(group)
+            return exerciseDAO.getExercisesByGroup(group, name)
           }
           else{
-            return exerciseDAO.getAllExercises()
+           return exerciseDAO.getAllExercises(name)
           }
     }
 

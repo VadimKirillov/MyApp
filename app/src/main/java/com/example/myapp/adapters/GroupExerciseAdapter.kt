@@ -39,6 +39,10 @@ class GroupExerciseAdapter(val listener: Listener): RecyclerView.Adapter<GroupEx
         notifyDataSetChanged()
     }
 
+    fun clear(){
+        groupExerciseList.clear()
+    }
+
     interface Listener{
         fun onClick(groupExercise: GroupExercise){
 

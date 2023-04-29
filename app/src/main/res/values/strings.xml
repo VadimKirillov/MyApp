@@ -15,6 +15,7 @@
     <string name="name_exercise">Название упражнения</string>
     <string name="my_train">Моя тренировка</string>
     <string name="end_train">Конец</string>
+    <string name="global">Сеть</string>
 
     <!--  Authentication  -->
     <string name="title_activity_login">LoginActivity</string>

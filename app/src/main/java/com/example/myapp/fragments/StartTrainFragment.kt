@@ -23,6 +23,7 @@ class StartTrainFragment : Fragment() {
             //findNavController()?.navigate(R.id.action_startTrainFragment_to_waitingFragment)
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.content, PickTrainToStartFragment())
+            transaction?.addToBackStack(null)
             transaction?.commit()
 
         }

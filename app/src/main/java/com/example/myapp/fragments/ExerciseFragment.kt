@@ -1,10 +1,13 @@
 package com.example.myapp.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -33,22 +36,27 @@ class ExerciseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         var group = arguments?.getString("filter")
+
+
+
+        //Log.d("debug", group?.toString() ?: "")
+        binding = ListExercisesBinding.inflate(inflater, container, false)
+
         if(group == "Все"){
             group = null
         }
+        else{
+            binding.textHeaderGroup.text = group
+        }
 
-        Log.d("debug", group?.toString() ?: "")
-        binding = ListExercisesBinding.inflate(inflater, container, false)
         val exercisesDao = Database.getInstance((context as FragmentActivity).application).exerciseDAO
         exerciseRepository = ExerciseRepository(exercisesDao)
         val exerciseFactory = ExerciseFactory(exerciseRepository)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
 
-
         initRecyclerExercises()
         displayExercises()
         exerciseViewModel.filterExercises.setValue("");
-//        exerciseViewModel.getExercises(group)
 
         binding.createNewExercise.setOnClickListener {
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
@@ -56,6 +64,27 @@ class ExerciseFragment : Fragment() {
             transaction?.addToBackStack(null)
             transaction?.commit()
         }
+
+        binding.searchExercise.addTextChangedListener(
+        object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+                Toast.makeText(context, "Test-test", Toast.LENGTH_LONG)
+                Log.d("test-ets", "test")
+                Log.d("test-1", s.toString())
+                exerciseViewModel.filterName.
+                          setValue("%" + s.toString() + "%");
+                exerciseViewModel.getExercises(group)
+                //initRecyclerExercises()
+                displayExercises()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+          })
         return binding.root
     }
 
@@ -63,8 +92,7 @@ class ExerciseFragment : Fragment() {
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
         exerciseAdapter = ExerciseAdapter(
             {categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
-            {categoryModel:ExerciseModel-> editExercise(categoryModel)},
-            {categoryModel: ExerciseModel -> pickExercise(categoryModel)},
+            {categoryModel:ExerciseModel-> editExercise(categoryModel)}
         )
         binding.recyclerCategories.adapter = exerciseAdapter
         binding.recyclerCategories.addOnScrollListener(scrollListener)
@@ -88,14 +116,8 @@ class ExerciseFragment : Fragment() {
             Log.e("Paging ", "PageAll" + it.size);
 
             exerciseAdapter.submitList(it)
-//            exerciseAdapter.notifyDataSetChanged()
 
         })
-    }
-
-    private fun pickExercise(exerciseModel: ExerciseModel) {
-        // todo: уберём, в тренировке будем добавлять упражнения
-        exerciseViewModel.pickExercise(exerciseModel, 1)
     }
 
     private fun deleteExercise(exerciseModel: ExerciseModel) {

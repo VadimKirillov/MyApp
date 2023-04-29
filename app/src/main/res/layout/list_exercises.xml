@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/textHeaderGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -24,13 +24,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerCategories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="408dp"
+            android:layout_height="566dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            app:layout_constraintTop_toBottomOf="@+id/searchExercise"
+            app:layout_constraintVertical_bias="0.11" />
 
         <ImageButton
             android:id="@+id/createNewExercise"
@@ -45,6 +47,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_add" />
+
+        <EditText
+            android:id="@+id/searchExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:hint="Поиск упражнения"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.164"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textHeaderGroup" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

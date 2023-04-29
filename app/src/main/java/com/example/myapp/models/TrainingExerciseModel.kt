@@ -20,6 +20,8 @@ data class TrainingExerciseModel (
 
     @ColumnInfo(name = "count")
     var count : Int,
+
+
     )
 
 data class LineWithExercises(
