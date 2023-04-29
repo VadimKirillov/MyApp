@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.ListExercisesBinding
 import com.example.myapp.models.ExerciseModel
@@ -24,6 +25,8 @@ class ExerciseFragment : Fragment() {
     private lateinit var exerciseRepository: ExerciseRepository
     private lateinit var exerciseViewModel: ExerciseViewModel
     private lateinit var exerciseAdapter: ExerciseAdapter
+    private var isLoading = false
+    private var currentPage = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +43,12 @@ class ExerciseFragment : Fragment() {
         exerciseRepository = ExerciseRepository(exercisesDao)
         val exerciseFactory = ExerciseFactory(exerciseRepository)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
-        exerciseViewModel.getExercises(group)
+
 
         initRecyclerExercises()
         displayExercises()
+        exerciseViewModel.filterExercises.setValue("");
+//        exerciseViewModel.getExercises(group)
 
         binding.createNewExercise.setOnClickListener {
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
@@ -59,16 +64,32 @@ class ExerciseFragment : Fragment() {
         exerciseAdapter = ExerciseAdapter(
             {categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
             {categoryModel:ExerciseModel-> editExercise(categoryModel)},
-            {categoryModel: ExerciseModel -> pickExercise(categoryModel)}
+            {categoryModel: ExerciseModel -> pickExercise(categoryModel)},
         )
         binding.recyclerCategories.adapter = exerciseAdapter
+        binding.recyclerCategories.addOnScrollListener(scrollListener)
+    }
 
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!isLoading) {
+                    currentPage++
+                    exerciseViewModel.getExercises("Ноги")
+                }
+            }
+        }
     }
 
     private fun displayExercises(){
+        exerciseViewModel.initAllTeams()
         exerciseViewModel.exercises.observe(viewLifecycleOwner, Observer {
-            exerciseAdapter.setList(it)
-            exerciseAdapter.notifyDataSetChanged()
+            Log.e("Paging ", "PageAll" + it.size);
+
+            exerciseAdapter.submitList(it)
+//            exerciseAdapter.notifyDataSetChanged()
+
         })
     }
 

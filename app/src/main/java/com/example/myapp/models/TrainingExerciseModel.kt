@@ -29,5 +29,4 @@ data class LineWithExercises(
         entityColumn = "id",
     )
     var exercise: ExerciseModel,
-
 )

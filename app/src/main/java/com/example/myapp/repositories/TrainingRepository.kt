@@ -1,24 +1,27 @@
 package com.example.myapp.repositories
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.example.myapp.data.ExerciseDao
 import com.example.myapp.data.TrainingDao
-import com.example.myapp.models.ExerciseModel
-import com.example.myapp.models.TrainingExerciseModel
-import com.example.myapp.models.TrainingModel
-import com.example.myapp.models.TrainingWithExercises
+import com.example.myapp.models.*
 
 class TrainingRepository (private val trainingDAO: TrainingDao) {
 
     val trainings = trainingDAO.getTrainingWithExercises()
+    var linesLiveData: LiveData<List<LineWithExercises>> = Transformations.map(trainings) { training ->
+        training.get(0).lines
+    }
     val allTrainings = trainingDAO.getTrainings()
 
     //suspend fun getTrainings(): LiveData<List<TrainingModel>> {
     //    return trainingDAO.getTrainings()
     //}
     
-    fun getTrainingWithExercisesById(id: Int): LiveData<List<TrainingWithExercises>>{
-         return trainingDAO.getTrainingWithExercisesById(id)
+    fun getTrainingWithExercisesById(id: Int): LiveData<List<LineWithExercises>>{
+         return Transformations.map(trainingDAO.getTrainingWithExercisesById(id)) { training ->
+             training.get(0).lines
+         }
     }
 
 

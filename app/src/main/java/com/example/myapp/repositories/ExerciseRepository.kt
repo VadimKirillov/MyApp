@@ -2,6 +2,8 @@ package com.example.myapp.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
 import com.example.myapp.data.ExerciseDao
 import com.example.myapp.models.ExerciseModel
 
@@ -36,6 +38,10 @@ class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
 
     suspend fun pickExercise(training_id: Int, exercise_id: Int){
         exerciseDAO.pickExercise(exercise_id = exercise_id, training_id = training_id)
+    }
+
+    fun loadExercises(): DataSource.Factory<Integer, ExerciseModel> {
+       return exerciseDAO.loadExercises()
     }
     
 }
