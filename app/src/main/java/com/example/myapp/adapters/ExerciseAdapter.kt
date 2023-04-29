@@ -3,16 +3,31 @@ package com.example.myapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.databinding.ExerciseItemBinding
 import com.example.myapp.models.ExerciseModel
 
-class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
-                      private val editExercise:(ExerciseModel)->Unit,
-                      ) : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>() {
 
-    private val exercisesList = ArrayList<ExerciseModel>()
+class DiffUtilCallBack : DiffUtil.ItemCallback<ExerciseModel>() {
+    override fun areItemsTheSame(oldItem: ExerciseModel, newItem: ExerciseModel): Boolean {
+        return oldItem.id == newItem.id
+    }
 
+    override fun areContentsTheSame(oldItem: ExerciseModel, newItem: ExerciseModel): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+}
+
+
+
+class ExerciseAdapter(
+    private val deleteExercise: (ExerciseModel) -> Unit,
+    private val editExercise: (ExerciseModel) -> Unit,
+
+) : PagedListAdapter<ExerciseModel, ExerciseAdapter.ExerciseHolder>(DiffUtilCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
 
         val binding : ExerciseItemBinding = ExerciseItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,18 +35,13 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
         return ExerciseHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return exercisesList.size
-    }
-
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        holder.bind(exercisesList[position], deleteExercise, editExercise)
+        if(position <= -1 || getItem(position) == null){
+            return
+        }
+        holder.bind(getItem(position)!!, deleteExercise, editExercise)
     }
 
-    fun setList(exercises: List<ExerciseModel>) {
-        exercisesList.clear()
-        exercisesList.addAll(exercises)
-    }
 
 
     class ExerciseHolder(val binding: ExerciseItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -40,7 +50,6 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
             exercisesModel: ExerciseModel,
             deleteExercise: (ExerciseModel) -> Unit,
             editExercise: (ExerciseModel) -> Unit,
-            
 
         ) {
             // todo: заменить просто на передачу объекта
@@ -56,8 +65,6 @@ class ExerciseAdapter(private val deleteExercise:(ExerciseModel)->Unit,
             binding.deleteExercise.setOnClickListener(View.OnClickListener {
                 deleteExercise(exercisesModel)
             })
-
-            
 
         }
 

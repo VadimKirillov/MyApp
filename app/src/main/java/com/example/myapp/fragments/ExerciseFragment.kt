@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.ListExercisesBinding
 import com.example.myapp.models.ExerciseModel
@@ -27,14 +28,14 @@ class ExerciseFragment : Fragment() {
     private lateinit var exerciseRepository: ExerciseRepository
     private lateinit var exerciseViewModel: ExerciseViewModel
     private lateinit var exerciseAdapter: ExerciseAdapter
+    private var isLoading = false
+    private var currentPage = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         var group = arguments?.getString("filter")
-
-
 
         //Log.d("debug", group?.toString() ?: "")
         binding = ListExercisesBinding.inflate(inflater, container, false)
@@ -51,11 +52,11 @@ class ExerciseFragment : Fragment() {
         val exerciseFactory = ExerciseFactory(exerciseRepository)
         exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
 
-        exerciseViewModel.filterName.setValue("%%");
-        exerciseViewModel.getExercises(group)
-
         initRecyclerExercises()
+        exerciseViewModel.filterName.setValue("%%");
+        exerciseViewModel.filterGroup.setValue(group);
         displayExercises()
+
 
         binding.createNewExercise.setOnClickListener {
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
@@ -73,9 +74,6 @@ class ExerciseFragment : Fragment() {
                 Log.d("test-1", s.toString())
                 exerciseViewModel.filterName.
                           setValue("%" + s.toString() + "%");
-                exerciseViewModel.getExercises(group)
-                //initRecyclerExercises()
-                displayExercises()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -84,10 +82,6 @@ class ExerciseFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
           })
-
-        binding.deleteSearch.setOnClickListener{
-            binding.searchExercise.setText("")
-        }
         return binding.root
     }
 
@@ -95,20 +89,32 @@ class ExerciseFragment : Fragment() {
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
         exerciseAdapter = ExerciseAdapter(
             {categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
-            {categoryModel:ExerciseModel-> editExercise(categoryModel)},
-
+            {categoryModel:ExerciseModel-> editExercise(categoryModel)}
         )
         binding.recyclerCategories.adapter = exerciseAdapter
+        binding.recyclerCategories.addOnScrollListener(scrollListener)
+    }
 
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (!isLoading) {
+                    currentPage++
+//                    exerciseViewModel.getExercises("Ноги")
+                }
+            }
+        }
     }
 
     private fun displayExercises(){
+        exerciseViewModel.initExercises()
         exerciseViewModel.exercises.observe(viewLifecycleOwner, Observer {
-            exerciseAdapter.setList(it)
-            exerciseAdapter.notifyDataSetChanged()
+            Log.e("Paging ", "PageAll" + it.size);
+
+            exerciseAdapter.submitList(it)
         })
     }
-
 
     private fun deleteExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel.deleteExercise(exerciseModel)
