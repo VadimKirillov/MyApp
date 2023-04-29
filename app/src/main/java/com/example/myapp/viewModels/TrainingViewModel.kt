@@ -11,17 +11,18 @@ import kotlinx.coroutines.launch
 
 class TrainingViewModel (private val trainingRepository: TrainingRepository) : ViewModel() {
 
-   var trainings = trainingRepository.trainings
+//   var trainings = trainingRepository.trainings
+   var linesLiveData = trainingRepository.linesLiveData
    var allTrainings = trainingRepository.allTrainings
 
 
    fun getTrainingWithExercisesById(id: Int? = null){
         if(id != null){
-            trainings = trainingRepository.getTrainingWithExercisesById(id)
+            linesLiveData = trainingRepository.getTrainingWithExercisesById(id)
         }
-        else{
-            trainings = trainingRepository.trainings
-        }
+//        else{
+//            linesLiveData = trainingRepository.trainings
+//        }
    }
 
 

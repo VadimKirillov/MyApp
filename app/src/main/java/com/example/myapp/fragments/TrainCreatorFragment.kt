@@ -36,7 +36,7 @@ class TrainCreatorFragment : Fragment() {
     ): View {
         binding = FragmentTrainCreatorBinding.inflate(inflater,container, false )
         idTraining = arguments?.getInt("idTraining")!!
-        nameTraining = arguments?.getString("nameTraining")!!
+//        nameTraining = arguments?.getString("nameTraining")!!
         binding.textView13.setText(nameTraining)
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         val trainingRepository = TrainingRepository(trainingsDao)
@@ -73,15 +73,17 @@ class TrainCreatorFragment : Fragment() {
     }
 
     private fun displayTrainingsLines(){
-        Log.d("banban", trainingViewModel.trainings.toString())
-
-        trainingViewModel.trainings.observe(viewLifecycleOwner, Observer {
+        Log.d("banban", trainingViewModel.allTrainings.toString())
+        Log.d("banban", trainingViewModel.linesLiveData.toString())
+//        trainingViewModel.trainings.observe(viewLifecycleOwner, Observer {
+//            Log.d("banban", it.size.toString())
+//            trainingAdapter.setList(trainingViewModel.linesLiveData.value)
+//            trainingAdapter.notifyDataSetChanged()
+//        })
+        trainingViewModel.linesLiveData.observe(viewLifecycleOwner, Observer {
             Log.d("banban", it.size.toString())
-             if(it.size > 0){
-                 trainingAdapter.setList(it.get(0).lines)
-                 trainingAdapter.notifyDataSetChanged()
-
-             }
+            trainingAdapter.setList(it)
+            trainingAdapter.notifyDataSetChanged()
       })
 
     }
