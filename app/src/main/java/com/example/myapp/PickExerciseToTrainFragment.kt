@@ -40,7 +40,9 @@ class PickExerciseToTrainFragment : Fragment() {
             exerciseRepository = ExerciseRepository(exercisesDao)
             val exerciseFactory = ExerciseFactory(exerciseRepository)
             exerciseViewModel = ViewModelProvider(this, exerciseFactory).get(ExerciseViewModel::class.java)
-            exerciseViewModel.getExercises(group)
+            exerciseViewModel.filterName.setValue("%%");
+            exerciseViewModel.filterGroup.setValue(group);
+            exerciseViewModel.initExercises()
             val trainingId = arguments?.getInt("idTraining")
             val trainingName = arguments?.getString("nameTraining")
 

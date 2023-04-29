@@ -22,10 +22,10 @@ interface ExerciseDao {
     suspend fun deleteAllExercises()
 
     @Query("SELECT * FROM exercise_data_table WHERE exercise_name LIKE :name")
-    fun getAllExercises(name: String): LiveData<List<ExerciseModel>>
+    fun getAllExercises(name: String): DataSource.Factory<Integer, ExerciseModel>
 
     @Query("SELECT * FROM exercise_data_table WHERE exercise_muscle_group=:group AND exercise_name LIKE :name")
-    fun getExercisesByGroup(group: String, name: String): LiveData<List<ExerciseModel>>
+    fun getExercisesByGroup(group: String, name: String): DataSource.Factory<Integer, ExerciseModel>
 
    // @Query("SELECT * FROM exercise_data_table WHERE exercise_muscle_group LIKE :name")
     //fun getExercisesByName(name: String): LiveData<List<ExerciseModel>>

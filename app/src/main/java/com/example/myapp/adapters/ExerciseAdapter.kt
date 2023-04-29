@@ -26,22 +26,14 @@ class DiffUtilCallBack : DiffUtil.ItemCallback<ExerciseModel>() {
 class ExerciseAdapter(
     private val deleteExercise: (ExerciseModel) -> Unit,
     private val editExercise: (ExerciseModel) -> Unit,
-    private val pickExercise: (ExerciseModel) -> Unit,
 
 ) : PagedListAdapter<ExerciseModel, ExerciseAdapter.ExerciseHolder>(DiffUtilCallBack()) {
-
-//    private val exercisesList = ArrayList<ExerciseModel>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
 
         val binding : ExerciseItemBinding = ExerciseItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return ExerciseHolder(binding)
     }
-
-//    override fun getItemCount(): Int {
-//        return exercisesList.size
-//    }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         if(position <= -1 || getItem(position) == null){

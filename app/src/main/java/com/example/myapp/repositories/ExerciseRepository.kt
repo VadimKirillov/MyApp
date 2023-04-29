@@ -11,7 +11,7 @@ import com.example.myapp.models.ExerciseModel
 class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
     val exercises = exerciseDAO.getAllExercises("%%")
 
-    fun getExercises(group: String? = null, name: String): LiveData<List<ExerciseModel>> {
+    fun getExercises(group: String? = null, name: String): DataSource.Factory<Integer, ExerciseModel> {
           if(group != null){
             return exerciseDAO.getExercisesByGroup(group, name)
           }
@@ -40,8 +40,5 @@ class ExerciseRepository (private val exerciseDAO: ExerciseDao) {
         exerciseDAO.pickExercise(exercise_id = exercise_id, training_id = training_id)
     }
 
-    fun loadExercises(): DataSource.Factory<Integer, ExerciseModel> {
-       return exerciseDAO.loadExercises()
-    }
     
 }

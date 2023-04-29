@@ -19,43 +19,20 @@ import androidx.paging.LivePagedListBuilder
 
 class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : ViewModel() {
     lateinit var exercises : LiveData<PagedList<ExerciseModel>>
-    val mediatorLiveDataExercises = MediatorLiveData<List<ExerciseModel>>()
-    fun getExercisesMediator() : LiveData<List<ExerciseModel>> = mediatorLiveDataExercises
     var selectedExercises = mutableListOf<ExerciseModel>()
 
-    var filterName = MutableLiveData<String>().apply { postValue("%%")};
+    var filterName = MutableLiveData<String>()
+    var filterGroup = MutableLiveData<String>()
 
-    lateinit var config : PagedList.Config
+    var config : PagedList.Config
     init {
         config = PagedList.Config.Builder()
             .setPageSize(5)
 //            .setEnablePlaceholders(false)
             .build()
-
-    }
-
-    fun initAllTeams() {
-
-
-//        filterExercises.setValue("");
-//        exercises = LivePagedListBuilder<Integer, ExerciseModel>(exerciseRepository.loadExercises(), config).build()
-//
-//        LivePagedListBuilder<Integer, ExerciseModel>(
-//            exerciseRepository.loadExercises(), config
-//        ).build()
-
-        exercises = Transformations.switchMap<String, PagedList<ExerciseModel>>(
-            filterName
-        ) { input: String? ->
-            return@switchMap LivePagedListBuilder<Integer, ExerciseModel>(
-                exerciseRepository.loadExercises(), config
-            ).build()
-        }
-
     }
 
     fun startUpdateExercise(idExercise:Int, nameExercise:String, muscle_group:String,exercise_type:String, exercise_image:String, external_id:String) {
-//        var ex_filter = exercises.value?. { it.id == idExercise }
         updateExercise(ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image,
             external_id))
         val exerciseModel = ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image, external_id)
@@ -69,21 +46,21 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
 
     }
 
-    fun getExercises(group: String? = null){
-        Log.d("exercise", filterName.value!!)
-       exercises = exerciseRepository.getExercises(group, filterName.value!!)
-//        initAllTeams()
-//        var list = exerciseRepository.getExercises(group)
-//        mediatorLiveDataExercises.addSource(exerciseRepository.getExercises(group)){
-//            mediatorLiveDataExercises.postValue( exercises.value)
-//            exercises.value = it
-//        }
-//        var list = exerciseRepository.getExercises(group)
-//        list.observeForever {
-//            exercises.value = it
-//        }
-//        exercises.value = listOf(ExerciseModel(100, "test", "test", "test","", null))
+    class DoubleTrigger<A, B>(a: LiveData<A>, b: LiveData<B>) : MediatorLiveData<Pair<A?, B?>>() {
+        init {
+            addSource(a) { value = it to b.value }
+            addSource(b) { value = a.value to it }
+        }
     }
+
+    fun initExercises(){
+        Log.d("exercise", filterName.value!!)
+        exercises = Transformations.switchMap(
+            DoubleTrigger(filterGroup, filterName),
+            { LivePagedListBuilder<Integer, ExerciseModel>(exerciseRepository.getExercises(it.first, it.second!!), config).build()}
+        )
+    }
+
 
     fun insertExercise(exerciseModel: ExerciseModel) = viewModelScope.launch{
         exerciseRepository.insertExercise(exerciseModel)
@@ -100,8 +77,5 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
     fun pickExercise(exerciseModel: ExerciseModel, trainingId: Int) = viewModelScope.launch{
         exerciseRepository.pickExercise(trainingId, exercise_id = exerciseModel.id)
     }
-
-
-
 
 }
