@@ -29,9 +29,9 @@ mutation DeleteExercisesMutation($exercise: ExerciseInput!){
     }
 }
 
-query AllExercicesQuery($exercise: ExerciseInput){
+query AllExercicesQuery($exercise: ExerciseInput, $page: Int, $size: Int){
     searchExercises(
-        exercise: $exercise
+        exercise: $exercise, page: $page, size: $size
     ) {
         success
         errors
@@ -42,6 +42,8 @@ query AllExercicesQuery($exercise: ExerciseInput){
             count
             picture
         }
+        position
+        total_count
     }
 }
 
