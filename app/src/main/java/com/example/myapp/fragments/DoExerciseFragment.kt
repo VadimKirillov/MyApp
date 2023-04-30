@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentDoExerciseBinding
@@ -21,6 +22,8 @@ import com.example.myapp.models.LineWithExercises
 import com.example.myapp.models.TrainingExerciseModel
 import com.example.myapp.repositories.TrainingRepository
 import com.example.myapp.utils.FragmentManager
+import com.example.myapp.viewModels.TrainingFactory
+import com.example.myapp.viewModels.TrainingViewModel
 import pl.droidsonroids.gif.GifDrawable
 import java.io.ByteArrayInputStream
 import java.io.InputStream
@@ -37,6 +40,7 @@ class DoExerciseFragment : Fragment() {
 //    private lateinit var exListTrain: List<TrainingWithExercises> todo: может нафиг его
 
     private lateinit var trainingRepository: TrainingRepository
+    private lateinit var trainingViewModel: TrainingViewModel
     private var idTraining:Int? = null
 
     override fun onCreateView(
@@ -47,8 +51,8 @@ class DoExerciseFragment : Fragment() {
 
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         trainingRepository = TrainingRepository(trainingsDao)
-//        trainingFactory = TrainingFactory(trainingRepository!!)
-//        trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
+        val trainingFactory = TrainingFactory(trainingRepository!!)
+        trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
 
         idTraining = arguments?.getString("idTraining")?.toInt()
 
@@ -59,17 +63,20 @@ class DoExerciseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         actionBar = (activity as AppCompatActivity).supportActionBar
-        trainingRepository.trainings.observe(viewLifecycleOwner){
+        trainingViewModel.getTrainingWithExercisesById(idTraining)
+        trainingViewModel.nameTraining.setValue("fsdf")
+        trainingViewModel.linesLiveData.observe(viewLifecycleOwner){
 
 
-            var lines = it!![idTraining?.minus(1)!!].lines
+            var lines = it
 
             trainingExercisesList = lines
             var t = lines.toMutableList()
+            t = it.sortedWith(compareBy({ it.playlist.sequence })).toMutableList()
             //t.add(LineWithExercises(TrainingExerciseModel(id=1, training_id=1, exercise_id=1, count=5),
             //                      ExerciseModel(id=1, name="отдых", muscle_group="отдых", type="type", image="4124", external_id=null)))
 
-            
+
             trainingExercisesList = t.toList()
             nextExercise()
         }

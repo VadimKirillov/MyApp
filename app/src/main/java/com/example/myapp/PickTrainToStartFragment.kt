@@ -57,6 +57,8 @@ class PickTrainToStartFragment : Fragment(), PickTrainToStartAdapter.Listener{
         }
 
         private fun displayTrainings(){
+            trainingViewModel.getAllTrainings()
+            trainingViewModel.nameTraining.setValue("gsdfdsf")
             trainingViewModel.allTrainings.observe(viewLifecycleOwner, Observer {
                 pickTrainAdapter.setList(it)
                 pickTrainAdapter.notifyDataSetChanged()
@@ -66,7 +68,7 @@ class PickTrainToStartFragment : Fragment(), PickTrainToStartAdapter.Listener{
         }
         override fun onClick(trainingModel: TrainingModel) {
             super.onClick(trainingModel)
-            Toast.makeText(context, trainingModel.name, Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, trainingModel.name, Toast.LENGTH_LONG).show()
 
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             val parameters = Bundle()

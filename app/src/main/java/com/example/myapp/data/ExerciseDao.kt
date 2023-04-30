@@ -30,7 +30,7 @@ interface ExerciseDao {
    // @Query("SELECT * FROM exercise_data_table WHERE exercise_muscle_group LIKE :name")
     //fun getExercisesByName(name: String): LiveData<List<ExerciseModel>>
 
-    @Query("INSERT INTO training_exercise_data_table(training_id, exercise_id, count) VALUES (:training_id,:exercise_id, 0)")
+    @Query("INSERT INTO training_exercise_data_table(training_id, exercise_id, count, sequence) VALUES (:training_id,:exercise_id, 0, 1000)")
     fun pickExercise(exercise_id:Int,training_id:Int)
 
     @Query("SELECT * FROM exercise_data_table")

@@ -8,7 +8,7 @@ import com.example.myapp.models.ExerciseModel
 import com.example.myapp.models.TrainingExerciseModel
 import com.example.myapp.models.TrainingModel
 
-@Database(entities = [TrainingModel::class, ExerciseModel::class,TrainingExerciseModel::class], version = 2)
+@Database(entities = [TrainingModel::class, ExerciseModel::class,TrainingExerciseModel::class], version = 2, exportSchema = true)
 abstract class Database: RoomDatabase() {
 
     abstract val exerciseDAO : ExerciseDao
@@ -25,7 +25,7 @@ abstract class Database: RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         com.example.myapp.data.Database::class.java,
-                        "database7.2"
+                        "database7.3"
                     ).allowMainThreadQueries().build()
                 }
 

@@ -1,6 +1,8 @@
 package com.example.myapp.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
 import com.example.myapp.PickExerciseToTrainFragment
 import com.example.myapp.R
+import com.example.myapp.TrainCreationFragment
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentTrainCreatorBinding
 import com.example.myapp.models.LineWithExercises
 import com.example.myapp.repositories.TrainingRepository
 import com.example.myapp.adapters.TrainingAdapter
+import com.example.myapp.models.TrainingModel
 import com.example.myapp.viewModels.TrainingFactory
 import com.example.myapp.viewModels.TrainingViewModel
 
@@ -37,12 +41,29 @@ class TrainCreatorFragment : Fragment() {
         binding = FragmentTrainCreatorBinding.inflate(inflater,container, false )
         idTraining = arguments?.getInt("idTraining")!!
         nameTraining = arguments?.getString("nameTraining")!!
-        binding.textView13.setText(nameTraining)
+        binding.editNameTraining.setText(nameTraining)
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         val trainingRepository = TrainingRepository(trainingsDao)
         trainingFactory = TrainingFactory(trainingRepository)
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
         trainingViewModel.getTrainingWithExercisesById(idTraining)
+        trainingViewModel.nameTraining.setValue("testte")
+
+        binding.editNameTraining.addTextChangedListener(
+            object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    trainingViewModel.nameTraining
+                    trainingViewModel.updateTraining(TrainingModel(idTraining,s.toString()))
+
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
+
 
         binding.addExercise.setOnClickListener {
 
@@ -58,6 +79,8 @@ class TrainCreatorFragment : Fragment() {
 
 
         }
+
+
         initRecyclerTrainings()
         displayTrainingsLines()
 
@@ -68,12 +91,14 @@ class TrainCreatorFragment : Fragment() {
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
         // todo: кажется адаптер должен вызывать только методы view model, но не факт
         trainingAdapter = TrainingAdapter({categoryModel: LineWithExercises -> deleteTraining(categoryModel)},
-            {categoryModel: LineWithExercises -> editTraining(categoryModel)})
+            {categoryModel: LineWithExercises -> editTraining(categoryModel)}, trainingViewModel)
+
         binding.recyclerCategories.adapter = trainingAdapter
+        trainingAdapter.itemTouchHelper.attachToRecyclerView(binding.recyclerCategories)
     }
 
     private fun displayTrainingsLines(){
-        Log.d("banban", trainingViewModel.allTrainings.toString())
+ //       Log.d("banban", trainingViewModel.allTrainings.toString())
         Log.d("banban", trainingViewModel.linesLiveData.toString())
 //        trainingViewModel.trainings.observe(viewLifecycleOwner, Observer {
 //            Log.d("banban", it.size.toString())
@@ -81,8 +106,10 @@ class TrainCreatorFragment : Fragment() {
 //            trainingAdapter.notifyDataSetChanged()
 //        })
         trainingViewModel.linesLiveData.observe(viewLifecycleOwner, Observer {
-            Log.d("banban", it.size.toString())
-            trainingAdapter.setList(it)
+            val sortedList = it.sortedWith(compareBy({ it.playlist.sequence }))
+             // sequence
+            Log.d("train_creator", it.size.toString())
+            trainingAdapter.setList(sortedList)
             trainingAdapter.notifyDataSetChanged()
       })
 
@@ -107,10 +134,29 @@ class TrainCreatorFragment : Fragment() {
         panelEditCountTrain.arguments = parameters
         panelEditCountTrain.show((context as FragmentActivity).supportFragmentManager, "editCount")
     }
+
+
     
     companion object {
         @JvmStatic
         fun newInstance() = TrainCreatorFragment()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Log.d("training", "onStop")
+
+        var i = 0
+        if(trainingAdapter.saveList == null){
+            return
+        }
+        for (line in trainingAdapter.saveList!!){
+            line.playlist.sequence = i
+            trainingViewModel.updateLine(line.playlist)
+            i += 1
+        }
+
     }
 
 

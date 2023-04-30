@@ -24,6 +24,8 @@ data class TrainingExerciseModel (
     @ColumnInfo(name = "rest_time")
     var rest_time : Int?,
 
+    @ColumnInfo(name = "sequence")
+    var sequence : Int?,
 
     )
 
@@ -34,4 +36,5 @@ data class LineWithExercises(
         entityColumn = "id",
     )
     var exercise: ExerciseModel,
+
 )

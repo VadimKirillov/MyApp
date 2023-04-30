@@ -37,8 +37,8 @@ interface TrainingDao {
     @Query("SELECT * FROM training_data_table")
     fun getTrainings(): LiveData<List<TrainingModel>>
 
-    @Query("DELETE FROM training_exercise_data_table WHERE training_id = :training_id and exercise_id = :exercise_id")
-    fun deleteLine(training_id: Int, exercise_id: Int)
+    @Query("DELETE FROM training_exercise_data_table WHERE id = :id")
+    fun deleteLine(id: Int)
 
     @Update
     suspend fun updateLine(productModel: TrainingExerciseModel)

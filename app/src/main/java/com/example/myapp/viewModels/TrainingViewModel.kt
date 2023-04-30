@@ -1,9 +1,6 @@
 package com.example.myapp.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.myapp.models.*
 import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.repositories.TrainingRepository
@@ -12,13 +9,25 @@ import kotlinx.coroutines.launch
 class TrainingViewModel (private val trainingRepository: TrainingRepository) : ViewModel() {
 
 //   var trainings = trainingRepository.trainings
-   var linesLiveData = trainingRepository.linesLiveData
-   var allTrainings = trainingRepository.allTrainings
+   lateinit var linesLiveData: LiveData<List<LineWithExercises>>
+   lateinit var allTrainings : LiveData<List<TrainingModel>>
+
+   var nameTraining = MutableLiveData<String>()
+
+   fun getAllTrainings(){
+        allTrainings = Transformations.switchMap(nameTraining, { nameTraining ->
+                                   trainingRepository.getTrainings()
+                                 })
+   }
 
 
    fun getTrainingWithExercisesById(id: Int? = null){
         if(id != null){
-            linesLiveData = trainingRepository.getTrainingWithExercisesById(id)
+            linesLiveData = Transformations.switchMap(nameTraining, { nameTraining ->
+                           Transformations.map(trainingRepository.getTrainingWithExercisesById(id)) { training ->
+                                 training.get(0).lines
+                             }
+                         })
         }
 //        else{
 //            linesLiveData = trainingRepository.trainings
@@ -40,7 +49,7 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
 
     fun startUpdateLine(idTraingLine: Int, idExercice:Int, idTraining:Int, count:Int, rest_time:Int) {
      // TODO: не передаётся id, не работает редактирование упражения
-        updateLine(TrainingExerciseModel(idTraingLine, idTraining,idExercice, count,rest_time))
+        updateLine(TrainingExerciseModel(idTraingLine, idTraining,idExercice, count,rest_time, 0))
     }
 
     fun insertTraining(trainingModel: TrainingModel) = viewModelScope.launch{
@@ -56,13 +65,12 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
    }
 
     fun deleteLine(trainingModel: LineWithExercises) = viewModelScope.launch{
-        trainingRepository.deleteLine(trainingModel.playlist.training_id, trainingModel.playlist.exercise_id)
+        trainingRepository.deleteLine(trainingModel.playlist.id)
         //trainingRepository.deleteTraining(trainingModel)
     }
 
     fun updateLine(trainingModel: TrainingExerciseModel) = viewModelScope.launch{
         trainingRepository.updateLine(trainingModel)
-
     }
 
     fun deleteAllTrainings() = viewModelScope.launch{

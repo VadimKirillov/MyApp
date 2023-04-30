@@ -64,14 +64,17 @@ class ExerciseFragment : Fragment() {
             transaction?.addToBackStack(null)
             transaction?.commit()
         }
+        binding.deleteSearch.setOnClickListener {
+            binding.searchExercise.setText("")
+        }
 
         binding.searchExercise.addTextChangedListener(
         object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
-                Toast.makeText(context, "Test-test", Toast.LENGTH_LONG)
-                Log.d("test-ets", "test")
-                Log.d("test-1", s.toString())
+//                Toast.makeText(context, "Test-test", Toast.LENGTH_LONG)
+//                Log.d("test-ets", "test")
+//                Log.d("test-1", s.toString())
                 exerciseViewModel.filterName.
                           setValue("%" + s.toString() + "%");
             }
@@ -84,6 +87,8 @@ class ExerciseFragment : Fragment() {
           })
         return binding.root
     }
+
+
 
     private fun initRecyclerExercises(){
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
