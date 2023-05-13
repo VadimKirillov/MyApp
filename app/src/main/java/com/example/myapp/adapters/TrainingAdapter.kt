@@ -1,9 +1,12 @@
 package com.example.myapp.adapters
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.view.size
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -15,6 +18,8 @@ import com.example.myapp.databinding.TrainItemBinding
 import com.example.myapp.models.LineWithExercises
 import com.example.myapp.models.TrainingModel
 import com.example.myapp.viewModels.TrainingViewModel
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 import java.util.*
 
 
@@ -60,10 +65,18 @@ class TrainingAdapter(private val deleteTraining:(LineWithExercises)->Unit,
                                              it(trainingModel.toString())
                                          }
                                     }
+            fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
+                val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
+                val stream: InputStream =
+                    ByteArrayInputStream(Base64.decode(imageDataBytes.toByteArray(), Base64.DEFAULT))
+                val bitmap = BitmapFactory.decodeStream(stream)
+                imageView.setImageBitmap(bitmap)
+            }
 
             binding.idTrain.text = trainingModel.exercise.id.toString()
             binding.nameExercise.text = trainingModel.exercise.name.toString()
             binding.count.text = trainingModel.playlist.count.toString()
+            decodeBase64AndSetImage(trainingModel.exercise.image, binding.imageCardExercise)
             //binding.categoryExercise.text = exercisesModel.category
 
 

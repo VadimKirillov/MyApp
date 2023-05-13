@@ -48,6 +48,18 @@ class WaitingFragment : Fragment() {
         soundEnd = MediaPlayer.create(context, R.raw.korotkiy)
         soundWarning = MediaPlayer.create(context, R.raw.nizkiy)
         binding.pBar.max = COUNT_DOWN_TIME.toInt()
+        binding.buttonGoStart.setOnClickListener(){
+            timer.cancel()
+            val transaction  = activity?.supportFragmentManager?.beginTransaction()
+            val parameters = Bundle()
+            parameters.putString("idTraining", idTraining)
+
+            val fragment = DoExerciseFragment()
+            fragment.arguments = parameters
+            transaction?.replace(R.id.content, fragment)
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+        }
         startTimer()
     }
 
@@ -80,6 +92,11 @@ class WaitingFragment : Fragment() {
             }
 
         }.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.cancel()
     }
 
     override fun onDetach() {

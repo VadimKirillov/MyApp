@@ -20,9 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/black"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/nameTrain"

@@ -40,7 +40,8 @@ class ExerciseFragment : Fragment() {
         //Log.d("debug", group?.toString() ?: "")
         binding = ListExercisesBinding.inflate(inflater, container, false)
 
-        if(group == "Все"){
+        if(group == "Все" || group == null){
+            binding.textHeaderGroup.text = "Все"
             group = null
         }
         else{
@@ -94,7 +95,8 @@ class ExerciseFragment : Fragment() {
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
         exerciseAdapter = ExerciseAdapter(
             {categoryModel: ExerciseModel -> deleteExercise(categoryModel)},
-            {categoryModel:ExerciseModel-> editExercise(categoryModel)}
+            {categoryModel:ExerciseModel-> editExercise(categoryModel)},
+            {categoryModel:ExerciseModel-> uploadExercise(categoryModel)}
         )
         binding.recyclerCategories.adapter = exerciseAdapter
         binding.recyclerCategories.addOnScrollListener(scrollListener)
@@ -125,6 +127,9 @@ class ExerciseFragment : Fragment() {
         exerciseViewModel.deleteExercise(exerciseModel)
     }
 
+    private fun uploadExercise(exerciseModel: ExerciseModel) {
+        exerciseViewModel.deleteExercise(exerciseModel)
+    }
     private fun editExercise(exerciseModel:ExerciseModel) {
         // todo: кажется нужно просто передавать id, хотелось бы объект
         val panelEditExercise = EditExerciseFragment()

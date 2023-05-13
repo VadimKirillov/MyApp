@@ -18,7 +18,7 @@
     <string name="global">Сеть</string>
 
     <!--  Authentication  -->
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Авторизация</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_register">Register</string>
