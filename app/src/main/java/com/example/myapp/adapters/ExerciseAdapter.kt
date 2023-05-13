@@ -17,16 +17,14 @@ import java.io.InputStream
 
 class DiffUtilCallBack : DiffUtil.ItemCallback<ExerciseModel>() {
     override fun areItemsTheSame(oldItem: ExerciseModel, newItem: ExerciseModel): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(oldItem: ExerciseModel, newItem: ExerciseModel): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.name == newItem.name
     }
 
 }
-
-
 
 class ExerciseAdapter(
     private val deleteExercise: (ExerciseModel) -> Unit,
