@@ -34,7 +34,7 @@ interface TrainingDao {
     @Query("SELECT * FROM training_data_table WHERE id=:id")
     fun getTrainingWithExercisesById(id:Int): LiveData<List<TrainingWithExercises>>
 
-    @Query("SELECT * FROM training_data_table")
+    @Query("SELECT training_data_table.id AS id, training_data_table.training_name as training_name, count(tr_ex.training_id) FROM training_data_table LEFT JOIN training_exercise_data_table as tr_ex ON tr_ex.training_id = training_data_table.id GROUP BY tr_ex.training_id")
     fun getTrainings(): LiveData<List<TrainingModel>>
 
     @Query("DELETE FROM training_exercise_data_table WHERE id = :id")

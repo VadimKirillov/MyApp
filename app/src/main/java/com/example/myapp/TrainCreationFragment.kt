@@ -1,7 +1,6 @@
 package com.example.myapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,20 +8,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapp.data.Database
-import com.example.myapp.databinding.AboutFragmentBinding.inflate
-import com.example.myapp.databinding.FragmentEditCountTrainBinding
 import com.example.myapp.databinding.FragmentTrainCreationBinding
 import com.example.myapp.fragments.AllTrainingsFragment
-import com.example.myapp.fragments.TrainCreatorFragment
-import com.example.myapp.models.ExerciseModel
 import com.example.myapp.models.TrainingModel
-import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.repositories.TrainingRepository
-import com.example.myapp.viewModels.ExerciseFactory
-import com.example.myapp.viewModels.ExerciseViewModel
 import com.example.myapp.viewModels.TrainingFactory
 import com.example.myapp.viewModels.TrainingViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

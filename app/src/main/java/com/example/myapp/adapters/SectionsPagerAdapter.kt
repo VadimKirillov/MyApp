@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.myapp.PickTrainToStartFragment
 import com.example.myapp.fragments.AboutFragment
 import com.example.myapp.fragments.ExerciseFragment
+import com.example.myapp.fragments.ExerciseGlobalFragment
 
 class SectionsPagerAdapter(fa: FragmentActivity, private val listOfTitle: List<String>) :
     FragmentStateAdapter(fa) {
@@ -15,7 +16,7 @@ class SectionsPagerAdapter(fa: FragmentActivity, private val listOfTitle: List<S
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> return PickTrainToStartFragment()
-            1 -> return AboutFragment()
+            1 -> return ExerciseGlobalFragment()
 
         }
         return PickTrainToStartFragment()

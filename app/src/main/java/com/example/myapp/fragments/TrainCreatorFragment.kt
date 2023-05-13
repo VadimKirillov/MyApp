@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
 import com.example.myapp.PickExerciseToTrainFragment
 import com.example.myapp.R
-import com.example.myapp.TrainCreationFragment
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentTrainCreatorBinding
 import com.example.myapp.models.LineWithExercises
