@@ -6,12 +6,15 @@ import retrofit2.http.POST
 data class LoginRequestBody(
         val login: String,
         val password: String,
+        val nickname: String,
+        val picture: String,
         )
 
 data class ResponseBody(
         val success: Boolean,
         val errors: Array<String>,
         val token: String? = null,
+        val picture: String? = null,
         )
 
 

@@ -31,5 +31,5 @@
     <string name="invalid_password">Password must be >3 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="server_url">http://84.201.187.3:8000</string>
-<!--    <string name="server_url">http://192.168.0.145:8000</string>-->
+    <!--    <string name="server_url">http://192.168.0.145:8000</string>-->
 </resources>

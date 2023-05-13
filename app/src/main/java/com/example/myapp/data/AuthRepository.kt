@@ -19,15 +19,12 @@ import kotlinx.coroutines.withContext
 class AuthRepository(val dataSource: AuthDataSource) {
 
     // in-memory cache of the loggedInUser object
-    var user: LoggedInUser? = null
-        private set
+
 
     val isLoggedIn: Boolean
         get() = user != null
 
-    init {
-        user = null
-    }
+
 // todo: пока нет
 //    fun logout() {
 //        user = null
@@ -48,8 +45,11 @@ class AuthRepository(val dataSource: AuthDataSource) {
 
         return result
     }
+     companion object {
+        lateinit var user : LoggedInUser
+        private fun setLoggedInUser(loggedInUser: LoggedInUser) {
+            this.user = loggedInUser
+        }
 
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        this.user = loggedInUser
     }
 }

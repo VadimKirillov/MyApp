@@ -7,4 +7,5 @@ data class LoggedInUser(
     val login: String,
     val displayName: String,
     val token: String? = null,
+    var picture: String,
 )

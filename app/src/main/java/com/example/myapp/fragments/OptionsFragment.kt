@@ -11,6 +11,7 @@ import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.myapp.PickTrainToStartFragment
 import kotlin.system.exitProcess
 
 val URL_GIT = "https://github.com/VadimKirillov/MyApp"
@@ -27,9 +28,10 @@ class OptionsFragment : Fragment() {
     ): View {
         binding = FragmentOptionsBinding.inflate(inflater,container, false)
         // todo: в граф
-        binding.aboutButton.setOnClickListener(){
+        binding.profileButton.setOnClickListener(){
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.content, AboutFragment())
+            transaction?.replace(R.id.content, ProfileFragment())
+            transaction?.addToBackStack(null)
             transaction?.commit()
         }
 

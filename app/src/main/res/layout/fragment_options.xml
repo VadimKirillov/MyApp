@@ -13,13 +13,13 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/aboutButton"
+            android:id="@+id/profileButton"
             android:layout_width="match_parent"
             android:layout_height="78dp"
             android:background="@android:drawable/menuitem_background"
             android:backgroundTint="@color/white"
             android:backgroundTintMode="src_in"
-            android:text="О приложении"
+            android:text="Профиль"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:icon="@drawable/cursor"
