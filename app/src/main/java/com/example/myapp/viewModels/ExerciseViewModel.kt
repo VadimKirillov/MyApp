@@ -42,14 +42,16 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
         updateExercise(ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image,
             external_id))
         val exerciseModel = ExerciseModel(idExercise, nameExercise, muscle_group, exercise_type,exercise_image, external_id)
-        val client = UtilClient.instance
+    }
 
+    fun uploadExercise(exerciseModel: ExerciseModel){
         var input2 = Converter.toBack(exerciseModel)
+        val client = UtilClient.instance
 
         GlobalScope.launch{
             val response2 = client.apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
+            Log.d("query", "Sent exercise")
         }
-
     }
 
     class DoubleTrigger<A, B>(a: LiveData<A>, b: LiveData<B>) : MediatorLiveData<Pair<A?, B?>>() {
@@ -115,7 +117,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
     suspend fun query(page: Int, size: Int): ResponseExercises{
 
             val client = UtilClient.instance
-            var input = Optional.present(ExerciseInput(name = Optional.present(filterName)))
+            var input = Optional.present(ExerciseInput(name = Optional.present(filterName), global = Optional.present(true)))
             Log.e("query ", "Query exercises");
             val response = client.apolloClient.query(
                 AllExercicesQuery(

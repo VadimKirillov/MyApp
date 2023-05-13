@@ -76,7 +76,6 @@ class GlobalFragment: Fragment() {
         ab?.show()
     }
     companion object {
-
         @JvmStatic
         fun newInstance() = GlobalFragment()
     }

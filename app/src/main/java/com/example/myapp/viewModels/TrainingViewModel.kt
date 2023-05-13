@@ -2,7 +2,6 @@ package com.example.myapp.viewModels
 
 import androidx.lifecycle.*
 import com.example.myapp.models.*
-import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.repositories.TrainingRepository
 import kotlinx.coroutines.launch
 

@@ -1,20 +1,16 @@
 package com.example.myapp.models
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import androidx.room.*
 
 @Entity(tableName = "training_data_table")
-data class TrainingModel (
+data class TrainingModel(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id : Int,
+    var id: Int,
 
     @ColumnInfo(name = "training_name")
-    var name : String,
-
-
+    var name: String,
 )
 
 

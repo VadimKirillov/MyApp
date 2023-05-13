@@ -16,8 +16,13 @@ class Converter {
         }
 
         fun toBack(local : ExerciseModel): ExerciseInput {
-            return ExerciseInput(name = Optional.present(local.name), picture =  Optional.present(local.image),
-                id = Optional.present(local.external_id))
+            return ExerciseInput(
+                name = Optional.present(local.name),
+                picture =  Optional.present(local.image),
+                class_exercise =  Optional.present(local.muscle_group),
+//                id = Optional.present(local.external_id),
+                published = Optional.present(true) // todo: всё паблиш пока
+            )
         }
     }
 }

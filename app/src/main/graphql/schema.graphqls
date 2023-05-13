@@ -12,6 +12,10 @@ type Exercise {
   count: Int
 
   picture: String
+
+  published: Boolean
+
+  user: User
 }
 
 input ExerciseInput {
@@ -28,6 +32,10 @@ input ExerciseInput {
   count: Int
 
   picture: String
+
+  global: Boolean
+  
+  published: Boolean
 }
 
 input TrainingLineInput {
@@ -80,10 +88,42 @@ type TrainingResult {
   trainings: [Training]
 }
 
+type User {
+  nickname: String
+
+  picture: String
+}
+
+input UserOrderByInput {
+  nickname: Sort
+}
+
+enum Sort {
+  asc
+
+  desc
+}
+
+input UserInput {
+  nickname: String
+
+  order_by: UserOrderByInput
+}
+
+type UserResult {
+  success: Boolean
+
+  errors: [String]
+
+  users: [User]
+}
+
 type QueryFitness {
   searchExercises(exercise: ExerciseInput, page: Int, size: Int): ExercisesResult!
 
   searchTrainings(training: TrainingInput): TrainingResult!
+
+  searchUsers(user: UserInput): UserResult!
 }
 
 type MutationFitness {
