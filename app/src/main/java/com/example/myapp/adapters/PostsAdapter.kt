@@ -2,37 +2,36 @@ package com.example.myapp.adapters
 
 import android.graphics.BitmapFactory
 import android.util.Base64
-import androidx.paging.PagedList
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapp.data.Post
 import com.example.myapp.data.UserProfile
-import com.example.myapp.databinding.ExerciseItemGlobalBinding
+import com.example.myapp.databinding.PostItemBinding
 import com.example.myapp.databinding.UserProfileItemBinding
-import com.example.myapp.models.ExerciseModel
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
-class DiffUtilUserProfileCallBack : DiffUtil.ItemCallback<UserProfile>() {
-    override fun areItemsTheSame(oldItem: UserProfile, newItem: UserProfile): Boolean {
-        return oldItem.nickname == newItem.nickname
+
+class DiffUtilPostsCallBack : DiffUtil.ItemCallback<Post>() {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+        return oldItem.postHead == newItem.postHead
     }
 
-    override fun areContentsTheSame(oldItem: UserProfile, newItem: UserProfile): Boolean {
-        return oldItem.nickname == newItem.nickname
+    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+        return oldItem.postHead == newItem.postHead
     }
 }
 
 
-class AllUsersProfilesAdapter(
-    ) : PagedListAdapter<UserProfile, AllUsersProfilesAdapter.Holder>(DiffUtilUserProfileCallBack()) {
+class PostsAdapter(
+) : PagedListAdapter<Post, PostsAdapter.Holder>(DiffUtilPostsCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
-        val binding : UserProfileItemBinding = UserProfileItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding : PostItemBinding = PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return Holder(binding)
     }
@@ -44,11 +43,11 @@ class AllUsersProfilesAdapter(
         holder.bind(getItem(position)!!)
     }
 
-    class Holder(val binding: UserProfileItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class Holder(val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            user: UserProfile,
+            post: Post,
 
-        ) {
+            ) {
             fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
                 val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
                 val stream: InputStream =
@@ -57,9 +56,9 @@ class AllUsersProfilesAdapter(
                 imageView.setImageBitmap(bitmap)
             }
 
-            binding.nameUser.text = user.nickname
+            binding.nickName.text = post.author
 
-            user.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise) }
+            post.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise) }
 
         }
 

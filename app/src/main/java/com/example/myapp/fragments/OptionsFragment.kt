@@ -6,13 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapp.MuscleGroupPickerFragment
+import androidx.fragment.app.Fragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentOptionsBinding
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.myapp.PickTrainToStartFragment
-import kotlin.system.exitProcess
+import com.example.myapp.ui.login.LoginActivity
 
 val URL_GIT = "https://github.com/VadimKirillov/MyApp"
 val URL_LANDING = "https://staszerling2.wixsite.com/fitness"
@@ -53,8 +50,10 @@ class OptionsFragment : Fragment() {
             startActivity(intent)
         }
         binding.exitButton.setOnClickListener(){
-            getActivity()?.finish();
-            exitProcess(0);
+//            getActivity()?.finish();
+//            exitProcess(0);
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root

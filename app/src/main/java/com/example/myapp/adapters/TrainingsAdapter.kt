@@ -43,6 +43,7 @@ class TrainingsAdapter(private val deleteTraining:(TrainingModel)->Unit,
 
             binding.idTrain.text = trainingModel.id.toString()
             binding.name.text = trainingModel.name.toString()
+            // getTrainingWithExercisesById(trainingModel.id)
 
             binding.editExercise.setOnClickListener(View.OnClickListener {
                 editTraining(trainingModel)

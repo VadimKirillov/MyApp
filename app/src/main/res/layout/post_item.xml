@@ -15,51 +15,63 @@
         android:background="@color/orange">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/idTrain"
+            android:id="@+id/countLikes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_marginBottom="4dp"
             android:textColor="@color/black"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/deleteExercise" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/nameExercise"
+            android:id="@+id/namePost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_marginStart="8dp"
             android:textColor="@color/black"
-            android:textSize="10sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.060000002" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
+            android:layout_margin="10dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/deleteExercise"
+            android:layout_width="30dp"
+            android:layout_height="28dp"
+            android:layout_margin="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/cloud_upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="250dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="250dp">
 
