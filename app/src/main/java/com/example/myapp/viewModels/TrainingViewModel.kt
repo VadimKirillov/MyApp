@@ -1,6 +1,7 @@
 package com.example.myapp.viewModels
 
 import androidx.lifecycle.*
+import com.example.myapp.data.Post
 import com.example.myapp.models.*
 import com.example.myapp.repositories.TrainingRepository
 import kotlinx.coroutines.launch
@@ -9,6 +10,7 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
 
 //   var trainings = trainingRepository.trainings
    lateinit var linesLiveData: LiveData<List<LineWithExercises>>
+   lateinit var linesLiveDataRead: LiveData<List<LineWithExercises>>
    lateinit var allTrainings : LiveData<List<TrainingModel>>
 
    var nameTraining = MutableLiveData<String>()
@@ -27,7 +29,25 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
                     training.get(0).lines
                 }
             }
-        }
+        }}
+
+
+
+
+       fun getTrainingWithExercisesReadById(post: Post){
+           val liveDataList = MutableLiveData<List<LineWithExercises>>()
+
+           val list = mutableListOf<LineWithExercises>( )
+           for (line in post.lines){
+               list.add(LineWithExercises(
+                   exercise = ExerciseModel(id=1, external_id = "", name=line.exercise.name, muscle_group=line.exercise.muscle_group, type=line.exercise.muscle_group, image=line.exercise.picture),
+                   playlist = TrainingExerciseModel(1,1,1, line.count,1,1)
+               ))
+           }
+
+           liveDataList.value = list
+           linesLiveData = liveDataList
+
 //        else{
 //            linesLiveData = trainingRepository.trainings
 //        }

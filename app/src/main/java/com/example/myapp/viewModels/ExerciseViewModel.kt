@@ -124,9 +124,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
                     input,
                     page = Optional.present(page),
                     size = Optional.present(size))).execute()
-            println("${response.data?.searchExercises?.exercises}")
-            println("${response.data?.searchExercises?.position}")
-            println("${response.data?.searchExercises?.total_count}")
+
             var exerciseList = mutableListOf<ExerciseModel>()
             if (response.data?.searchExercises?.exercises != null){
                 for (line in response.data?.searchExercises?.exercises!!) {

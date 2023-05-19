@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
@@ -18,22 +19,22 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apollographql.apollo3.api.Optional
-import com.example.SearchUsersQuery
+import com.example.SearchTrainingsQuery
 import com.example.myapp.adapters.AllUsersProfilesAdapter
 import com.example.myapp.adapters.ExerciseGlobalAdapter
 import com.example.myapp.adapters.PostsAdapter
-import com.example.myapp.data.Database
-import com.example.myapp.data.Post
-import com.example.myapp.data.UserProfile
+import com.example.myapp.data.*
 import com.example.myapp.data.model.UtilClient
 import com.example.myapp.databinding.FragmentAllUserProfilesBinding
 import com.example.myapp.databinding.FragmentPostsBinding
 import com.example.myapp.databinding.ListExercisesGlobalBinding
+import com.example.myapp.fragments.TrainCreatorFragment
 import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.viewModels.ExerciseFactory
 import com.example.myapp.viewModels.ExerciseViewModel
 import com.example.type.Sort
+import com.example.type.TrainingInput
 import com.example.type.UserInput
 import com.example.type.UserOrderByInput
 import kotlinx.coroutines.GlobalScope
@@ -46,6 +47,7 @@ class PostsFragment : Fragment() {
     private var currentPage = 0
     private lateinit var postAdapter: PostsAdapter
     lateinit var users : LiveData<PagedList<Post>>
+    private val postViewModel: PostViewModel by activityViewModels()
 
     var config : PagedList.Config
     init {
@@ -87,8 +89,21 @@ class PostsFragment : Fragment() {
 //        GlobalScope.launch {
 //            Toast.makeText(context, "ss", Toast.LENGTH_SHORT)
 //        }
-        //TODO логика открытия поста
         Toast.makeText(context, "ss", Toast.LENGTH_SHORT).show()
+        val fragment = TrainCreatorFragment()
+        val parameters = Bundle()
+        postViewModel.post = post
+
+
+        parameters.putInt("idTraining", 1)
+        parameters.putString("nameTraining", "Post")
+        parameters.putBoolean("read", true)
+
+        fragment.arguments = parameters
+        val transaction  = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.content, fragment)
+        transaction?.addToBackStack(null)
+        transaction?.commit()
     }
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
@@ -124,6 +139,7 @@ class PostsFragment : Fragment() {
             { source.build()}
         )
 
+
     }
 
 
@@ -146,24 +162,31 @@ class PostDataSource(val filter: String) : PageKeyedDataSource<Integer, Post>() 
     suspend fun query(filterName: String): Response {
 
         val client = UtilClient.instance
-        var input = UserInput(
-            order_by= Optional.present(
-                UserOrderByInput(nickname= Optional.present(Sort.valueOf("desc"))
-                )
-            )
-        )
 
-        Log.e("query ", "Query users")
+        var input = TrainingInput()
+
+        Log.e("query ", "Query posts")
         val response = client.apolloClient.query(
-            SearchUsersQuery(
+            SearchTrainingsQuery(
                 input
             )
         ).execute()
-        println("${response.data?.searchUsers?.users}")
+        println("${response.data?.searchTrainings?.trainings}")
         var userList = mutableListOf<Post>()
-        if (response.data?.searchUsers?.users != null){
-            for (line in response.data?.searchUsers?.users!!) {
-                userList.add(Post(line?.nickname!!, line.picture, line.nickname, line.nickname))
+        if (response.data?.searchTrainings?.trainings != null){
+            for (line in response.data?.searchTrainings?.trainings!!) {
+                val exercises = mutableListOf<ExerciseLine>()
+                for (line in line!!.training_lines!!) {
+                    try{
+                    exercises.add(ExerciseLine(
+                        Exercise(line!!.exercise!!.name!!, line!!.exercise!!.picture!!, line!!.exercise!!.class_exercise!!),
+                        line.count!!
+                    ))}
+                    catch (e: NullPointerException){
+
+                    }
+                }
+                userList.add(Post(line?.name!!, line.user!!.picture, line.text, author=line.user!!.nickname, lines = exercises, likes = null))
             }
         }
 
@@ -173,7 +196,7 @@ class PostDataSource(val filter: String) : PageKeyedDataSource<Integer, Post>() 
             0,
         )
         Log.e("query ", "${userList.size}");
-        Log.e("query ", "Query users end");
+        Log.e("query ", "Query users posts");
         return data
     }
 

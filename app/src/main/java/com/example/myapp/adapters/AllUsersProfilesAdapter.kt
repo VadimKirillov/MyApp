@@ -48,10 +48,22 @@ class AllUsersProfilesAdapter(val listener: Listener
             ) {
             fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
                 val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
-                val stream: InputStream =
-                    ByteArrayInputStream(Base64.decode(imageDataBytes.toByteArray(), Base64.DEFAULT))
-                val bitmap = BitmapFactory.decodeStream(stream)
-                imageView.setImageBitmap(bitmap)
+                try {
+                    val stream: InputStream =
+                        ByteArrayInputStream(
+                            Base64.decode(
+                                imageDataBytes.toByteArray(),
+                                Base64.DEFAULT
+                            )
+                        )
+
+                    val bitmap = BitmapFactory.decodeStream(stream)
+                    imageView.setImageBitmap(bitmap)
+                }
+                catch (e: IllegalArgumentException){
+
+                }
+
             }
 
 

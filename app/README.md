@@ -1,2 +1,2 @@
 gradle generateApolloSources
-gradle downloadApolloSchema --endpoint "http://localhost:8000/graphql"  --schema schema.graphqls (переместить в src/graphql) 
+gradle downloadApolloSchema --endpoint "http://192.168.0.145:8000/graphql"  --schema schema.graphqls (переместить в src/graphql) 

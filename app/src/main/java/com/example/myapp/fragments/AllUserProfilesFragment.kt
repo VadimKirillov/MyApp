@@ -166,7 +166,7 @@ class UserDataSource(val filter: String) : PageKeyedDataSource<Integer, UserProf
                     input
                 )
             ).execute()
-            println("${response.data?.searchUsers?.users}")
+
             var userList = mutableListOf<UserProfile>()
             if (response.data?.searchUsers?.users != null){
                 for (line in response.data?.searchUsers?.users!!) {

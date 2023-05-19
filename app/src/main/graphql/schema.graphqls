@@ -1,97 +1,105 @@
+schema {
+    query: QueryFitness
+    mutation: MutationFitness
+}
+
+
 type Exercise {
-  id: String
-
-  name: String
-
-  class_exercise: String
-
-  description: String
-
-  measure: String
-
-  count: Int
-
-  picture: String
-
-  published: Boolean
-
-  user: User
+    id: String
+    name: String
+    class_exercise: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+    published: Boolean
+    user: User
 }
 
 input ExerciseInput {
-  id: String
-
-  name: String
-
-  class_exercise: String
-
-  description: String
-
-  measure: String
-
-  count: Int
-
-  picture: String
-
-  global: Boolean
-  
-  published: Boolean
+    id: String
+    name: String
+    class_exercise: String
+    description: String
+    measure: String
+    count: Int
+    picture: String
+    global: Boolean
+    published: Boolean
 }
 
 input TrainingLineInput {
-  exercise: String
-
-  count: Int
+    exercise: String
+    count: Int
 }
 
 input TrainingInput {
-  id: String
-
-  name: String
-
-  training_lines: [TrainingLineInput]
+    id: String
+    name: String
+    text: String
+    training_lines: [TrainingLineInput]
 }
+
 
 type TrainingLine {
-  id: String
-
-  exercise: String
-
-  count: Int
+    id: String
+    exercise: String
+    count: Int
 }
+
+type TrainingLineWithExercise {
+    id: String
+    exercise: Exercise
+    count: Int
+}
+
+type TrainingLike {
+    user: User
+}
+
 
 type Training {
-  id: String
-
-  name: String
-
-  training_lines: [TrainingLine]
+    id: String
+    name: String
+    text: String
+    user: User
+    training_lines: [TrainingLine]
+    likes: [User]
 }
 
+type TrainingWithExercise {
+    id: String
+    name: String
+    text: String
+    user: User
+    training_lines: [TrainingLineWithExercise]
+    likes: [User]
+}
+
+
 type ExercisesResult {
-  success: Boolean
-
-  errors: [String]
-
-  exercises: [Exercise]
-
-  position: Int
-
-  total_count: Int
+    success: Boolean
+    errors: [String]
+    exercises: [Exercise]
+    position: Int
+    total_count: Int
 }
 
 type TrainingResult {
-  success: Boolean
+    success: Boolean
+    errors: [String]
+    trainings: [Training]
+}
 
-  errors: [String]
-
-  trainings: [Training]
+type TrainingResultWithExercise {
+    success: Boolean
+    errors: [String]
+    trainings: [TrainingWithExercise]
 }
 
 type User {
-  nickname: String
-
-  picture: String
+    nickname: String
+    picture: String
 }
 
 input UserOrderByInput {
@@ -100,43 +108,34 @@ input UserOrderByInput {
 
 enum Sort {
   asc
-
   desc
 }
 
 input UserInput {
-  nickname: String
-
-  order_by: UserOrderByInput
+    nickname: String
+    password: String
+    login: String
+    order_by: UserOrderByInput
 }
 
 type UserResult {
-  success: Boolean
-
-  errors: [String]
-
-  users: [User]
+    success: Boolean
+    errors: [String]
+    users: [User]
 }
 
+
 type QueryFitness {
-  searchExercises(exercise: ExerciseInput, page: Int, size: Int): ExercisesResult!
-
-  searchTrainings(training: TrainingInput): TrainingResult!
-
-  searchUsers(user: UserInput): UserResult!
+    searchExercises(exercise: ExerciseInput, page: Int, size: Int): ExercisesResult!
+    searchTrainings(training: TrainingInput): TrainingResultWithExercise!
+    searchUsers(user: UserInput): UserResult!
 }
 
 type MutationFitness {
-  createExercise(exercise: ExerciseInput!): ExercisesResult
-
-  deleteExercises(exercise: ExerciseInput!): ExercisesResult
-
-  createTrainings(training: TrainingInput!): TrainingResult
-
-  deleteTrainings(training: TrainingInput!): TrainingResult
+    createExercise(exercise: ExerciseInput!): ExercisesResult
+    deleteExercises(exercise: ExerciseInput!): ExercisesResult
+    createTrainings (training: TrainingInput!): TrainingResult
+    deleteTrainings(training: TrainingInput!): TrainingResult
 }
 
-schema {
-  query: QueryFitness
-  mutation: MutationFitness
-}
+

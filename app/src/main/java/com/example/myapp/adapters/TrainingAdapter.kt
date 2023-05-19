@@ -217,19 +217,8 @@ class TrainingAdapter(private val deleteTraining:(LineWithExercises)->Unit,
 
                 }
 
-
-
-
-
-
-
-
                 setList(list)
                 saveList = saveMutableList
-
-
-
-
 }
 }
 
