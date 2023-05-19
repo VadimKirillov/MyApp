@@ -56,6 +56,7 @@ class AuthDataSource(private val retrofit: Retrofit) {
 
             Log.d("RetrofitClient","Send data to server was: "+result)
             val token = result.token
+            Log.e("token", token.toString())
             if (token != null){
                 val picture = result.picture
                 val user = LoggedInUser(login, login, token, picture?:"")

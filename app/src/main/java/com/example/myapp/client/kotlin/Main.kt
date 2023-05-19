@@ -12,7 +12,7 @@ suspend fun main(args: Array<String>) {
     val apolloClient = ApolloClient.Builder()
         .addHttpHeader("content-type", "application/json")
         .addHttpHeader("Auth", "token") // jwt token
-        .serverUrl("http://84.201.187.3:8000/graphql")
+        .serverUrl("http://192.168.0.145:8000/graphql")
         .build()
 
 //     Execute your query. This will suspend until the response is received.

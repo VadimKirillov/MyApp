@@ -70,8 +70,22 @@ query searchTrainings($training: TrainingInput!){
       trainings{
         id
         name
+        text
+        user {
+          nickname
+          picture
+        }
         training_lines{
-          exercise
+          exercise{
+            id,
+            name,
+            class_exercise,
+            description,
+            measure,
+            count,
+            picture,
+            published,
+          }
           count
         }
       }
@@ -87,6 +101,7 @@ mutation createTrainings($training: TrainingInput!){
       trainings {
         id
         name
+        text
         training_lines{
             id
             exercise

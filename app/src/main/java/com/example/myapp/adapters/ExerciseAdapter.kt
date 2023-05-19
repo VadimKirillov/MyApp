@@ -87,9 +87,7 @@ class ExerciseAdapter(
 
         }
 
-
     }
-
 
 }
 
