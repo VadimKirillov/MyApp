@@ -133,6 +133,7 @@ class ExerciseFragment : Fragment() {
 
     private fun uploadExercise(exerciseModel: ExerciseModel) {
         exerciseViewModel.uploadExercise(exerciseModel)
+        Toast.makeText(context, "Упражнение загружено", Toast.LENGTH_SHORT).show()
     }
     private fun editExercise(exerciseModel:ExerciseModel) {
         // todo: кажется нужно просто передавать id, хотелось бы объект

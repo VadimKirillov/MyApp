@@ -170,7 +170,7 @@ class CreationExerciseFragment : Fragment(), BottomMuscleAdapter.Listener {
             //binding.autoCompleteType.setText("")
 
             binding.textExerciseName.setText("")
-
+            Toast.makeText(context, "Упражнение создано", Toast.LENGTH_SHORT).show()
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.content, ExerciseFragment())
             transaction?.commit()

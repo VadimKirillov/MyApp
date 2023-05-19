@@ -3,6 +3,7 @@ package com.example.myapp
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.myapp.databinding.ActivityMainBinding
 import com.example.myapp.fragments.*
 import com.example.myapp.utils.FragmentManager
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbar = binding.bottomNav

@@ -2,18 +2,14 @@ package com.example.myapp.adapters
 
 import android.graphics.BitmapFactory
 import android.util.Base64
-import androidx.paging.PagedList
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.data.UserProfile
-import com.example.myapp.databinding.ExerciseItemGlobalBinding
 import com.example.myapp.databinding.UserProfileItemBinding
-import com.example.myapp.models.ExerciseModel
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
@@ -28,7 +24,7 @@ class DiffUtilUserProfileCallBack : DiffUtil.ItemCallback<UserProfile>() {
 }
 
 
-class AllUsersProfilesAdapter(
+class AllUsersProfilesAdapter(val listener: Listener
     ) : PagedListAdapter<UserProfile, AllUsersProfilesAdapter.Holder>(DiffUtilUserProfileCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
@@ -41,14 +37,15 @@ class AllUsersProfilesAdapter(
         if(position <= -1 || getItem(position) == null){
             return
         }
-        holder.bind(getItem(position)!!)
+        holder.bind(getItem(position)!!, listener)
     }
 
     class Holder(val binding: UserProfileItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             user: UserProfile,
+            listener: Listener,
 
-        ) {
+            ) {
             fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
                 val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
                 val stream: InputStream =
@@ -56,6 +53,7 @@ class AllUsersProfilesAdapter(
                 val bitmap = BitmapFactory.decodeStream(stream)
                 imageView.setImageBitmap(bitmap)
             }
+
 
             binding.nameUser.text = user.nickname
 
@@ -65,4 +63,9 @@ class AllUsersProfilesAdapter(
 
     }
 
+    interface Listener{
+        fun onClick(user: UserProfile){
+
+        }
+    }
 }

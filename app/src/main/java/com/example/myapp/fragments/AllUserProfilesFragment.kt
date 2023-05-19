@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.paging.DataSource
 import androidx.lifecycle.LiveData
@@ -38,12 +39,14 @@ import com.apollographql.apollo3.api.Optional
 import com.example.AllExercicesQuery
 import com.example.SearchUsersQuery
 import com.example.myapp.adapters.AllUsersProfilesAdapter
+import com.example.myapp.adapters.GroupExerciseAdapter
+import com.example.myapp.data.GroupExercise
 import com.example.myapp.utils.Converter
 import com.example.myapp.viewModels.PostsDataSource
 import com.example.type.Sort
 import com.example.type.UserOrderByInput
 
-class AllUserProfilesFragment : Fragment() {
+class AllUserProfilesFragment : Fragment(), AllUsersProfilesAdapter.Listener {
     private lateinit var binding: FragmentAllUserProfilesBinding
     private var isLoading = false
     private var currentPage = 0
@@ -74,9 +77,23 @@ class AllUserProfilesFragment : Fragment() {
         return binding.root
     }
 
+    override fun onClick(user: UserProfile) {
+        super.onClick(user)
+        Toast.makeText(context, "Переход", Toast.LENGTH_LONG).show()
+
+//        val transaction  = activity?.supportFragmentManager?.beginTransaction()
+//        val parameters = Bundle()
+//        parameters.putString("filter", groupExercise.title)
+//        Log.d("debug", groupExercise.title)
+//        val fragment = ExerciseFragment()
+//        fragment.arguments = parameters
+//        transaction?.replace(R.id.content, fragment)
+//        transaction?.addToBackStack(null)
+//        transaction?.commit()
+    }
     private fun initRecyclerExercises(){
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
-        userAdapter = AllUsersProfilesAdapter()
+        userAdapter = AllUsersProfilesAdapter(this)
         binding.recyclerCategories.adapter = userAdapter
        // binding.recyclerCategories.addOnScrollListener(scrollListener)
 

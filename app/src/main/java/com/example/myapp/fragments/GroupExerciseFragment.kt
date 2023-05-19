@@ -18,7 +18,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
     private var adapter = GroupExerciseAdapter(this)
 
     private val imageGroupExerciseIdList = listOf(
-        R.drawable.billy_bg,
+        R.drawable.all_muscles,
         R.drawable.abs,
         R.drawable.quads,
         R.drawable.glutes,
@@ -27,8 +27,9 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         R.drawable.back,
         R.drawable.chest,
         R.drawable.other,
-        R.drawable.twoguys,
+
     )
+
     private val titleGroupExerciseIdList = listOf(
         "Все",
         "Пресс",
@@ -39,7 +40,7 @@ class GroupExerciseFragment :Fragment(), GroupExerciseAdapter.Listener {
         "Спина",
         "Грудь",
         "Другое",
-        "Пользовательские"
+
     )
 
     override fun onCreateView(

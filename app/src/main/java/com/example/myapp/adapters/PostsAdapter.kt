@@ -3,6 +3,7 @@ package com.example.myapp.adapters
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagedListAdapter
@@ -12,6 +13,7 @@ import com.example.myapp.data.Post
 import com.example.myapp.data.UserProfile
 import com.example.myapp.databinding.PostItemBinding
 import com.example.myapp.databinding.UserProfileItemBinding
+import com.example.myapp.models.ExerciseModel
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 
@@ -28,6 +30,7 @@ class DiffUtilPostsCallBack : DiffUtil.ItemCallback<Post>() {
 
 
 class PostsAdapter(
+    private val openPost: (Post) -> Unit,
 ) : PagedListAdapter<Post, PostsAdapter.Holder>(DiffUtilPostsCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
@@ -40,13 +43,13 @@ class PostsAdapter(
         if(position <= -1 || getItem(position) == null){
             return
         }
-        holder.bind(getItem(position)!!)
+        holder.bind(getItem(position)!!, openPost)
     }
 
     class Holder(val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             post: Post,
-
+            openPost: (Post) -> Unit,
             ) {
             fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
                 val imageDataBytes = completeImageData.substring(completeImageData.indexOf(",") + 1)
@@ -60,6 +63,9 @@ class PostsAdapter(
 
             post.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise) }
 
+            binding.openPostButton.setOnClickListener(View.OnClickListener{
+                openPost(post)
+            })
         }
 
     }

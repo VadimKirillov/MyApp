@@ -49,6 +49,7 @@ class OptionsFragment : Fragment() {
             intent.data = data
             startActivity(intent)
         }
+
         binding.exitButton.setOnClickListener(){
 //            getActivity()?.finish();
 //            exitProcess(0);

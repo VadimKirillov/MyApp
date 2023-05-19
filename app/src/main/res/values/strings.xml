@@ -5,9 +5,9 @@
     <string name="start_train">Начать тренировку</string>
     <string name="waiting">Приготовьтесь</string>
     <string name="exercises">Упражнения</string>
-    <string name="train">тренировка</string>
-    <string name="start">старт</string>
-    <string name="more">больше</string>
+    <string name="train">Тренировка</string>
+    <string name="start">Старт</string>
+    <string name="more">Больше</string>
     <string name="next">ДАЛЕЕ</string>
     <string name="finish">ГОТОВО</string>
     <string name="edit_exercise">Изменить упражнение</string>

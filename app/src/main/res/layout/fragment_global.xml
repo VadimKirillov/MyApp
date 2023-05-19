@@ -48,8 +48,9 @@
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabMode="fixed" />
+                    android:layout_height="match_parent"
+                    app:tabInlineLabel="false"
+                    app:tabMode="scrollable" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
