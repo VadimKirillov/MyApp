@@ -38,6 +38,7 @@ import com.example.type.UserInput
 import com.example.type.UserOrderByInput
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
 
 class PostsFragment : Fragment() {
     private lateinit var binding: FragmentPostsBinding
@@ -67,6 +68,11 @@ class PostsFragment : Fragment() {
         initRecyclerPosts()
         displayPosts()
         filterName.setValue("%%")
+
+        binding.createNewPost.setOnClickListener {
+            Toast.makeText(context,"Создание поста", Toast.LENGTH_SHORT).show()
+
+        }
         return binding.root
     }
 
@@ -81,7 +87,8 @@ class PostsFragment : Fragment() {
 //        GlobalScope.launch {
 //            Toast.makeText(context, "ss", Toast.LENGTH_SHORT)
 //        }
-        Toast.makeText(context, "ss", Toast.LENGTH_SHORT)
+        //TODO логика открытия поста
+        Toast.makeText(context, "ss", Toast.LENGTH_SHORT).show()
     }
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {

@@ -14,19 +14,19 @@ class TrainingViewModel (private val trainingRepository: TrainingRepository) : V
    var nameTraining = MutableLiveData<String>()
 
    fun getAllTrainings(){
-        allTrainings = Transformations.switchMap(nameTraining, { nameTraining ->
-                                   trainingRepository.getTrainings()
-                                 })
+        allTrainings = Transformations.switchMap(nameTraining) { nameTraining ->
+            trainingRepository.getTrainings()
+        }
    }
 
 
    fun getTrainingWithExercisesById(id: Int? = null){
         if(id != null){
-            linesLiveData = Transformations.switchMap(nameTraining, { nameTraining ->
-                           Transformations.map(trainingRepository.getTrainingWithExercisesById(id)) { training ->
-                                 training.get(0).lines
-                             }
-                         })
+            linesLiveData = Transformations.switchMap(nameTraining) { nameTraining ->
+                Transformations.map(trainingRepository.getTrainingWithExercisesById(id)) { training ->
+                    training.get(0).lines
+                }
+            }
         }
 //        else{
 //            linesLiveData = trainingRepository.trainings

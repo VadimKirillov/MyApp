@@ -46,7 +46,9 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
         val trainRepository = TrainingRepository(productDao)
         val factory = TrainingFactory(trainRepository)
         trainViewModel = ViewModelProvider(this, factory).get(TrainingViewModel::class.java)
-
+        binding.textCount.setOnClickListener{
+            binding.textCount.setText("")
+        }
         binding.buttonEditCount.setOnClickListener(this)
 
         return binding.root

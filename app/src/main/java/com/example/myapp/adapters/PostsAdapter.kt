@@ -58,9 +58,9 @@ class PostsAdapter(
                 val bitmap = BitmapFactory.decodeStream(stream)
                 imageView.setImageBitmap(bitmap)
             }
-
+            //TODO()траблы с названием поста
             binding.nickName.text = post.author
-
+            binding.namePost.text = post.postHead
             post.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise) }
 
             binding.openPostButton.setOnClickListener(View.OnClickListener{

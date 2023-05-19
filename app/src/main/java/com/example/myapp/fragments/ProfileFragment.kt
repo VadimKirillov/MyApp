@@ -15,11 +15,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
-import com.example.myapp.PickTrainToStartFragment
 import com.example.myapp.R
 import com.example.myapp.data.AuthRepository
 import com.example.myapp.databinding.FragmentProfileBinding
-import com.example.myapp.databinding.FragmentStartTrainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.http.Body
@@ -29,7 +27,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream

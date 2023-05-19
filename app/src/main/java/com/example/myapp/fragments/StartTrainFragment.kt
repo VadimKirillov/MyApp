@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.myapp.PickTrainToStartFragment
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentStartTrainBinding
 

@@ -3,7 +3,6 @@ package com.example.myapp.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.myapp.PickTrainToStartFragment
 import com.example.myapp.PostsFragment
 import com.example.myapp.fragments.*
 

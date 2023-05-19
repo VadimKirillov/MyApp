@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.fragments
 
 import android.R
 import android.os.Bundle
@@ -7,14 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import com.example.myapp.databinding.FragmentMuscleGroupPickerBinding
-import com.example.myapp.fragments.CreationExerciseFragment
-import com.example.myapp.fragments.OptionsFragment
-import com.example.myapp.fragments.TrainCreatorFragment
 
 
 class MuscleGroupPickerFragment : DialogFragment(), View.OnClickListener {

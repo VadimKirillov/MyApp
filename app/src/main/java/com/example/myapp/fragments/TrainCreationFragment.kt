@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentTrainCreationBinding
-import com.example.myapp.fragments.AllTrainingsFragment
 import com.example.myapp.models.TrainingModel
 import com.example.myapp.repositories.TrainingRepository
 import com.example.myapp.viewModels.TrainingFactory

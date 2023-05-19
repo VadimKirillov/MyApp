@@ -23,9 +23,6 @@ interface TrainingDao {
     @Query("DELETE FROM training_data_table")
     suspend fun deleteAllTrainings()
 
-    //@Query("SELECT * FROM training_data_table")
-    //fun getAllTrainings(): LiveData<List<TrainingModel>>
-
     @Transaction
     @Query("SELECT * FROM training_data_table")
     fun getTrainingWithExercises(): LiveData<List<TrainingWithExercises>>
@@ -42,4 +39,7 @@ interface TrainingDao {
 
     @Update
     suspend fun updateLine(productModel: TrainingExerciseModel)
+
+    //@Query("SELECT * FROM training_data_table")
+    //fun getAllTrainings(): LiveData<List<TrainingModel>>
 }

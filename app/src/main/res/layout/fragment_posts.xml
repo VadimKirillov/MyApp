@@ -46,6 +46,20 @@
             app:srcCompat="@android:drawable/ic_delete" />
 
 
+        <ImageButton
+            android:id="@+id/createNewPost"
+            android:layout_width="53dp"
+            android:layout_height="55dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/deleteSearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toEndOf="@+id/deleteSearch"
+            app:layout_constraintTop_toTopOf="@+id/deleteSearch"
+            app:srcCompat="@drawable/plus" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
