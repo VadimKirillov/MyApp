@@ -1,0 +1,140 @@
+type Exercise {
+  id: String
+
+  name: String
+
+  class_exercise: String
+
+  description: String
+
+  measure: String
+
+  count: Int
+
+  picture: String
+
+  published: Boolean
+
+  user: User
+}
+
+input ExerciseInput {
+  id: String
+
+  name: String
+
+  class_exercise: String
+
+  description: String
+
+  measure: String
+
+  count: Int
+
+  picture: String
+
+  global: Boolean
+}
+
+input TrainingLineInput {
+  exercise: String
+
+  count: Int
+}
+
+input TrainingInput {
+  id: String
+
+  name: String
+
+  training_lines: [TrainingLineInput]
+}
+
+type TrainingLine {
+  id: String
+
+  exercise: String
+
+  count: Int
+}
+
+type Training {
+  id: String
+
+  name: String
+
+  training_lines: [TrainingLine]
+}
+
+type ExercisesResult {
+  success: Boolean
+
+  errors: [String]
+
+  exercises: [Exercise]
+
+  position: Int
+
+  total_count: Int
+}
+
+type TrainingResult {
+  success: Boolean
+
+  errors: [String]
+
+  trainings: [Training]
+}
+
+type User {
+  nickname: String
+
+  picture: String
+}
+
+input UserOrderByInput {
+  nickname: Sort
+}
+
+enum Sort {
+  asc
+
+  desc
+}
+
+input UserInput {
+  nickname: String
+
+  order_by: UserOrderByInput
+}
+
+type UserResult {
+  success: Boolean
+
+  errors: [String]
+
+  users: [User]
+}
+
+type QueryFitness {
+  searchExercises(exercise: ExerciseInput, page: Int, size: Int): ExercisesResult!
+
+  searchTrainings(training: TrainingInput): TrainingResult!
+
+  searchUsers(user: UserInput): UserResult!
+}
+
+type MutationFitness {
+  createExercise(exercise: ExerciseInput!): ExercisesResult
+
+  deleteExercises(exercise: ExerciseInput!): ExercisesResult
+
+  createTrainings(training: TrainingInput!): TrainingResult
+
+  deleteTrainings(training: TrainingInput!): TrainingResult
+}
+
+schema {
+  query: QueryFitness
+  mutation: MutationFitness
+}
