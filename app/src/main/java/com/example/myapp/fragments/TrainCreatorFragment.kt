@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
+import com.example.myapp.PostViewModel
+import com.example.myapp.PostsFragment
 import com.example.myapp.R
 import com.example.myapp.data.Database
 import com.example.myapp.databinding.FragmentTrainCreatorBinding
@@ -32,6 +35,9 @@ class TrainCreatorFragment : Fragment() {
     private var idTraining: Int = 0
     private var nameTraining: String = " "
 
+    private val postViewModel: PostViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,12 +45,18 @@ class TrainCreatorFragment : Fragment() {
         binding = FragmentTrainCreatorBinding.inflate(inflater,container, false )
         idTraining = arguments?.getInt("idTraining")!!
         nameTraining = arguments?.getString("nameTraining")!!
+        var read = arguments?.getBoolean("read")
         binding.editNameTraining.setText(nameTraining)
         val trainingsDao = Database.getInstance((context as FragmentActivity).application).trainingDAO
         val trainingRepository = TrainingRepository(trainingsDao)
         trainingFactory = TrainingFactory(trainingRepository)
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
-        trainingViewModel.getTrainingWithExercisesById(idTraining)
+        if (read!!){
+            trainingViewModel.getTrainingWithExercisesReadById(postViewModel.post)
+        }
+        else{
+            trainingViewModel.getTrainingWithExercisesById(idTraining)
+        }
         trainingViewModel.nameTraining.setValue("testte")
 
         binding.editNameTraining.addTextChangedListener(
@@ -64,7 +76,6 @@ class TrainCreatorFragment : Fragment() {
 
 
         binding.addExercise.setOnClickListener {
-
             val transaction  = activity?.supportFragmentManager?.beginTransaction()
             val parameters = Bundle()
             parameters.putInt("idTraining", idTraining)
@@ -74,7 +85,6 @@ class TrainCreatorFragment : Fragment() {
             transaction?.replace(R.id.content, pickExerciseToTrainFragment)
             transaction?.addToBackStack(null)
             transaction?.commit()
-
 
         }
 

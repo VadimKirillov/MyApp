@@ -2,16 +2,22 @@ package com.example.myapp
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModel
+import com.example.myapp.data.Post
 import com.example.myapp.databinding.ActivityMainBinding
 import com.example.myapp.fragments.*
+import com.example.myapp.models.ExerciseModel
+import com.example.myapp.repositories.ExerciseRepository
 import com.example.myapp.utils.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener{
     private lateinit var binding: ActivityMainBinding
     lateinit var toolbar: BottomNavigationView
+    val postViewModel: PostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,4 +49,8 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
         }
         return true
     }
+}
+
+class PostViewModel  : ViewModel() {
+    lateinit var post :Post
 }
