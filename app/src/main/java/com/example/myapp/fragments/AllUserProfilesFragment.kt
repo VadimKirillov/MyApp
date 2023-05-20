@@ -93,12 +93,25 @@ class AllUserProfilesFragment : Fragment(), AllUsersProfilesAdapter.Listener {
     }
     private fun initRecyclerExercises(){
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
-        userAdapter = AllUsersProfilesAdapter(this)
+        userAdapter = AllUsersProfilesAdapter(
+            {user:UserProfile-> openUser(user)}
+        )
         binding.recyclerCategories.adapter = userAdapter
        // binding.recyclerCategories.addOnScrollListener(scrollListener)
 
     }
 
+    private fun openUser(user: UserProfile){
+        val userExercises = ExerciseGlobalFragment()
+        val arguments = Bundle()
+        arguments.putString("idUser", user.nickname)
+
+        userExercises.arguments = arguments
+        val transaction  = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.content, userExercises)
+        transaction?.commit()
+
+    }
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
