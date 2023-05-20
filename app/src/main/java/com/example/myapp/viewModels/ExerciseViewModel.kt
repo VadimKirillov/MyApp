@@ -151,7 +151,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
             val data = ResponseExercises(
                 exerciseList,
                 response.data?.searchExercises?.position?.plus(1) ?: 0,
-                response.data?.searchExercises?.total_count ?: 0,
+                response.data?.searchExercises?.total_count?.plus(1) ?: 0,
             )
         Log.e("query ", "Query exercises end");
         return data
@@ -166,7 +166,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
             val data = query(page = 1, size = params.requestedLoadSize)
             callback.onResult(data.exercises ?: listOf(),
                 Integer(data.position ),
-                Integer(data.total_count + 1)
+                Integer(data.total_count)
             )
         }
 
