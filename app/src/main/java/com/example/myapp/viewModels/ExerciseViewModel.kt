@@ -52,6 +52,9 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
 
         GlobalScope.launch{
             val response2 = client.apolloClient.mutation(CreateOrUpdateExercicesMutation(exercise = input2)).execute()
+            val id = response2.data?.createExercise?.exercises?.get(0)?.id
+            exerciseModel.external_id = id
+            exerciseRepository.updateExercise(exerciseModel)
             Log.d("query", "Sent exercise")
         }
     }

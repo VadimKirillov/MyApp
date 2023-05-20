@@ -220,7 +220,7 @@ class UserDataSource(val filter: String) : PageKeyedDataSource<Integer, UserProf
     ) {
             GlobalScope.launch {
                 val data = query("")
-                callback.onResult(data.users ?: listOf(),
+                callback.onResult(listOf(),
                     Integer(data.position),
                 )
             }
@@ -236,7 +236,7 @@ class UserDataSource(val filter: String) : PageKeyedDataSource<Integer, UserProf
 
         GlobalScope.launch {
             val data = query("")
-            callback.onResult(data.users ?: listOf(),
+            callback.onResult(listOf(),
                 Integer(data.position),
             )
         }
