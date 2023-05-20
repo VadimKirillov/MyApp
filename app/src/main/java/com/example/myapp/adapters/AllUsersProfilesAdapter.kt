@@ -3,15 +3,19 @@ package com.example.myapp.adapters
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.data.UserProfile
 import com.example.myapp.databinding.UserProfileItemBinding
+import com.example.myapp.models.ExerciseModel
 import java.io.ByteArrayInputStream
 import java.io.InputStream
+import kotlin.system.exitProcess
 
 class DiffUtilUserProfileCallBack : DiffUtil.ItemCallback<UserProfile>() {
     override fun areItemsTheSame(oldItem: UserProfile, newItem: UserProfile): Boolean {
@@ -24,7 +28,8 @@ class DiffUtilUserProfileCallBack : DiffUtil.ItemCallback<UserProfile>() {
 }
 
 
-class AllUsersProfilesAdapter(val listener: Listener
+class AllUsersProfilesAdapter(
+    private val openUser: (UserProfile) -> Unit,
     ) : PagedListAdapter<UserProfile, AllUsersProfilesAdapter.Holder>(DiffUtilUserProfileCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
@@ -37,13 +42,13 @@ class AllUsersProfilesAdapter(val listener: Listener
         if(position <= -1 || getItem(position) == null){
             return
         }
-        holder.bind(getItem(position)!!, listener)
+        holder.bind(getItem(position)!!, openUser)
     }
 
     class Holder(val binding: UserProfileItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             user: UserProfile,
-            listener: Listener,
+            openUser: (UserProfile) -> Unit,
 
             ) {
             fun decodeBase64AndSetImage(completeImageData: String, imageView: ImageView) {
@@ -66,7 +71,10 @@ class AllUsersProfilesAdapter(val listener: Listener
 
             }
 
+            binding.cardTrainItem.setOnClickListener {
+                openUser(user)
 
+            }
             binding.nameUser.text = user.nickname
 
             user.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise) }

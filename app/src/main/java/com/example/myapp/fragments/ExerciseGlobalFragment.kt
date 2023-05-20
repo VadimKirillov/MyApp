@@ -37,6 +37,8 @@ class ExerciseGlobalFragment : Fragment() {
     ): View {
         var group = arguments?.getString("filter")
         group = null
+
+        var userNickname = arguments?.getString("idUser") ?: ""
         //Log.d("debug", group?.toString() ?: "")
         binding = ListExercisesGlobalBinding.inflate(inflater, container, false)
 
@@ -48,6 +50,7 @@ class ExerciseGlobalFragment : Fragment() {
         initRecyclerExercises()
         exerciseViewModel.filterName.setValue("%%");
         exerciseViewModel.filterGroup.setValue(group);
+        exerciseViewModel.userNickname.setValue(userNickname)
         displayExercises()
 
         binding.deleteSearch.setOnClickListener {

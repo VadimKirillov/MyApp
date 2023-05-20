@@ -41,6 +41,10 @@ query AllExercicesQuery($exercise: ExerciseInput, $page: Int, $size: Int){
         class_exercise
         count
         picture
+        user{
+            nickname
+            picture
+        }
     }
     position
     total_count
