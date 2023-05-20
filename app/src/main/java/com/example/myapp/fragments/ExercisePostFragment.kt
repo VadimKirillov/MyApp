@@ -77,7 +77,7 @@ class ExercisePostFragment : Fragment() {
         trainingAdapter = ExercisePostAdapter(trainingViewModel)
 
         binding.recyclerCategories.adapter = trainingAdapter
-        trainingAdapter.itemTouchHelper.attachToRecyclerView(binding.recyclerCategories)
+
     }
 
     private fun displayTrainingsLines(){
@@ -105,22 +105,7 @@ class ExercisePostFragment : Fragment() {
         fun newInstance() = TrainCreatorFragment()
     }
 
-    override fun onPause() {
-        super.onPause()
 
-        Log.d("training", "onStop")
-
-        var i = 0
-        if(trainingAdapter.saveList == null){
-            return
-        }
-        for (line in trainingAdapter.saveList!!){
-            line.playlist.sequence = i
-            trainingViewModel.updateLine(line.playlist)
-            i += 1
-        }
-
-    }
 
 
 }
