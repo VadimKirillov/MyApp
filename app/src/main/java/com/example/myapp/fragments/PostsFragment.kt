@@ -217,9 +217,9 @@ class PostDataSource(val filter: String) : PageKeyedDataSource<Integer, Post>() 
 
     override fun loadAfter(params: LoadParams<Integer>, callback: LoadCallback<Integer, Post>) {
         GlobalScope.launch {
-            val data = query("")
+//            val data = query("")
             callback.onResult(listOf(),
-                Integer(data.position),
+                Integer(0),
             )
         }
 
@@ -230,9 +230,9 @@ class PostDataSource(val filter: String) : PageKeyedDataSource<Integer, Post>() 
     override fun loadBefore(params: LoadParams<Integer>, callback: LoadCallback<Integer, Post>) {
 
         GlobalScope.launch {
-            val data = query("")
+//            val data = query("")
             callback.onResult(listOf(),
-                Integer(data.position),
+                Integer(0),
             )
         }
     }

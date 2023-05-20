@@ -150,7 +150,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
 
             val data = ResponseExercises(
                 exerciseList,
-                response.data?.searchExercises?.position ?: 0,
+                response.data?.searchExercises?.position?.plus(1) ?: 0,
                 response.data?.searchExercises?.total_count ?: 0,
             )
         Log.e("query ", "Query exercises end");
@@ -165,8 +165,8 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
         GlobalScope.launch {
             val data = query(page = 1, size = params.requestedLoadSize)
             callback.onResult(data.exercises ?: listOf(),
-                Integer(data.position),
-                Integer(data.total_count)
+                Integer(data.position ),
+                Integer(data.total_count + 1)
             )
         }
 
@@ -180,7 +180,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
             GlobalScope.launch {
                 val data = query(page = params.key.toInt(), size = params.requestedLoadSize)
                 callback.onResult(data.exercises ?: listOf(),
-                    Integer(data.position),
+                    Integer(data.position ),
                 )
             }
 
@@ -196,7 +196,7 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
         GlobalScope.launch {
             val data = query(page = params.key.toInt(), size = params.requestedLoadSize)
             callback.onResult(data.exercises ?: listOf(),
-                Integer(data.position),
+                 Integer(data.position ),
             )
         }
     }

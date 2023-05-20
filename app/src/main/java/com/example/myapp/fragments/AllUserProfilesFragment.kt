@@ -219,9 +219,9 @@ class UserDataSource(val filter: String) : PageKeyedDataSource<Integer, UserProf
         callback: LoadCallback<Integer, UserProfile>
     ) {
             GlobalScope.launch {
-                val data = query("")
+//                val data = query("")
                 callback.onResult(listOf(),
-                    Integer(data.position),
+                    Integer(0),
                 )
             }
 
@@ -235,9 +235,9 @@ class UserDataSource(val filter: String) : PageKeyedDataSource<Integer, UserProf
     ) {
 
         GlobalScope.launch {
-            val data = query("")
+//            val data = query("")
             callback.onResult(listOf(),
-                Integer(data.position),
+                Integer(0),
             )
         }
     }
