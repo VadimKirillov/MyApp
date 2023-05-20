@@ -15,49 +15,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchExercise" />
-
-        <EditText
-            android:id="@+id/searchExercise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fitsSystemWindows="true"
-            android:hint="Поиск упражнения"
-            android:inputType="textPersonName"
-            android:isScrollContainer="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.129"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/deleteSearch"
-            android:layout_width="39dp"
-            android:layout_height="36dp"
-            android:backgroundTint="#00FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/searchExercise"
-            app:layout_constraintStart_toEndOf="@+id/searchExercise"
-            app:layout_constraintTop_toTopOf="@+id/searchExercise"
-            app:layout_constraintVertical_bias="0.222"
-            app:srcCompat="@android:drawable/ic_delete" />
-
-
-        <ImageButton
-            android:id="@+id/createNewPost"
-            android:layout_width="53dp"
-            android:layout_height="55dp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/deleteSearch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.8"
-            app:layout_constraintStart_toEndOf="@+id/deleteSearch"
-            app:layout_constraintTop_toTopOf="@+id/deleteSearch"
-            app:srcCompat="@drawable/plus" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,6 +55,8 @@ class ExercisePostFragment : Fragment() {
         trainingViewModel = ViewModelProvider(this, trainingFactory).get(TrainingViewModel::class.java)
         if (read!!){
             trainingViewModel.getTrainingWithExercisesReadById(postViewModel.post)
+            binding.namePostText.setText(postViewModel.post.postHead)
+            binding.textView19.setText(postViewModel.post.text)
         }
         else{
             trainingViewModel.getTrainingWithExercisesById(idTraining)

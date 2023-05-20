@@ -67,9 +67,12 @@ class GlobalFragment: Fragment() {
         }.attach()
     }
     private fun loadTitles() {
-        listOfTitles.add("Люди")
-        listOfTitles.add("Упражнения")
-        listOfTitles.add("Посты")
+        if (listOfTitles.isEmpty()){
+            listOfTitles.add("Люди")
+            listOfTitles.add("Упражнения")
+            listOfTitles.add("Посты")
+        }
+
     }
     private fun setUpViewPagerWithTabLayout() {
         val pagerAdapter = SectionsPagerAdapter(context as FragmentActivity, listOfTitles)

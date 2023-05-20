@@ -73,10 +73,7 @@ class PostsFragment : Fragment() {
         displayPosts()
         filterName.setValue("%%")
 
-        binding.createNewPost.setOnClickListener {
-            Toast.makeText(context,"Создание поста", Toast.LENGTH_SHORT).show()
 
-        }
         return binding.root
     }
 

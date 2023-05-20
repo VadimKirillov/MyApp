@@ -18,6 +18,10 @@ class TrainingRepository (private val trainingDAO: TrainingDao) {
           return trainingDAO.getTrainingWithExercisesById(id)
      }
 
+     fun getTrainingWithExercisesByIdList(id: Int): List<TrainingWithExercises>{
+           return trainingDAO.getTrainingWithExercisesByIdList(id)
+      }
+
 
     fun getTrainings(): LiveData<List<TrainingModel>> {
         return trainingDAO.getTrainings()

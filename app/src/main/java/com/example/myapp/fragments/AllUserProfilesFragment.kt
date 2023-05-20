@@ -109,6 +109,7 @@ class AllUserProfilesFragment : Fragment(), AllUsersProfilesAdapter.Listener {
         userExercises.arguments = arguments
         val transaction  = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.content, userExercises)
+        transaction?.addToBackStack(null)
         transaction?.commit()
 
     }

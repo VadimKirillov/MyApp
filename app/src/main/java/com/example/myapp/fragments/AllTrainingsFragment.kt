@@ -71,8 +71,11 @@ class AllTrainingsFragment : Fragment() {
     private fun createPost(trainingModel: TrainingModel) {
         //trainingViewModel.deleteTraining(trainingModel)
         //Toast.makeText(context, trainingModel.name, Toast.LENGTH_SHORT).show()
-        val panelNewPost = PostCreationFragment()
-        panelNewPost.show((context as FragmentActivity).supportFragmentManager, "editCount")
+        val fragment = PostCreationFragment()
+        val parameters = Bundle()
+        parameters.putInt("idTraining", trainingModel.id)
+        fragment.arguments = parameters
+        fragment.show((context as FragmentActivity).supportFragmentManager, "createPost")
     }
 
     private fun editTraining(trainingModel: TrainingModel) {

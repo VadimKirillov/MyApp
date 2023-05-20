@@ -63,10 +63,15 @@ class PostsAdapter(
             binding.namePost.text = post.postHead
 
             post.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise) }
+            post.lines.getOrNull(0)?.exercise?.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise1) }
+            post.lines.getOrNull(1)?.exercise?.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise2) }
+            post.lines?.getOrNull(2)?.exercise?.picture?.let { decodeBase64AndSetImage(it, binding.imageCardExercise3) }
 
             binding.openPostButton.setOnClickListener(View.OnClickListener{
                 openPost(post)
             })
+
+
         }
 
     }
