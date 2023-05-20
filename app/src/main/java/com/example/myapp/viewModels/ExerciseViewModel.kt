@@ -20,6 +20,7 @@ import androidx.paging.PageKeyedDataSource
 import com.apollographql.apollo3.api.Optional
 import com.example.AllExercicesQuery
 import com.example.type.ExerciseInput
+import com.example.type.UserInput
 import kotlin.collections.ArrayList
 
 
@@ -29,6 +30,7 @@ class ExerciseViewModel (private val exerciseRepository: ExerciseRepository) : V
 
     var filterName = MutableLiveData<String>()
     var filterGroup = MutableLiveData<String>()
+    var userNickname = MutableLiveData<String>()
 
     var config : PagedList.Config
     init {
@@ -117,13 +119,24 @@ class PostsDataSource(val exerciseViewModel: ExerciseViewModel) : PageKeyedDataS
     suspend fun query(page: Int, size: Int): ResponseExercises{
 
             val client = UtilClient.instance
-            var input = Optional.present(ExerciseInput(name = Optional.present(filterName), global = Optional.present(true)))
+            var input = Optional.present(
+                ExerciseInput(
+                name = Optional.present(filterName), global = Optional.present(true),
+                    user = Optional.present(UserInput(
+                        nickname=Optional.present(exerciseViewModel.userNickname.value)
+                    )
+                    )
+            )
+            )
             Log.e("query ", "Query exercises");
             val response = client.apolloClient.query(
                 AllExercicesQuery(
                     input,
                     page = Optional.present(page),
-                    size = Optional.present(size))).execute()
+                    size = Optional.present(size),
+
+
+                )).execute()
 
             var exerciseList = mutableListOf<ExerciseModel>()
             if (response.data?.searchExercises?.exercises != null){

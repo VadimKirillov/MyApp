@@ -26,6 +26,7 @@ input ExerciseInput {
     picture: String
     global: Boolean
     published: Boolean
+    user: UserInput
 }
 
 input TrainingLineInput {
