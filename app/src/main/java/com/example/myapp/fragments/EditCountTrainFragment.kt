@@ -67,7 +67,7 @@ class EditCountTrainFragment : DialogFragment(), View.OnClickListener {
             arguments.putInt("idTraining", idTrain)
             arguments.putString("nameTraining", nameTraining)
             fragment.arguments = arguments
-            //(context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
+            (context as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
     }
 
 }

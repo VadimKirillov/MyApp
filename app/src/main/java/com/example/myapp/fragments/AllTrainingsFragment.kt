@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +50,8 @@ class AllTrainingsFragment : Fragment() {
         binding.recyclerCategories.layoutManager = LinearLayoutManager(context)
         // todo: кажется адаптер должен вызывать только методы view model, но не факт
         trainingAdapter = TrainingsAdapter({categoryModel: TrainingModel -> deleteTraining(categoryModel)},
-            {categoryModel: TrainingModel -> editTraining(categoryModel)})
+            {categoryModel: TrainingModel -> editTraining(categoryModel) },
+            {categoryModel: TrainingModel -> createPost(categoryModel)})
         binding.recyclerCategories.adapter = trainingAdapter
     }
 
@@ -65,6 +67,12 @@ class AllTrainingsFragment : Fragment() {
 
     private fun deleteTraining(trainingModel: TrainingModel) {
         trainingViewModel.deleteTraining(trainingModel)
+    }
+    private fun createPost(trainingModel: TrainingModel) {
+        //trainingViewModel.deleteTraining(trainingModel)
+        //Toast.makeText(context, trainingModel.name, Toast.LENGTH_SHORT).show()
+        val panelNewPost = PostCreationFragment()
+        panelNewPost.show((context as FragmentActivity).supportFragmentManager, "editCount")
     }
 
     private fun editTraining(trainingModel: TrainingModel) {

@@ -9,7 +9,7 @@ import com.example.myapp.models.TrainingModel
 
 
 class TrainingsAdapter(private val deleteTraining:(TrainingModel)->Unit,
-                       private val editTraining:(TrainingModel)->Unit) : RecyclerView.Adapter<TrainingsAdapter.TrainingsHolder>() {
+                       private val editTraining:(TrainingModel)->Unit, private val createPost:(TrainingModel)->Unit) : RecyclerView.Adapter<TrainingsAdapter.TrainingsHolder>() {
 
     private val trainingList = ArrayList<TrainingModel>()
 
@@ -23,7 +23,7 @@ class TrainingsAdapter(private val deleteTraining:(TrainingModel)->Unit,
     }
 
     override fun onBindViewHolder(holder: TrainingsHolder, position: Int) {
-        holder.bind(trainingList[position], deleteTraining, editTraining)
+        holder.bind(trainingList[position], deleteTraining, editTraining, createPost)
     }
 
     fun setList(trainings: List<TrainingModel>) {
@@ -37,7 +37,8 @@ class TrainingsAdapter(private val deleteTraining:(TrainingModel)->Unit,
         fun bind(
             trainingModel: TrainingModel,
             deleteTraining: (TrainingModel) -> Unit,
-            editTraining: (TrainingModel) -> Unit
+            editTraining: (TrainingModel) -> Unit,
+            createPost:(TrainingModel)->Unit,
 
         ) {
             binding.idTrain.text = trainingModel.id.toString()
@@ -50,6 +51,10 @@ class TrainingsAdapter(private val deleteTraining:(TrainingModel)->Unit,
 
             binding.deleteExercise.setOnClickListener(View.OnClickListener {
                 deleteTraining(trainingModel)
+            })
+
+            binding.createPost.setOnClickListener(View.OnClickListener {
+                createPost(trainingModel)
             })
         }
     }

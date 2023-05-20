@@ -26,8 +26,10 @@ import com.example.myapp.adapters.PostsAdapter
 import com.example.myapp.data.*
 import com.example.myapp.data.model.UtilClient
 import com.example.myapp.databinding.FragmentAllUserProfilesBinding
+import com.example.myapp.databinding.FragmentExercisePostBinding
 import com.example.myapp.databinding.FragmentPostsBinding
 import com.example.myapp.databinding.ListExercisesGlobalBinding
+import com.example.myapp.fragments.ExercisePostFragment
 import com.example.myapp.fragments.TrainCreatorFragment
 import com.example.myapp.models.ExerciseModel
 import com.example.myapp.repositories.ExerciseRepository
@@ -89,8 +91,8 @@ class PostsFragment : Fragment() {
 //        GlobalScope.launch {
 //            Toast.makeText(context, "ss", Toast.LENGTH_SHORT)
 //        }
-        Toast.makeText(context, "ss", Toast.LENGTH_SHORT).show()
-        val fragment = TrainCreatorFragment()
+        //Toast.makeText(context, "ss", Toast.LENGTH_SHORT).show()
+        val fragment = ExercisePostFragment()
         val parameters = Bundle()
         postViewModel.post = post
 
